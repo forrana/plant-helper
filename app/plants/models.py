@@ -21,12 +21,12 @@ class Plant(models.Model):
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
     time_between_watering = models.DurationField(default=datetime.timedelta(days=7))
-    planted = models.DateTimeField(default=timezone.now())
-    watered = models.DateTimeField(default=timezone.now())
-    repoted = models.DateTimeField(default=timezone.now())
-    furtilized = models.DateTimeField(default=timezone.now())
+    planted = models.DateTimeField(default=timezone.now)
+    watered = models.DateTimeField(default=timezone.now)
+    repoted = models.DateTimeField(default=timezone.now)
+    furtilized = models.DateTimeField(default=timezone.now)
 
-    def get_days_until_next_watering(self):
+    def days_until_next_watering(self):
         return timezone.now() - (self.watered + self.time_between_watering)
 
     def __str__(self):
