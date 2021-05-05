@@ -25,13 +25,13 @@ class Query(graphene.ObjectType):
     rooms  = graphene.List(RoomType)
     plants_by_room = graphene.Field(PlantType, room_id=graphene.Int(required=True))
 
-    def plants(self, info, **kwargs):
+    def resolve_plants(self, info, **kwargs):
         try:
             return Plant.objects.select_related("room").all()
         except Plant.DoesNotExist:
             return None
 
-    def rooms(self, info, **kwargs):
+    def resolve_rooms(self, info, **kwargs):
         try:
             return Room.objects.select_related("house").all()
         except Room.DoesNotExist:
