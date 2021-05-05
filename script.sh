@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker-compose run web python manage.py "$@"
+docker-compose run backend python manage.py "$@"

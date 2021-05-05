@@ -9,7 +9,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  web:
+  backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -18,3 +18,14 @@ services:
       - "8000:8000"
     depends_on:
       - db
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-elm
+    command: reactor
+    volumes:
+      - ./web:/mnt
+    ports:
+      - "8001:8000"
+    # we need init to kill elm-test when run with "make test"
+    init: true
