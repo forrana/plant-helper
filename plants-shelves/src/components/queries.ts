@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-export const GET_CITY_BY_NAME = gql`
+export const GET_ALL_PLANTS = gql`
 query {
   plants {
     id, name
