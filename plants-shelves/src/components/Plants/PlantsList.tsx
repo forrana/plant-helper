@@ -20,7 +20,7 @@ function PlantsList() {
 
     let plants = data ? data.plants : []
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :( {error}</p>;
+    if (error) return <p>Error :( {error.message}</p>;
     if (plants.length === 0) return <p> No plants yet. Add your first plant! </p>
     return (
       <div className="shopping-list">
