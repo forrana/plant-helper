@@ -11,12 +11,12 @@ class House(models.Model):
 class Room(models.Model):
     room_name = models.CharField(max_length=200)
     room_description = models.CharField(max_length=200, blank=True, default='')
-    house = models.ForeignKey(House, on_delete=models.CASCADE)
+    house = models.ForeignKey(House, on_delete=models.CASCADE, blank=True, null=True)
     def __str__(self):
         return f"{self.house.house_name}.{self.room_name}"
 
 class Plant(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=200)
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
