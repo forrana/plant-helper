@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_PLANTS } from '../queries'
+import { PlantsCreate } from './PlantsCreate'
 
 interface Plant {
   id: number;
@@ -21,15 +22,22 @@ function PlantsList() {
     let plants = data ? data.plants : []
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :( {error.message}</p>;
-    if (plants.length === 0) return <p> No plants yet. Add your first plant! </p>
+    if (plants.length === 0) return (
+      <div className="new-plant">
+        <PlantsCreate/>
+      </div>
+    )
     return (
       <div className="shopping-list">
         <h1>Your plants: </h1>
         <ul>
             {plants.map(function(item) {
-                return <li>item</li>
+                return <li>{item.name}</li>
             })}
         </ul>
+        <div className="new-plant">
+          <PlantsCreate/>
+        </div>
       </div>
     )
 }

@@ -43,4 +43,8 @@ class Query(graphene.ObjectType):
         except Room.DoesNotExist:
             return None
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.AbstractType, graphene.ObjectType):
+    create_plant = PlantType()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)
