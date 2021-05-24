@@ -11,7 +11,7 @@ function PlantsCreate() {
           e.preventDefault();
           let name: string = nameInput ? nameInput.value : "";
           let scientificName: string = scientificNameInput ? scientificNameInput.value : "";
-          addPlant({ variables: { name: name, scientific_name: scientificName } });
+          addPlant({ variables: { plantName: name, scientificName: scientificName } });
         }}
       >
         <label>
@@ -22,7 +22,7 @@ function PlantsCreate() {
         </label>
         <label>
           Scientific name:
-          <input type="text" name="scientific_name" ref={node => {
+          <input type="text" name="scientificName" ref={node => {
             scientificNameInput = node;
           }}/>
         </label>

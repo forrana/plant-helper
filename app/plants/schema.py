@@ -4,6 +4,8 @@ import graphene
 from .models import Plant, Room, House
 
 class PlantType(DjangoObjectType):
+    name = graphene.String()
+    scientific_name = graphene.String()
     class Meta:
         model = Plant
         fields = ("id", "name", "scientific_name", "description", "room",
@@ -43,8 +45,21 @@ class Query(graphene.ObjectType):
         except Room.DoesNotExist:
             return None
 
+class CreatePlant(graphene.Mutation):
+    class Arguments:
+        plant_name = graphene.String()
+        scientific_name = graphene.String()
+    ok = graphene.Boolean()
+    plant = graphene.Field(PlantType)
+
+    @classmethod
+    def mutate(root, info, id, plant_name, scientific_name):
+        plant = PlantType(name=plant_name, scientific_name=scientific_name)
+        ok = True
+        return CreatePlant(plant=plant, ok=ok)
+
 class Mutation(graphene.AbstractType, graphene.ObjectType):
-    create_plant = PlantType()
+    create_plant = CreatePlant.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -8,11 +8,12 @@ query {
 `;
 
 const ADD_PLANT = gql`
-  mutation AddPlant($name: String!, $scientific_name: String!) {
-    addTodo(name: $name, scientific_name: $scientific_name) {
-      id
-      name
-      scientific_name
+  mutation CreatePlant($plantName: String!, $scientificName: String!) {
+    createPlant(plantName: $plantName, scientificName: $scientificName) {
+      plant {
+        name,
+        scientificName
+      }
     }
   }
 `;
