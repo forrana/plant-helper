@@ -4,13 +4,8 @@ import graphene
 from .models import Plant, Room, House
 
 class PlantType(DjangoObjectType):
-    name = graphene.String()
-    scientific_name = graphene.String()
     class Meta:
         model = Plant
-        fields = ("id", "name", "scientific_name", "description", "room",
-            "days_until_next_watering", "time_between_watering",
-            "planted", "watered", "repoted", "furtilized")
 
 class RoomType(DjangoObjectType):
     class Meta:
@@ -50,11 +45,12 @@ class CreatePlant(graphene.Mutation):
         plant_name = graphene.String()
         scientific_name = graphene.String()
     ok = graphene.Boolean()
-    plant = graphene.Field(PlantType)
+    plant = graphene.Field(lambda: PlantType)
 
     @classmethod
     def mutate(root, info, id, plant_name, scientific_name):
-        plant = PlantType(name=plant_name, scientific_name=scientific_name)
+        plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name)
+            # plant = PlantType(name=plant_name, scientific_name=scientific_name)
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 

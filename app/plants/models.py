@@ -30,4 +30,13 @@ class Plant(models.Model):
         return timezone.now() - (self.watered + self.time_between_watering)
 
     def __str__(self):
-        return f"{self.room.house.house_name}.{self.room.room_name}.{self.name}"
+        name:string = ""
+
+        if self.room:
+            name += f"{self.room.room_name}"
+            if self.room.house:
+                name = f"{self.room.house.house_name}.{name}"
+        if name:
+            return f"{name}.{self.name}"
+        else:
+            return self.name

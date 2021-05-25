@@ -9,9 +9,14 @@ function PlantsCreate() {
     return (
       <form onSubmit={e => {
           e.preventDefault();
-          let name: string = nameInput ? nameInput.value : "";
-          let scientificName: string = scientificNameInput ? scientificNameInput.value : "";
-          addPlant({ variables: { plantName: name, scientificName: scientificName } });
+          if(nameInput && scientificNameInput) {
+            let name: string = nameInput.value;
+            let scientificName: string = scientificNameInput.value;
+            addPlant({ variables: { plantName: name, scientificName: scientificName } });
+            nameInput.value = "";
+            scientificNameInput.value = "";
+          }
+
         }}
       >
         <label>
