@@ -26,8 +26,9 @@ class Plant(models.Model):
     repoted = models.DateTimeField(default=timezone.now)
     furtilized = models.DateTimeField(default=timezone.now)
 
+    @property
     def days_until_next_watering(self):
-        return timezone.now() - (self.watered + self.time_between_watering)
+        return ((self.time_between_watering + self.watered) - timezone.now()).days
 
     def __str__(self):
         name:string = ""

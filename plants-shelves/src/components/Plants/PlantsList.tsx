@@ -6,6 +6,7 @@ import { PlantsCreate } from './PlantsCreate'
 interface Plant {
   id: number;
   name: string;
+  daysUntilNextWatering: number;
 }
 
 interface PlantData {
@@ -32,7 +33,7 @@ function PlantsList() {
         <h1>Your plants: </h1>
         <ul>
             {plants.map(function(item) {
-                return <li>{item.name}</li>
+                return <li key={item.id}>{item.name} - {item.daysUntilNextWatering} days left</li>
             })}
         </ul>
         <div className="new-plant">

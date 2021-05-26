@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 const GET_ALL_PLANTS = gql`
 query {
   plants {
-    id, name
+    id, name, scientificName, daysUntilNextWatering
   }
 }
 `;

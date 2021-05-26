@@ -4,8 +4,10 @@ import graphene
 from .models import Plant, Room, House
 
 class PlantType(DjangoObjectType):
+    days_until_next_watering = graphene.Int()
     class Meta:
         model = Plant
+        fields = "__all__"
 
 class RoomType(DjangoObjectType):
     class Meta:
