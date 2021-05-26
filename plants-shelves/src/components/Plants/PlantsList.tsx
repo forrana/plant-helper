@@ -1,18 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_PLANTS } from '../queries'
+import { Plant } from './Plant'
+import { PlantData } from './models'
 import { PlantsCreate } from './PlantsCreate'
-
-interface Plant {
-  id: number;
-  name: string;
-  daysUntilNextWatering: number;
-}
-
-interface PlantData {
-  plants: Plant[];
-}
-
+import './PlantsList.css';
 
 function PlantsList() {
     const { loading, data, error } = useQuery<PlantData>(
@@ -24,22 +16,19 @@ function PlantsList() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :( {error.message}</p>;
     if (plants.length === 0) return (
-      <div className="new-plant">
+      <section className="new-plant">
         <PlantsCreate/>
-      </div>
+      </section>
     )
     return (
-      <div className="shopping-list">
+      <section className="plants">
         <h1>Your plants: </h1>
-        <ul>
-            {plants.map(function(item) {
-                return <li key={item.id}>{item.name} - {item.daysUntilNextWatering} days left</li>
-            })}
-        </ul>
-        <div className="new-plant">
-          <PlantsCreate/>
-        </div>
-      </div>
+          <section className="plants-list">
+            {
+              plants.map((item) => <Plant plant={item} key={item.id} />)
+            }
+          </section>
+      </section>
     )
 }
 

@@ -1,9 +1,11 @@
-export interface Plant {
+export interface PlantType {
   id: number;
   name: string;
-  scientific_name: string;
+  scientificName: string;
+  daysUntilNextWatering: number;
+
 }
 
 export interface PlantData {
-  plants: Plant[];
+  plants: PlantType[];
 }

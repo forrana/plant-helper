@@ -1,0 +1,9 @@
+.plants {
+  margin: 0 1em;
+}
+
+.plants-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
