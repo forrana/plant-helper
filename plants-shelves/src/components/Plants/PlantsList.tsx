@@ -6,6 +6,8 @@ import { PlantData } from './models'
 import { PlantsCreate } from './PlantsCreate'
 import styles from './PlantsList.module.css';
 
+import { Redirect } from "react-router-dom";
+
 function PlantsList() {
     const { loading, data, error } = useQuery<PlantData>(
       GET_ALL_PLANTS,
@@ -16,9 +18,7 @@ function PlantsList() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :( {error.message}</p>;
     if (plants.length === 0) return (
-      <section className="new-plant">
-        <PlantsCreate/>
-      </section>
+      <Redirect push to="/create" />
     )
     return (
       <section className={styles.plants}>
