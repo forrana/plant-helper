@@ -1,14 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styles from './App.module.css';
 import { PlantsList } from './components/Plants/PlantsList'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <PlantsList/>
-      </header>
+    <div className={styles.App}>
+      <PlantsList/>
     </div>
   );
 }

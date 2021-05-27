@@ -1,5 +1,5 @@
 import React from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { ADD_PLANT } from '../queries'
 
 function PlantsCreate() {

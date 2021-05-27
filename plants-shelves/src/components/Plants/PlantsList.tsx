@@ -4,7 +4,7 @@ import { GET_ALL_PLANTS } from '../queries'
 import { Plant } from './Plant'
 import { PlantData } from './models'
 import { PlantsCreate } from './PlantsCreate'
-import './PlantsList.css';
+import styles from './PlantsList.module.css';
 
 function PlantsList() {
     const { loading, data, error } = useQuery<PlantData>(
@@ -21,9 +21,9 @@ function PlantsList() {
       </section>
     )
     return (
-      <section className="plants">
+      <section className={styles.plants}>
         <h1>Your plants: </h1>
-          <section className="plants-list">
+          <section className={styles.plantsList}>
             {
               plants.map((item) => <Plant plant={item} key={item.id} />)
             }
