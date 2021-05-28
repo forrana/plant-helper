@@ -30,6 +30,10 @@ class Plant(models.Model):
     def days_until_next_watering(self):
         return ((self.time_between_watering + self.watered) - timezone.now()).days
 
+    @property
+    def days_between_watering(self):
+        return self.time_between_watering.days
+
     def __str__(self):
         name:string = ""
 

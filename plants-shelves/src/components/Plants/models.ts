@@ -3,7 +3,7 @@ export interface PlantType {
   name: string;
   scientificName: string;
   daysUntilNextWatering: number;
-
+  daysBetweenWatering: number;
 }
 
 export interface PlantData {

@@ -5,6 +5,7 @@ from .models import Plant, Room, House
 
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
+    days_between_watering = graphene.Int()
     class Meta:
         model = Plant
         fields = "__all__"
@@ -52,7 +53,6 @@ class CreatePlant(graphene.Mutation):
     @classmethod
     def mutate(root, info, id, plant_name, scientific_name):
         plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name)
-            # plant = PlantType(name=plant_name, scientific_name=scientific_name)
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 
