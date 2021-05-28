@@ -1,5 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
+from django.utils import timezone
 
 from .models import Plant, Room, House
 
@@ -56,8 +57,22 @@ class CreatePlant(graphene.Mutation):
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 
+class WaterPlant(graphene.Mutation):
+    class Arguments:
+        plant_id = graphene.ID()
+    ok = graphene.Boolean()
+    plant = graphene.Field(PlantType)
+
+    @classmethod
+    def mutate(root, info, id, plant_id):
+        plant = Plant.objects.get(pk=plant_id)
+        plant.watered = timezone.now()
+        plant.save()
+        ok = True
+        return WaterPlant(plant=plant, ok=ok)
+
 class Mutation(graphene.AbstractType, graphene.ObjectType):
     create_plant = CreatePlant.Field()
-
+    water_plant  = WaterPlant.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
