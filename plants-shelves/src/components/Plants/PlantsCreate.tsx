@@ -24,10 +24,13 @@ function PlantsCreate() {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      addPlant({ variables: { plantName, scientificName } })
-      setPlantName("");
-      setScientificName("");
-      setSubmitted(true)
+      addPlant({ variables: { plantName, scientificName } }).then(
+        () => {
+          setPlantName("");
+          setScientificName("");
+          setSubmitted(true)
+        }
+      )
     }
   }
 

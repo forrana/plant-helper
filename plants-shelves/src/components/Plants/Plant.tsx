@@ -4,6 +4,7 @@ import { PlantType } from './models'
 import { Card, CardText, CardBody, CardTitle, CardSubtitle, CardImg, Progress, Button } from 'reactstrap';
 import { WATER_PLANT } from '../queries'
 import styles from "./Plant.module.css"
+import uiStyles from "./UIElements.module.css"
 
 type PlantProps = {
   plant: PlantType
@@ -11,7 +12,7 @@ type PlantProps = {
 
 function Plant({ plant }: PlantProps) {
     const [waterPlant, { data }] = useMutation(WATER_PLANT);
-    const func = () => waterPlant({variables: { plantId: plant.id } });
+    const toWater = () => waterPlant({variables: { plantId: plant.id } });
     const plantHealth = (plant.daysUntilNextWatering / plant.daysBetweenWatering)*100;
     const healthColor = () => {
       if( plantHealth >= 70) {
@@ -27,7 +28,7 @@ function Plant({ plant }: PlantProps) {
     return (
       <Card className={styles.plant}>
         <CardBody>
-          <Button onClick={func}>&#128166;</Button>
+          <Button outline onClick={toWater} className={uiStyles.roundButton}>&#128166;</Button>
           <div className={styles.image}>&#129716;</div>
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>

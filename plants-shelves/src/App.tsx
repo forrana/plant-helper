@@ -11,12 +11,8 @@ function App() {
   return (
     <div className={styles.App}>
       <Switch>
-        <Route path="/create">
-          <PlantsCreate />
-        </Route>
-        <Route path="/">
-          <PlantsList />
-        </Route>
+        <Route path="/create" component={PlantsCreate} />
+        <Route path="/" component={PlantsList} />
       </Switch>
     </div>
   );

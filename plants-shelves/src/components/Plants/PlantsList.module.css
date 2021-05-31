@@ -7,3 +7,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls Button {
+  margin-right: 1em;
+}
