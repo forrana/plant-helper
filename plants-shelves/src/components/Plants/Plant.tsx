@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useMutation } from '@apollo/client';
 import { PlantType } from './models'
-import { Card, CardText, CardBody, CardTitle, CardSubtitle, CardImg, Progress, Button } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, CardSubtitle, CardImg, Progress, Button, Spinner } from 'reactstrap';
 import { WATER_PLANT } from '../queries'
 import styles from "./Plant.module.css"
+import PlantsDispatch from './PlantsDispatch';
 import uiStyles from "./UIElements.module.css"
 
 type PlantProps = {
@@ -11,7 +12,13 @@ type PlantProps = {
 }
 
 function Plant({ plant }: PlantProps) {
-    const [waterPlant, { data }] = useMutation(WATER_PLANT);
+    const dispatch = useContext(PlantsDispatch);
+    const [waterPlant, { loading, data, error }] = useMutation(WATER_PLANT, {
+      // TODO move to the separate function
+      onCompleted: (data: { waterPlant: { plant: PlantType } }) => {
+        dispatch && dispatch({ type: 'water', plant: data.waterPlant.plant })
+      }
+    });
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
     const plantHealth = (plant.daysUntilNextWatering / plant.daysBetweenWatering)*100;
     const healthColor = () => {
@@ -25,6 +32,9 @@ function Plant({ plant }: PlantProps) {
           return "danger"
         }
     }
+    if (loading) return  <Spinner color="primary" />
+
+    if (error)  return  <p>Error :( {error.message}</p>;
     return (
       <Card className={styles.plant}>
         <CardBody>

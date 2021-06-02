@@ -1,30 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import { useQuery } from '@apollo/client';
 import { GET_ALL_PLANTS } from '../queries'
 import { Button } from 'reactstrap';
 
 import { Plant } from './Plant'
-import { PlantData } from './models'
+import { PlantData, PlantType } from './models'
 import { PlantsCreate } from './PlantsCreate'
 import styles from './PlantsList.module.css';
 import uiStyles from "./UIElements.module.css"
+import PlantsDispatch from './PlantsDispatch';
+
 
 import { Redirect } from "react-router-dom";
 
-function PlantsList() {
+type PlantsListProps = {
+  plants: PlantType[],
+}
+
+function PlantsList(props: PlantsListProps) {
+    const dispatch = useContext(PlantsDispatch);
+
     const { loading, data, error } = useQuery<PlantData>(
       GET_ALL_PLANTS,
-      // { variables: { year: 2019 } }
+      {
+        onCompleted: (data: PlantData) => {
+          dispatch && dispatch({ type: 'load', plants: data.plants })
+        }
+      }
     );
     const history = useHistory();
     const goToCreatePage = () => history.push("/create");
 
-    let plants = data ? data.plants : []
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :( {error.message}</p>;
-    if (plants.length === 0) return (
-      <Redirect push to="/create" />
+
+    if (props.plants.length === 0) return (
+      <p> No plants yet, create the first one </p>
     )
     return (
       <section className={styles.plants}>
@@ -36,7 +48,7 @@ function PlantsList() {
           </section>
           <section className={styles.plantsList}>
             {
-              plants.map((item) => <Plant plant={item} key={item.id} />)
+              props.plants.map((item) => <Plant plant={item} key={item.id} />)
             }
           </section>
       </section>

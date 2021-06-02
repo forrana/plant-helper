@@ -11,8 +11,7 @@ const ADD_PLANT = gql`
   mutation CreatePlant($plantName: String!, $scientificName: String!) {
     createPlant(plantName: $plantName, scientificName: $scientificName) {
       plant {
-        name,
-        scientificName
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
       }
     }
   }
