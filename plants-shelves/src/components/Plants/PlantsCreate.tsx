@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 import { ADD_PLANT } from '../queries'
 import PlantsDispatch from './PlantsDispatch';
-import { PlantData, PlantType } from './models'
+import { PlantData } from './models'
 
 function PlantsCreate() {
   const dispatch = useContext(PlantsDispatch);
@@ -13,9 +13,9 @@ function PlantsCreate() {
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
 
-  const [addPlant, { loading, data, error }] = useMutation(ADD_PLANT, {
+  const [addPlant, { loading, error }] = useMutation(ADD_PLANT, {
     // TODO move to the separate function
-    onCompleted: (data: { createPlant: { plant: PlantType } }) => {
+    onCompleted: (data: { createPlant: PlantData }) => {
       dispatch && dispatch({ type: 'add', plant: data.createPlant.plant })
       setPlantName("");
       setScientificName("");

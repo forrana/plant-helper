@@ -1,21 +1,19 @@
 import React, { useContext } from 'react';
 import { useMutation } from '@apollo/client';
-import { PlantType } from './models'
-import { Card, CardText, CardBody, CardTitle, CardSubtitle, CardImg, Progress, Button, Spinner } from 'reactstrap';
+import { PlantData } from './models'
+import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner } from 'reactstrap';
 import { WATER_PLANT } from '../queries'
 import styles from "./Plant.module.css"
 import PlantsDispatch from './PlantsDispatch';
 import uiStyles from "./UIElements.module.css"
 
-type PlantProps = {
-  plant: PlantType
-}
+interface PlantProps extends PlantData { }
 
 function Plant({ plant }: PlantProps) {
     const dispatch = useContext(PlantsDispatch);
-    const [waterPlant, { loading, data, error }] = useMutation(WATER_PLANT, {
+    const [waterPlant, { loading, error }] = useMutation(WATER_PLANT, {
       // TODO move to the separate function
-      onCompleted: (data: { waterPlant: { plant: PlantType } }) => {
+      onCompleted: (data: { waterPlant: PlantData }) => {
         dispatch && dispatch({ type: 'water', plant: data.waterPlant.plant })
       }
     });

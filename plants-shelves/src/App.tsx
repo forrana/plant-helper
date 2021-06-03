@@ -1,29 +1,32 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, Dispatch } from 'react';
+import { useHistory } from "react-router-dom";
 import {
   Switch,
   Route
 } from "react-router-dom";
+import { useQuery } from '@apollo/client';
+import { Button } from 'reactstrap';
+
 import styles from './App.module.css';
 import { PlantsList } from './components/Plants/PlantsList'
 import { PlantsCreate } from './components/Plants/PlantsCreate'
-import { PlantType } from './components/Plants/models'
+import { GlobalReducerAction, GlobalState } from './components/Plants/models'
 import PlantsDispatch from './components/Plants/PlantsDispatch'
+import { PlantsData } from './components/Plants/models'
 
+import { GET_ALL_PLANTS } from './components/queries'
 
-const initialState: { plants: PlantType[] } = { plants: [] };
+const initialState: GlobalState  = { plants: [] };
 
-function reducer(state: { plants: PlantType[] }, action: { type: string, plants?: PlantType[], plant?: PlantType }) {
+function reducer(state: GlobalState, action: GlobalReducerAction) {
   switch (action.type) {
     case 'add':
-      return action.plant && {plants: [...state.plants, action.plant]};
+      return { plants: [...state.plants, action.plant] };
     case 'load':
-    // TODO figure out why apollo doesn't return freshly created plant
-      if(action.plants && action.plants.length >= state.plants.length)
-        return action.plants && {plants: [...action.plants]};
-      return state;
+      return { plants: [...action.plants] };
     case 'water':
       return { plants: [
-        ...state.plants.filter(plant => plant.id !== action.plant?.id),
+        ...state.plants.filter(plant => plant.id !== action.plant.id),
         action.plant
       ]}
     default:
@@ -32,8 +35,32 @@ function reducer(state: { plants: PlantType[] }, action: { type: string, plants?
 }
 
 function App() {
-  // @ts-ignore: figure out why TS2769
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(reducer, initialState);
+
+  const { loading, data, error } = useQuery<PlantsData>(
+    GET_ALL_PLANTS,
+    {
+      onCompleted: (data: PlantsData) => {
+        dispatch({ type: 'load', plants: data.plants })
+      }
+    }
+  );
+
+  const history = useHistory();
+  const goToCreatePage = () => history.push("/create");
+
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :( {error.message}</p>;
+
+  if (data?.plants?.length === 0) return (
+    <section>
+      <p> No plants yet, create the first one! </p>
+      <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
+        Create!
+      </Button>
+    </section>
+  )
 
   return (
     <div className={styles.App}>

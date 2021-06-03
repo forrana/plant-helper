@@ -1,6 +1,6 @@
-import React, { createContext, Dispatch } from 'react';
-import { PlantType } from './models'
+import React, { Dispatch } from 'react';
+import { GlobalReducerAction } from './models'
 
-const PlantsDispatch = React.createContext<Dispatch<{ type: string; plants?: PlantType[]; plant?: PlantType;}>| null>(null);
+const PlantsDispatch = React.createContext<Dispatch<GlobalReducerAction>| null>(null);
 
-export default PlantsDispatch;
+export default PlantsDispatch
