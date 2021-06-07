@@ -37,6 +37,14 @@ const UPDATE_PLANT = gql`
   }
 `;
 
+const DELETE_PLANT = gql`
+  mutation DeletePlant($plantId: ID!) {
+    deletePlant(plantId: $plantId) {
+      ok
+    }
+  }
+`;
 
 
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT }
+
+export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT }

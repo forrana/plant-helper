@@ -5,3 +5,8 @@
 .image {
   font-size: 5em;
 }
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}

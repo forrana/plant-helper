@@ -89,9 +89,23 @@ class UpdatePlant(graphene.Mutation):
         ok = True
         return UpdatePlant(plant=plant, ok=ok)
 
+class DeletePlant(graphene.Mutation):
+    class Arguments:
+        plant_id = graphene.ID()
+    ok = graphene.Boolean()
+    plant = graphene.Field(PlantType)
+
+    @classmethod
+    def mutate(root, info, id, plant_id):
+        plant = Plant.objects.get(pk=plant_id)
+        plant.delete()
+        ok = True
+        return DeletePlant(plant=plant, ok=ok)
+
 class Mutation(graphene.AbstractType, graphene.ObjectType):
     create_plant = CreatePlant.Field()
     water_plant  = WaterPlant.Field()
     update_plant = UpdatePlant.Field()
+    delete_plant = DeletePlant.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
