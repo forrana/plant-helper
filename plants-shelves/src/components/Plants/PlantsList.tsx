@@ -23,7 +23,7 @@ function PlantsList(props: PlantsListProps) {
           </section>
           <section className={styles.plantsList}>
             {
-              props.plants.map((item) => <Plant plant={item} key={item.id} />)
+              props.plants.map((item, index) => <Plant plant={item} index={index} key={index} />)
             }
           </section>
       </section>

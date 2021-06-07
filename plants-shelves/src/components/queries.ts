@@ -27,5 +27,16 @@ const WATER_PLANT = gql`
   }
 `;
 
+const UPDATE_PLANT = gql`
+  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!) {
+    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName) {
+      plant {
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+      }
+    }
+  }
+`;
 
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT }
+
+
+export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT }

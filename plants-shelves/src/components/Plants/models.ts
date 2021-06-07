@@ -17,7 +17,11 @@ export interface PlantData {
 
 export interface GlobalState extends PlantsData { }
 
+export interface loadAction { type: 'load', plants: PlantType[] }
+export interface addAction { type: 'add', plant: PlantType }
+export interface updateAction { type: 'update', plant: PlantType, index: number }
+
 export type GlobalReducerAction =
-  | { type: 'add', plant: PlantType }
-  | { type: 'load', plants: PlantType[] }
-  | { type: 'water', plant: PlantType };
+  | addAction
+  | loadAction
+  | updateAction;

@@ -11,31 +11,15 @@ import styles from './App.module.css';
 import { PlantsList } from './components/Plants/PlantsList'
 import { PlantsCreate } from './components/Plants/PlantsCreate'
 import { GlobalReducerAction, GlobalState } from './components/Plants/models'
+import { globalReducer, initialGlobalState } from './components/Plants/GlobalReducer'
 import PlantsDispatch from './components/Plants/PlantsDispatch'
 import { PlantsData } from './components/Plants/models'
 
 import { GET_ALL_PLANTS } from './components/queries'
 
-const initialState: GlobalState  = { plants: [] };
-
-function reducer(state: GlobalState, action: GlobalReducerAction) {
-  switch (action.type) {
-    case 'add':
-      return { plants: [...state.plants, action.plant] };
-    case 'load':
-      return { plants: [...action.plants] };
-    case 'water':
-      return { plants: [
-        ...state.plants.filter(plant => plant.id !== action.plant.id),
-        action.plant
-      ]}
-    default:
-      throw new Error();
-  }
-}
 
 function App() {
-  const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(reducer, initialState);
+  const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
 
   const { loading, data, error } = useQuery<PlantsData>(
     GET_ALL_PLANTS,
