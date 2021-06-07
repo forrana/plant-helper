@@ -28,7 +28,7 @@ class Query(graphene.ObjectType):
 
     def resolve_plants(self, info, **kwargs):
         try:
-            return Plant.objects.select_related("room").all()
+            return Plant.objects.order_by("watered").select_related("room").all()
         except Plant.DoesNotExist:
             return None
 
@@ -48,6 +48,7 @@ class CreatePlant(graphene.Mutation):
     class Arguments:
         plant_name = graphene.String()
         scientific_name = graphene.String()
+
     ok = graphene.Boolean()
     plant = graphene.Field(lambda: PlantType)
 
@@ -71,8 +72,26 @@ class WaterPlant(graphene.Mutation):
         ok = True
         return WaterPlant(plant=plant, ok=ok)
 
+class UpdatePlant(graphene.Mutation):
+    class Arguments:
+        plant_id = graphene.ID()
+        plant_name = graphene.String()
+        scientific_name = graphene.String()
+    ok = graphene.Boolean()
+    plant = graphene.Field(PlantType)
+
+    @classmethod
+    def mutate(root, info, id, plant_id, plant_name, scientific_name):
+        plant = Plant.objects.get(pk=plant_id)
+        plant.name = plant_name
+        plant.scientific_name = scientific_name
+        plant.save()
+        ok = True
+        return UpdatePlant(plant=plant, ok=ok)
+
 class Mutation(graphene.AbstractType, graphene.ObjectType):
     create_plant = CreatePlant.Field()
     water_plant  = WaterPlant.Field()
+    update_plant = UpdatePlant.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

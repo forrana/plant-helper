@@ -35,13 +35,13 @@ class Plant(models.Model):
         return self.time_between_watering.days
 
     def __str__(self):
-        name:string = ""
-
+        prefix:string = ""
+        plant_name = f"{self.scientific_name}.{self.name}"
         if self.room:
-            name += f"{self.room.room_name}"
+            prefix += f"{self.room.room_name}"
             if self.room.house:
-                name = f"{self.room.house.house_name}.{name}"
-        if name:
-            return f"{name}.{self.name}"
+                prefix = f"{self.room.house.house_name}.{prefix}"
+        if prefix:
+            return f"{prefix}.{plant_name}"
         else:
-            return self.name
+            return plant_name
