@@ -7,19 +7,21 @@ import { ADD_PLANT } from '../queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 
-function PlantsCreate() {
+interface PlantsCreateProps { action?: () => any }
+
+function PlantsCreate({ action }: PlantsCreateProps) {
   const dispatch = useContext(PlantsDispatch);
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
 
   const [addPlant, { loading, error }] = useMutation(ADD_PLANT, {
-    // TODO move to the separate function
     onCompleted: (data: { createPlant: PlantData }) => {
       dispatch && dispatch({ type: 'add', plant: data.createPlant.plant })
       setPlantName("");
       setScientificName("");
-      setSubmitted(true)
+      setSubmitted(true);
+      action && action();
     }
   });
 
