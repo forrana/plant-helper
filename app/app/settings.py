@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'catalog.apps.CatalogConfig',
     'plants.apps.PlantsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'plants.schema.schema' # Where your Graphene schema lives
+    'SCHEMA': 'app.schema.schema' # Where your Graphene schema lives
 }
 
 MIDDLEWARE = [

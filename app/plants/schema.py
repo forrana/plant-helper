@@ -41,7 +41,7 @@ class Query(graphene.ObjectType):
     def resolve_plants_by_room(root, info, room_id):
         try:
             return Plant.objects.select_related("room").get(room_id = room_id)
-        except Room.DoesNotExist:
+        except Plant.DoesNotExist:
             return None
 
 class CreatePlant(graphene.Mutation):

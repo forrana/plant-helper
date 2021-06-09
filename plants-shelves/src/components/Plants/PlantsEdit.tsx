@@ -25,12 +25,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   });
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
     setPlantName(event.target.value);
   };
 
   const handleScientificNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
     setScientificName(event.target.value);
   };
 
