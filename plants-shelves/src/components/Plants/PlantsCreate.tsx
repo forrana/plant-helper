@@ -3,9 +3,10 @@ import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
-import { ADD_PLANT } from '../queries'
+import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
+import AutoCompleteInput from '../UI/AutoCompleteInput';
 
 interface PlantsCreateProps { action?: () => any }
 
@@ -26,12 +27,10 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   });
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
     setPlantName(event.target.value);
   };
 
   const handleScientificNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
     setScientificName(event.target.value);
   };
 
@@ -51,6 +50,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   return (
     <Form
       onSubmit={handleFormSubmit}
+      autocomplete="off"
     >
       <FormGroup>
         <Label for="name">Name:</Label>
@@ -61,7 +61,8 @@ function PlantsCreate({ action }: PlantsCreateProps) {
       </FormGroup>
       <FormGroup>
         <Label for="scientificName">Scientific name:</Label>
-        <Input type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
+        <AutoCompleteInput
+          type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
           onChange={handleScientificNameInputChange}
         />

@@ -14,6 +14,10 @@ export interface PlantData {
   plant: PlantType;
 }
 
+export interface PlantSuggestion {
+  nickName: string
+  scientificName: string
+}
 
 export interface GlobalState extends PlantsData { }
 

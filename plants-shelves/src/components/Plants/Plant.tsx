@@ -4,7 +4,7 @@ import { PlantData } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner,
          Modal, ModalHeader, ModalBody, ModalFooter,
         } from 'reactstrap';
-import { WATER_PLANT, DELETE_PLANT } from '../queries'
+import { WATER_PLANT, DELETE_PLANT } from './queries'
 import styles from "./Plant.module.css"
 import PlantsDispatch from './PlantsDispatch';
 import PlantsEdit from './PlantsEdit'

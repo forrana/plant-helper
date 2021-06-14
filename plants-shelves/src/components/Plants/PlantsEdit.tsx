@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
-import { UPDATE_PLANT } from '../queries'
+import { UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 

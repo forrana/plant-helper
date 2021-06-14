@@ -15,7 +15,7 @@ import { globalReducer, initialGlobalState } from './components/Plants/GlobalRed
 import PlantsDispatch from './components/Plants/PlantsDispatch'
 import { PlantsData } from './components/Plants/models'
 
-import { GET_ALL_PLANTS } from './components/queries'
+import { GET_ALL_PLANTS } from './components/Plants/queries'
 
 
 function App() {
