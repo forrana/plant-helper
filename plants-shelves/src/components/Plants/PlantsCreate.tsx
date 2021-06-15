@@ -50,7 +50,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   return (
     <Form
       onSubmit={handleFormSubmit}
-      autocomplete="off"
+      autoComplete="off"
     >
       <FormGroup>
         <Label for="name">Name:</Label>
@@ -64,6 +64,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
         <AutoCompleteInput
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
+          setValue={setScientificName}
           onChange={handleScientificNameInputChange}
         />
       </FormGroup>
