@@ -18,6 +18,8 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
   const [options, setOptions] = useState<Array<PlantSuggestion>>([]);
   const [skipFetch, setSkipFetch] = useState<Boolean>(false);
 
+  let {setValue, ...inputProps} = props;
+
   const isSkipFecth = () => {
     if(skipFetch) {
       return true;
@@ -32,7 +34,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
   }
 
   const handleOnClick = (nickName: string) => {
-    props.setValue(nickName);
+    setValue(nickName);
     setSkipFetch(true);
     setOptions([]);
   }
@@ -48,7 +50,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
   return (
     <>
       <Input
-        {...props}
+        {...inputProps}
         onClick={handleInputOnClick}
       />
       <ListGroup className={styles.option}>

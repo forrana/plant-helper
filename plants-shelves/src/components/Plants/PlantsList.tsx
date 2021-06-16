@@ -13,7 +13,6 @@ function PlantsList(props: PlantsListProps) {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
 
-
     return (
       <section className={styles.plants}>
           <section className={styles.controls}>
