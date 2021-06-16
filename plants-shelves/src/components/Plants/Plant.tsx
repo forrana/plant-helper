@@ -5,12 +5,35 @@ import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner,
          Modal, ModalHeader, ModalBody, ModalFooter,
         } from 'reactstrap';
 import { WATER_PLANT, DELETE_PLANT } from './queries'
-import styles from "./Plant.module.css"
-import PlantsDispatch from './PlantsDispatch';
+import PlantsDispatch from './PlantsDispatch'
 import PlantsEdit from './PlantsEdit'
+import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 
 interface PlantProps extends PlantData { index: number }
+interface WhenToWaterProps { daysUntilNextWatering: number }
+
+
+function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
+  if(daysUntilNextWatering > 1)
+    return (
+      <div className="text-center">{daysUntilNextWatering} days until watering</div>
+    )
+
+  if(daysUntilNextWatering == 1)
+    return (
+      <div className="text-center">Water in {daysUntilNextWatering} day</div>
+    )
+
+  if(daysUntilNextWatering < 1)
+    return (
+      <div className="text-center">Water me!</div>
+    )
+
+  return (
+    <div className="text-center">Uups! Something went wrong!</div>
+  )
+}
 
 function Plant({ plant, index }: PlantProps) {
     const dispatch = useContext(PlantsDispatch);
@@ -28,6 +51,7 @@ function Plant({ plant, index }: PlantProps) {
     });
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
     const plantHealth = (plant.daysUntilNextWatering / plant.daysBetweenWatering)*100;
+    // TODO should be memoized perhaps?
     const healthColor = () => {
       if( plantHealth >= 70) {
           return "success"
@@ -37,6 +61,20 @@ function Plant({ plant, index }: PlantProps) {
           return "warning"
         } else {
           return "danger"
+        }
+    }
+
+    const backgroundColor = () => {
+      if( plantHealth >= 70) {
+          return "success"
+        } else if ( plantHealth >= 50 ) {
+          return "info"
+        } else if ( plantHealth > 20 ) {
+          return "warning"
+        } else if ( plantHealth > 5 ) {
+          return "danger"
+        } else {
+          return "alarm"
         }
     }
 
@@ -59,25 +97,23 @@ function Plant({ plant, index }: PlantProps) {
       return (
         <Card className={styles.plant}>
           <CardBody>
-            <Button outline onClick={toggleEditMode} className={uiStyles.roundButton}>&#10060;</Button>
-            <div className={styles.image}>&#129716;</div>
             <PlantsEdit plant={plant} index={index} action={toggleEditMode}/>
           </CardBody>
         </Card>
       )
 
     return (
-      <Card className={styles.plant}>
+      <Card className={`${styles.plant} ${styles[backgroundColor()]}`}>
         <CardBody>
           <section className={styles.controls}>
-            <Button outline onClick={toWater} className={uiStyles.roundButton}>&#128166;</Button>
-            <Button outline onClick={toggleEditMode} className={uiStyles.roundButton}>&#x270E;</Button>
-            <Button outline onClick={toggleModal} className={uiStyles.roundButton}>&#x1F5D1;</Button>
+            <Button outline onClick={toWater} title="Water" className={uiStyles.roundButton}>&#128166;</Button>
+            <Button outline onClick={toggleEditMode} title="Edit" className={uiStyles.roundButton}>&#x270E;</Button>
+            <Button outline onClick={toggleModal} title="Remove" className={uiStyles.roundButton}>&#x1F5D1;</Button>
           </section>
           <div className={styles.image}>&#129716;</div>
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>
-          <div className="text-center">{plant.daysUntilNextWatering} day(s) until watering</div>
+          <WhenToWater daysUntilNextWatering={plant.daysUntilNextWatering}/>
           <Progress value={ plantHealth } color={ healthColor() }/>
         </CardBody>
 

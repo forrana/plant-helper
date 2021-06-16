@@ -1,5 +1,14 @@
 @import-normalize;
 
+:root {
+  --alarm-bg-color: #dc354560;
+  --danger-bg-color: #dc354520;
+  --warning-bg-color: #ffc10720;
+  --info-bg-color: #0dcaf020;
+  --success-bg-color: #19875420;
+  --default-bg-color: #fff;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

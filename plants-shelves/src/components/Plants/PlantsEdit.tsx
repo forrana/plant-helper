@@ -7,6 +7,9 @@ import { UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 
+import styles from "./Plant.module.css"
+import uiStyles from "../UI/UIElements.module.css"
+
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
 function PlantsEdit({ plant, index, action }: PlantsEditProps) {
@@ -49,6 +52,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     <Form
       onSubmit={handleFormSubmit}
     >
+      <section className={styles.controls}>
+        <Button outline color="success" className={uiStyles.roundButton} type="submit">&#10003;</Button>
+        <Button outline color="danger" onClick={action} className={uiStyles.roundButton}>&#10060;</Button>
+      </section>
+      <div className={styles.image}>&#129716;</div>
+
       <FormGroup>
         <Label for="name">Name:</Label>
         <Input type="text" name="name" id="name" placeholder="Plant name"
@@ -63,7 +72,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           onChange={handleScientificNameInputChange}
         />
       </FormGroup>
-      <Button type="submit">Update plant</Button>
     </Form>
   )
 }

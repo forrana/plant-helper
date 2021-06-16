@@ -1,5 +1,28 @@
 .plant {
   margin: 0.25em;
+  max-width: 47vw;
+  width: 12em;
+}
+
+.alarm {
+  background-color: var(--alarm-bg-color);
+  animation: alarm 0.8s ease-in-out infinite;
+}
+
+.danger {
+  background-color: var(--danger-bg-color);
+}
+
+.warning {
+  background-color: var(--warning-bg-color);
+}
+
+.info {
+  background-color: var(--info-bg-color);
+}
+
+.success {
+  background-color: var(--success-bg-color);
 }
 
 .image {
@@ -9,4 +32,9 @@
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+@keyframes alarm {
+  from {background-color: var(--alarm-bg-color);}
+  to {background-color: var(--default-bg-color);}
 }

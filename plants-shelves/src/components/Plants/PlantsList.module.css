@@ -1,7 +1,3 @@
-.plants {
-  margin: 0 1em;
-}
-
 .plantsList {
   display: flex;
   flex-wrap: wrap;
