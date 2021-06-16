@@ -8,7 +8,7 @@ import { WATER_PLANT, DELETE_PLANT } from './queries'
 import styles from "./Plant.module.css"
 import PlantsDispatch from './PlantsDispatch';
 import PlantsEdit from './PlantsEdit'
-import uiStyles from "./UIElements.module.css"
+import uiStyles from "../UI/UIElements.module.css"
 
 interface PlantProps extends PlantData { index: number }
 

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Input, InputProps, ListGroup, ListGroupItem } from 'reactstrap';
 import { PLANT_ENTRY_BY_FRAGMENT } from '../Plants/catalogQueries';
 import { PlantSuggestion } from '../Plants/models';
+import styles from './AutoCompleteInput.module.css'
 
 interface PlantSuggestionsResponse {
   plantEntriesByNameFragment: Array<PlantSuggestion>
@@ -50,14 +51,13 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
         {...props}
         onClick={handleInputOnClick}
       />
-      <ListGroup>
+      <ListGroup className={styles.option}>
         {
           options.map(
             (option, index) => <ListGroupItem key={index} onClick={() => handleOnClick(option.nickName)}>{option.nickName}</ListGroupItem>
           )
         }
       </ListGroup>
-
     </>
   )
 }

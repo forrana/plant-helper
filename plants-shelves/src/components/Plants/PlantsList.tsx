@@ -5,7 +5,7 @@ import { Plant } from './Plant'
 import { PlantsCreate } from './PlantsCreate'
 import { PlantsData } from './models'
 import styles from './PlantsList.module.css';
-import uiStyles from "./UIElements.module.css"
+import uiStyles from '../UI/UIElements.module.css'
 
 interface PlantsListProps extends PlantsData {}
 
