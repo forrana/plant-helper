@@ -53,8 +53,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       onSubmit={handleFormSubmit}
     >
       <section className={styles.controls}>
-        <Button outline color="success" className={uiStyles.roundButton} type="submit">&#10003;</Button>
-        <Button outline color="danger" onClick={action} className={uiStyles.roundButton}>&#10060;</Button>
+        <Button outline color="success" title="Save!" className={uiStyles.roundButton} type="submit">&#10003;</Button>
+        <Button outline color="danger" title="Cancel!" onClick={action} className={uiStyles.roundButton}>&#10060;</Button>
       </section>
       <div className={styles.image}>&#129716;</div>
 
