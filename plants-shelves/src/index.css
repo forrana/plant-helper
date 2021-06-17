@@ -4,8 +4,8 @@
   --alarm-bg-color: #dc354560;
   --danger-bg-color: #dc354520;
   --warning-bg-color: #ffc10720;
-  --info-bg-color: #0dcaf020;
-  --success-bg-color: #19875420;
+  --info-bg-color: #0dcaf00A;
+  --success-bg-color: #28a74505;
   --default-bg-color: #fff;
 }
 
@@ -21,4 +21,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+form .form-group:last-child {
+  margin-bottom: 0;
 }

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { PlantData } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner,
-         Modal, ModalHeader, ModalBody, ModalFooter,
+         Modal, ModalHeader, ModalBody, ModalFooter, Badge,
         } from 'reactstrap';
 import { WATER_PLANT, DELETE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch'
@@ -20,7 +20,7 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
       <div className="text-center">{daysUntilNextWatering} days until watering</div>
     )
 
-  if(daysUntilNextWatering == 1)
+  if(daysUntilNextWatering === 1)
     return (
       <div className="text-center">Water in {daysUntilNextWatering} day</div>
     )
@@ -96,6 +96,7 @@ function Plant({ plant, index }: PlantProps) {
     if (isEditMode)
       return (
         <Card className={styles.plant}>
+          <Badge color="light">{plant.id}</Badge>
           <CardBody>
             <PlantsEdit plant={plant} index={index} action={toggleEditMode}/>
           </CardBody>
@@ -104,6 +105,7 @@ function Plant({ plant, index }: PlantProps) {
 
     return (
       <Card className={`${styles.plant} ${styles[backgroundColor()]}`}>
+        <Badge color="light">{plant.id}</Badge>
         <CardBody>
           <section className={styles.controls}>
             <Button outline onClick={toWater} title="Water" className={uiStyles.roundButton}>&#128166;</Button>

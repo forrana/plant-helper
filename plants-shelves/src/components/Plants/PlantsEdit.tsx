@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Spinner } from 'reactstrap';
 
 import { UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
@@ -59,15 +59,13 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <div className={styles.image}>&#129716;</div>
 
       <FormGroup>
-        <Label for="name">Name:</Label>
-        <Input type="text" name="name" id="name" placeholder="Plant name"
+        <Input type="text" title="Plant name" name="name" id="name" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
         />
       </FormGroup>
       <FormGroup>
-        <Label for="scientificName">Scientific name:</Label>
-        <Input type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
+        <Input type="text" title="Scientific name" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
           onChange={handleScientificNameInputChange}
         />
