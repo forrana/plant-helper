@@ -46,6 +46,13 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
       setOptions(data.plantEntriesByNameFragment);
     }
   })
+  if(props?.value.length < 3)
+    return (
+      <Input
+        {...inputProps}
+        onClick={handleInputOnClick}
+      />
+    )
 
   return (
     <>
