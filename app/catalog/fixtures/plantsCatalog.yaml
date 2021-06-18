@@ -1,0 +1,35 @@
+- model: catalog.plantentry
+  pk: 1
+  fields:
+    nick_name: Aloe vera
+    scientific_name: Aloe vera
+- model: catalog.plantentry
+  pk: 2
+  fields:
+    nick_name: Sansevieria Hahnii
+    scientific_name: Dracaena trifasciata
+- model: catalog.plantentry
+  pk: 3
+  fields:
+    nick_name: Peace lily
+    scientific_name: Spathiphyllum
+- model: catalog.plantentry
+  pk: 4
+  fields:
+    nick_name: Monstera
+    scientific_name: Monstera Adansonii
+- model: catalog.plantentry
+  pk: 5
+  fields:
+    nick_name: Laceleaf
+    scientific_name: Anthurium
+- model: catalog.plantentry
+  pk: 6
+  fields:
+    nick_name: Chinese evergreen
+    scientific_name: Aglaonema
+- model: catalog.plantentry
+  pk: 7
+  fields:
+    nick_name: Flamingo flower
+    scientific_name: Anthurium
