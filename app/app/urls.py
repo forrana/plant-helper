@@ -22,4 +22,5 @@ urlpatterns = [
     path('plants/', include('plants.urls')),
     path('admin/', admin.site.urls),
     path('graphql/', GraphQLView.as_view(graphiql=True)),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 
 class House(models.Model):
@@ -16,6 +17,7 @@ class Room(models.Model):
         return f"{self.house.house_name}.{self.room_name}"
 
 class Plant(models.Model):
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=200)
     scientific_name = models.CharField(max_length=200)
