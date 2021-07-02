@@ -9,6 +9,7 @@ import { PlantsCreate } from './components/Plants/PlantsCreate'
 import { GlobalReducerAction, GlobalState } from './components/Plants/models'
 import { globalReducer, initialGlobalState } from './components/Plants/GlobalReducer'
 import PlantsDispatch from './components/Plants/PlantsDispatch'
+import Login from './components/User/Login';
 
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
@@ -18,6 +19,9 @@ function App() {
       <PlantsDispatch.Provider value={dispatch}>
         <Switch>
           <Route path="/create" component={PlantsCreate}/>
+          <Route path="/login">
+            <Login/>
+          </Route>
           <Route path="/">
             <PlantsContainer state={state}/>
           </Route>
