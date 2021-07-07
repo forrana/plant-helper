@@ -3,22 +3,25 @@ import datetime
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from users.models import CustomUser
 
 class House(models.Model):
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
     house_name = models.CharField(max_length=200)
     def __str__(self):
         return self.house_name
 
 class Room(models.Model):
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
     room_name = models.CharField(max_length=200)
     room_description = models.CharField(max_length=200, blank=True, default='')
-    house = models.ForeignKey(House, on_delete=models.CASCADE, blank=True, null=True)
+    house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True)
     def __str__(self):
         return f"{self.house.house_name}.{self.room_name}"
 
 class Plant(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=200)
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
@@ -37,7 +40,7 @@ class Plant(models.Model):
         return self.time_between_watering.days
 
     def __str__(self):
-        prefix:string = ""
+        prefix = ""
         plant_name = f"{self.scientific_name}.{self.name}"
         if self.room:
             prefix += f"{self.room.room_name}"
