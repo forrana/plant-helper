@@ -1,0 +1,13 @@
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    text-align: start;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+}
