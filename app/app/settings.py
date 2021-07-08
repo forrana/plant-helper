@@ -95,6 +95,7 @@ GRAPHQL_JWT = {
 
 GRAPHQL_AUTH = {
     'LOGIN_ALLOWED_FIELDS': ['email', 'username'],
+    'ACTIVATION_PATH_ON_EMAIL': "user/activate"
 }
 
 ROOT_URLCONF = 'app.urls'
