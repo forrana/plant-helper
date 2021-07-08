@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
+import { useMutation } from '@apollo/client';
 import { Link } from "react-router-dom";
+import { LOG_IN } from './queries'
 import styles from "./Login.module.css"
 
 function Login() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+  const [loginUser, { loading, error }] = useMutation(LOG_IN, {
+    onCompleted: (data: any) => {
+      console.log(data)
+      setLogin("");
+      setPassword("");
+    }
+  });
+
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(login && password) {
-      //TODO login code there, check https://django-graphql-auth.readthedocs.io/en/latest/quickstart/
+      loginUser({ variables: { username: login, password }})
     }
   }
 
@@ -21,6 +31,10 @@ function Login() {
   const handlePasswordInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
+
+  if (loading) return  <Spinner color="primary" />
+
+  if (error)  return  <p>Error :( {error.message}</p>;
 
   return (
     <Form
