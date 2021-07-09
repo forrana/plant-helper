@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.template import loader
 from .schema import schema
 
 def activate(request, token):
@@ -11,5 +12,7 @@ def activate(request, token):
     }
     """
     result = schema.execute(mutation, variables= { 'token': token })
+    template = loader.get_template('users/activate.html')
+    context = { 'data': result.data }
 
-    return HttpResponse(result, content_type="application/json")
+    return HttpResponse(template.render(context, request))

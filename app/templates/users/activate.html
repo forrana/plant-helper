@@ -1,0 +1,7 @@
+{% if data.verifyAccount.success %}
+    <h1>User email is successfully verified!</h1>
+{% else %}
+    {% for error in data.verifyAccount.errors.nonFieldErrors %}
+        <h1>{{ error.message }}</h1>
+    {% endfor %}
+{% endif %}
