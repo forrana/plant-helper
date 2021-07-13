@@ -53,6 +53,7 @@ function Login() {
           value={login}
           onChange={handleLoginInputChange}
           invalid={loginErrors.length > 0}
+          required
         />
         {
           loginErrors.map((error, index) =>
@@ -66,6 +67,7 @@ function Login() {
           value={password}
           onChange={handlePasswordInputChange}
           invalid={loginErrors.length > 0}
+          required
         />
         {
           loginErrors.map((error, index) =>
