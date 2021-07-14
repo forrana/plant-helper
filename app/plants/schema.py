@@ -28,7 +28,13 @@ class Query(graphene.ObjectType):
 
     def resolve_plants(self, info, **kwargs):
         try:
-            return Plant.objects.order_by("watered").select_related("room").all()
+            if not info.context.user.is_authenticated:
+                return Plant.objects.none()
+            else:
+                return Plant.objects \
+                    .order_by("watered") \
+                    .select_related("room") \
+                    .filter(owner=info.context.user)
         except Plant.DoesNotExist:
             return None
 
@@ -54,7 +60,9 @@ class CreatePlant(graphene.Mutation):
 
     @classmethod
     def mutate(root, info, id, plant_name, scientific_name):
-        plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name)
+        if not info.context.user.is_authenticated:
+            return CreatePlant(plant=null, ok=False)
+        plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user)
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 
