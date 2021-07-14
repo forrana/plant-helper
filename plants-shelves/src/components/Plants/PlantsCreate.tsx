@@ -57,6 +57,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
         <Input type="text" name="name" id="name" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -66,7 +67,8 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           value={scientificName}
           setValue={setScientificName}
           onChange={handleScientificNameInputChange}
-        />
+          required
+          />
       </FormGroup>
       <Button type="submit">Add plant</Button>
     </Form>

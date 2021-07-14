@@ -6,7 +6,7 @@ import { Button, Form, FormGroup, Input, Spinner } from 'reactstrap';
 import { UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
-
+import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 
@@ -51,6 +51,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   return (
     <Form
       onSubmit={handleFormSubmit}
+      autoComplete="off"
     >
       <section className={styles.controls}>
         <Button outline color="success" title="Save!" className={uiStyles.roundButton} type="submit">&#10003;</Button>
@@ -62,13 +63,17 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
         <Input type="text" title="Plant name" name="name" id="name" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
+          required
         />
       </FormGroup>
       <FormGroup>
-        <Input type="text" title="Scientific name" name="scientificName" id="scientificName" placeholder="Scientific name"
+        <AutoCompleteInput
+          type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
+          setValue={setScientificName}
           onChange={handleScientificNameInputChange}
-        />
+          required
+          />
       </FormGroup>
     </Form>
   )
