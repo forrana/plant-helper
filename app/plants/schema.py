@@ -59,9 +59,9 @@ class CreatePlant(graphene.Mutation):
     plant = graphene.Field(lambda: PlantType)
 
     @classmethod
-    def mutate(root, info, id, plant_name, scientific_name):
+    def mutate(root, id, info, plant_name, scientific_name):
         if not info.context.user.is_authenticated:
-            return CreatePlant(plant=null, ok=False)
+            return CreatePlant(ok=False)
         plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user)
         ok = True
         return CreatePlant(plant=plant, ok=ok)

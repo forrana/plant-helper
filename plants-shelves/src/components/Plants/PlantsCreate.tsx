@@ -7,11 +7,14 @@ import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
+import UserContext from '../User/UserContext'
+
 
 interface PlantsCreateProps { action?: () => any }
 
 function PlantsCreate({ action }: PlantsCreateProps) {
   const dispatch = useContext(PlantsDispatch);
+  const userState = useContext(UserContext);
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
