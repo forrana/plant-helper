@@ -4,7 +4,6 @@ import {
   Route
 } from "react-router-dom";
 import PlantsContainer from './components/Plants/PlantsContainer'
-import styles from './App.module.css';
 import { PlantsCreate } from './components/Plants/PlantsCreate'
 
 import { GlobalReducerAction, GlobalState } from './components/Plants/models'
@@ -23,7 +22,7 @@ function App() {
   const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, initialUserState);
 
   return (
-    <div className={styles.App}>
+    <div>
       <UserDispatch.Provider value={userDispatch}>
         <UserContext.Provider value={userState}>
           <PlantsDispatch.Provider value={dispatch}>

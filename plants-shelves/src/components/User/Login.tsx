@@ -38,6 +38,7 @@ function Login() {
                 username
             })
           localStorage.setItem('token', token);
+          localStorage.setItem('token', token);
           goToHomePage()
         } else {
           const error = {
@@ -70,44 +71,46 @@ function Login() {
   if (error)  return  <p>Error :( {error.message}</p>;
 
   return (
-    <Form
-      onSubmit={handleFormSubmit}
-      autoComplete="off"
-      className={styles.container}
-    >
-      <FormGroup>
-        <Label for="login">Login:</Label>
-        <Input type="text" name="login" id="login" placeholder="Enter login"
-          value={login}
-          onChange={handleLoginInputChange}
-          invalid={loginErrors.length > 0}
-          required
-        />
-        {
-          loginErrors.map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <FormGroup>
-        <Label for="password">Password:</Label>
-        <Input type="password" name="password" id="password" placeholder="Enter password"
-          value={password}
-          onChange={handlePasswordInputChange}
-          invalid={loginErrors.length > 0}
-          required
-        />
-        {
-          loginErrors.map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <section className={styles.controls}>
-        <Button type="submit">Login</Button>
-        <Link to="/signup" className={styles.link}>Signup</Link>
-      </section>
-    </Form>
+    <main>
+      <Form
+        onSubmit={handleFormSubmit}
+        autoComplete="off"
+        className={styles.container}
+      >
+        <FormGroup>
+          <Label for="login">Login:</Label>
+          <Input type="text" name="login" id="login" placeholder="Enter login"
+            value={login}
+            onChange={handleLoginInputChange}
+            invalid={loginErrors.length > 0}
+            required
+          />
+          {
+            loginErrors.map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Password:</Label>
+          <Input type="password" name="password" id="password" placeholder="Enter password"
+            value={password}
+            onChange={handlePasswordInputChange}
+            invalid={loginErrors.length > 0}
+            required
+          />
+          {
+            loginErrors.map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <section className={styles.controls}>
+          <Button type="submit">Login</Button>
+          <Link to="/signup" className={styles.link}>Signup</Link>
+        </section>
+      </Form>
+    </main>
   )
 }
 

@@ -66,75 +66,77 @@ function Signup() {
   if (error)  return  <p>Error :( {error.message}</p>;
 
   return (
-    <Form
-      onSubmit={handleFormSubmit}
-      autoComplete="off"
-      className={styles.container}
-    >
-      <FormGroup>
-        <Label for="login">Login:</Label>
-        <Input type="text" name="username" id="login" placeholder="Enter login"
-          autoComplete="off"
-          value={username}
-          onChange={handleInputChange}
-          invalid={isFieldHasErrors("username")}
-          required
-        />
-        {
-          getFieldErrors("username").map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <FormGroup>
-        <Label for="email">Email:</Label>
-        <Input type="email" name="email" id="email" placeholder="Enter email"
-          autoComplete="off"
-          value={email}
-          onChange={handleInputChange}
-          invalid={isFieldHasErrors("email")}
-          required
-        />
-        {
-          getFieldErrors("email").map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <FormGroup>
-        <Label for="password">Password:</Label>
-        <Input type="password" name="password1" id="password" placeholder="Enter password"
-          autoComplete="off"
-          value={password1}
-          onChange={handleInputChange}
-          invalid={isFieldHasErrors("password1")}
-          required
-        />
-        {
-          getFieldErrors("password1").map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <FormGroup>
-        <Label for="password-confirmation">Password confirmation:</Label>
-        <Input type="password" name="password2" id="password-confirmation" placeholder="Re-enter password"
-          autoComplete="off"
-          value={password2}
-          onChange={handleInputChange}
-          invalid={isFieldHasErrors("password2")}
-          required
-        />
-        {
-          getFieldErrors("password2").map((error, index) =>
-            <FormFeedback key={index}>{ error.message }</FormFeedback>
-          )
-        }
-      </FormGroup>
-      <section className={styles.controls}>
-        <Button type="submit">Create</Button>
-      </section>
-    </Form>
+    <main>
+      <Form
+        onSubmit={handleFormSubmit}
+        autoComplete="off"
+        className={styles.container}
+      >
+        <FormGroup>
+          <Label for="login">Login:</Label>
+          <Input type="text" name="username" id="login" placeholder="Enter login"
+            autoComplete="off"
+            value={username}
+            onChange={handleInputChange}
+            invalid={isFieldHasErrors("username")}
+            required
+          />
+          {
+            getFieldErrors("username").map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <FormGroup>
+          <Label for="email">Email:</Label>
+          <Input type="email" name="email" id="email" placeholder="Enter email"
+            autoComplete="off"
+            value={email}
+            onChange={handleInputChange}
+            invalid={isFieldHasErrors("email")}
+            required
+          />
+          {
+            getFieldErrors("email").map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <FormGroup>
+          <Label for="password">Password:</Label>
+          <Input type="password" name="password1" id="password" placeholder="Enter password"
+            autoComplete="off"
+            value={password1}
+            onChange={handleInputChange}
+            invalid={isFieldHasErrors("password1")}
+            required
+          />
+          {
+            getFieldErrors("password1").map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <FormGroup>
+          <Label for="password-confirmation">Password confirmation:</Label>
+          <Input type="password" name="password2" id="password-confirmation" placeholder="Re-enter password"
+            autoComplete="off"
+            value={password2}
+            onChange={handleInputChange}
+            invalid={isFieldHasErrors("password2")}
+            required
+          />
+          {
+            getFieldErrors("password2").map((error, index) =>
+              <FormFeedback key={index}>{ error.message }</FormFeedback>
+            )
+          }
+        </FormGroup>
+        <section className={styles.controls}>
+          <Button type="submit">Create</Button>
+        </section>
+      </Form>
+    </main>
   )
 }
 

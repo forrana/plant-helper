@@ -27,3 +27,12 @@ code {
 form .form-group:last-child {
   margin-bottom: 0;
 }
+
+main {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

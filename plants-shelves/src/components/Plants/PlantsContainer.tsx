@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client';
 import PlantsDispatch from './PlantsDispatch'
 import { PlantsData } from './models'
 import { GlobalState } from './models'
+import PlantsNavBar from './PlantsNavBar';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -32,16 +33,24 @@ function PlantsContainer(props: PlantsContainerProps) {
   if (error) return <p>Error :( {error.message}</p>;
 
   if (data?.plants?.length === 0) return (
-    <section>
-      <p> No plants yet, create the first one! </p>
-      <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
-        Create!
-      </Button>
-    </section>
+    <>
+      <PlantsNavBar />
+      <main>
+        <p> No plants yet, create the first one! </p>
+        <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
+          Create!
+        </Button>
+      </main>
+    </>
   )
 
   return (
-    <PlantsList plants={props.state.plants} />
+    <>
+      <PlantsNavBar />
+      <main>
+        <PlantsList plants={props.state.plants} />
+      </main>
+    </>
   )
 
 
