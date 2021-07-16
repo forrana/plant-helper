@@ -37,7 +37,6 @@ function Login() {
                 token,
                 username
             })
-          localStorage.setItem('token', token);
           goToHomePage()
         } else {
           const error = {

@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import UserDispatch from "./UserDispatch";
 
 function Logout() {
     const dispatch = useContext(UserDispatch);
     
-    localStorage.setItem('token', "");
-    dispatch && dispatch({
-        type: 'logout'
-    });
+    useEffect(() => {        
+        dispatch && dispatch({
+            type: 'logout'
+        });
+    }, [dispatch]);
 
     return  (
         <Redirect

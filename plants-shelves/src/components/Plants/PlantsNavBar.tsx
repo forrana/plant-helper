@@ -32,7 +32,7 @@ const PlantsNavBar = () => {
             </NavItem>
           </Nav>
         <NavbarText>Welcome { userContext.username }</NavbarText>
-        <NavLink href="/components/">Logout</NavLink>
+        <NavLink href="/logout">Logout</NavLink>
       </Navbar>
       <Modal isOpen={modal} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Create new plant </ModalHeader>

@@ -14,6 +14,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { USER_STATE_STORAGE_KEY } from './components/User/UserReducer';
+import { UserState } from './components/User/models';
 
 const graphQLink = createHttpLink({
   uri: "http://localhost:8000/graphql/",
@@ -23,8 +25,13 @@ const cache = new InMemoryCache();
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('token');
-  // return the headers to the context so httpLink can read them
+  const userStateStr:string|null = localStorage.getItem(USER_STATE_STORAGE_KEY);
+  let token = null;
+  if(userStateStr !== null) {
+    const userState: UserState = JSON.parse(userStateStr);
+    token = userState.token;
+  }
+    // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,

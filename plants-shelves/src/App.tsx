@@ -1,4 +1,4 @@
-import { useReducer, Dispatch } from 'react';
+import { useReducer, Dispatch, useEffect } from 'react';
 import {
   Switch,
   Route
@@ -10,7 +10,7 @@ import { globalReducer, initialGlobalState } from './components/Plants/GlobalRed
 import PlantsDispatch from './components/Plants/PlantsDispatch'
 
 import { UserReducerAction, UserState } from './components/User/models'
-import { userReducer, initialUserState } from './components/User/UserReducer'
+import { userReducer, initialUserState, USER_STATE_STORAGE_KEY } from './components/User/UserReducer'
 import UserContext from './components/User/UserContext'
 import UserDispatch from './components/User/UserDispatch'
 import Login from './components/User/Login';
@@ -21,6 +21,10 @@ import { PrivateRoute } from './components/Auth/PrivateRoute';
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
   const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, initialUserState);
+
+  useEffect(() => {
+    localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify(userState));
+  }, [userState]);
 
   return (
     <div>
