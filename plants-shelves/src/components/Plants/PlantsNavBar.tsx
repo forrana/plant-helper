@@ -6,49 +6,48 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
+    Button,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText
+    NavbarText,
+    Modal,
+    ModalHeader,
+    ModalBody
   } from 'reactstrap';
 import UserContext from '../User/UserContext'
-
+import { PlantsCreate } from './PlantsCreate';
+import uiStyles from '../UI/UIElements.module.css'
 
 const PlantsNavBar = () => {
   const userContext = useContext(UserContext);
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal)
+
   const [isOpen, setIsOpen] = useState(false);
-
   const toggle = () => setIsOpen(!isOpen);
-
+;
   return (
+    <>
       <Navbar color="light" light expand="md">
         <NavbarBrand>Plants Shelves</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-        {/* <Nav className="mr-auto" navbar>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  Option 1
-                </DropdownItem>
-                <DropdownItem>
-                  Option 2
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>
-                  Reset
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav> */}
-        </Collapse>
+        <Nav className="mr-auto" navbar>
+            <NavItem>
+              <Button onClick={toggleModal} outline className={uiStyles.roundButton} color="primary" title="Add new plant">
+                &#10133;
+              </Button>
+            </NavItem>
+          </Nav>
         <NavbarText>Welcome { userContext.username }</NavbarText>
       </Navbar>
+      <Modal isOpen={modal} toggle={toggleModal}>
+            <ModalHeader toggle={toggleModal}>Create new plant </ModalHeader>
+            <ModalBody>
+              <PlantsCreate action={toggleModal} />
+            </ModalBody>
+      </Modal>
+    </>
   );
 }
 
