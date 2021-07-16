@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { Plant } from './Plant'
 import { PlantsData } from './models'
@@ -6,10 +6,7 @@ import styles from './PlantsList.module.css';
 
 interface PlantsListProps extends PlantsData {}
 
-function PlantsList(props: PlantsListProps) {
-    const [modal, setModal] = useState(false);
-    const toggleModal = () => setModal(!modal);
-
+const PlantsList: React.FC<PlantsListProps> = (props) => {
     return (
       <section className={styles.plants}>
           <section className={styles.plantsList}>

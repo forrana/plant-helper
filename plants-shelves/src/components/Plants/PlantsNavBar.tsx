@@ -1,16 +1,11 @@
 import React, { useState, useContext } from 'react';
 import {
-    Collapse,
+    Button,
     Navbar,
-    NavbarToggler,
     NavbarBrand,
     Nav,
     NavItem,
-    Button,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
+    NavLink,
     NavbarText,
     Modal,
     ModalHeader,
@@ -23,11 +18,8 @@ import uiStyles from '../UI/UIElements.module.css'
 const PlantsNavBar = () => {
   const userContext = useContext(UserContext);
   const [modal, setModal] = useState(false);
-  const toggleModal = () => setModal(!modal)
+  const toggleModal = () => setModal(!modal);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
-;
   return (
     <>
       <Navbar color="light" light expand="md">
@@ -40,6 +32,7 @@ const PlantsNavBar = () => {
             </NavItem>
           </Nav>
         <NavbarText>Welcome { userContext.username }</NavbarText>
+        <NavLink href="/components/">Logout</NavLink>
       </Navbar>
       <Modal isOpen={modal} toggle={toggleModal}>
             <ModalHeader toggle={toggleModal}>Create new plant </ModalHeader>

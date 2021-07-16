@@ -38,7 +38,6 @@ function Login() {
                 username
             })
           localStorage.setItem('token', token);
-          localStorage.setItem('token', token);
           goToHomePage()
         } else {
           const error = {
