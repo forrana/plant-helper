@@ -13,6 +13,15 @@ interface PlantsContainerProps {
   state: GlobalState
 }
 
+const WithNavBar = ({ children }: any) => {
+  return (
+    <>
+      <PlantsNavBar />
+      {children}
+    </>
+  )
+}
+
 function PlantsContainer(props: PlantsContainerProps) {
   const dispatch = useContext(PlantsDispatch);
 
@@ -33,23 +42,23 @@ function PlantsContainer(props: PlantsContainerProps) {
   if (error) return <p>Error :( {error.message}</p>;
 
   if (data?.plants?.length === 0) return (
-    <>
-      <PlantsNavBar />
+    <WithNavBar>
       <main>
         <p> No plants yet, create the first one! </p>
         <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
           Create!
         </Button>
       </main>
-    </>
+    </WithNavBar>
   )
 
   return (
     <>
-      <PlantsNavBar />
-      <main>
-        <PlantsList plants={props.state.plants} />
-      </main>
+      <WithNavBar>
+        <main>
+          <PlantsList plants={props.state.plants} />
+        </main>
+      </WithNavBar>
     </>
   )
 
