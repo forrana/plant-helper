@@ -24,7 +24,8 @@ function PlantsCreate({ action }: PlantsCreateProps) {
       setScientificName("");
       setSubmitted(true);
       action && action();
-    }
+    },
+    onError: (e) => console.error('Error creating plant:', e)
   });
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +46,19 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   if (submitted) return <Redirect push to="/"/>
 
   if (loading) return  <Spinner color="primary" />
-
-  if (error)  return  <p>Error :( {error.message}</p>;
+  
+  if (error) {
+    switch(error.message) {
+      case "Unauthorized":
+        return (
+          <Redirect
+            to={{
+            pathname: "/logout"
+          }}
+      />)
+      default: return <p>Error :( {error.message}</p>;
+    } 
+  }
 
   return (
     <Form

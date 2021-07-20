@@ -29,9 +29,13 @@
   font-size: 5em;
 }
 
-.controls {
+.plant .controls {
   display: flex;
   justify-content: space-between;
+}
+
+.plant:hover .controls {
+  display: flex;
 }
 
 @keyframes alarm {

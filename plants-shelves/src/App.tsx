@@ -1,4 +1,4 @@
-import { useReducer, Dispatch, useEffect } from 'react';
+import React, { useReducer, Dispatch, useEffect } from 'react';
 import {
   Switch,
   Route
@@ -16,7 +16,7 @@ import UserDispatch from './components/User/UserDispatch'
 import Login from './components/User/Login';
 import Logout from './components/User/Logout';
 import Signup from './components/User/Signup';
-import { PrivateRoute } from './components/Auth/PrivateRoute';
+import { PrivateRoute, PublicRoute } from './components/Auth/AuthRoutes';
 
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
@@ -32,15 +32,15 @@ function App() {
         <UserContext.Provider value={userState}>
           <PlantsDispatch.Provider value={dispatch}>
             <Switch>
-              <Route path="/login">
+              <PublicRoute path="/login">
                 <Login/>
-              </Route>
-              <Route path="/logout">
+              </PublicRoute>
+              <PrivateRoute path="/logout">
                 <Logout/>
-              </Route>
-              <Route path="/signup">
+              </PrivateRoute>
+              <PublicRoute path="/signup">
                 <Signup/>
-              </Route>
+              </PublicRoute>
               <PrivateRoute path="/">
                 <PlantsContainer state={state}/>
               </PrivateRoute>

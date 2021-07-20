@@ -30,7 +30,27 @@ function PrivateRoute({ children, ...rest }: any) {
     );
 }
 
-export { PrivateRoute }
+function PublicRoute({ children, ...rest }: any) {
+    let auth = useAuth();
+    return (
+        <Route
+        {...rest}
+        render={() =>
+            auth.token ? (
+                <Redirect
+                    to={{
+                    pathname: "/",
+                    }}
+                />
+            ) : (
+                children
+            )
+        }
+        />
+    );
+}
+
+export { PrivateRoute, PublicRoute }
 
 
 

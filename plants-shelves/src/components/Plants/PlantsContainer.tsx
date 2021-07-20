@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import { Redirect, Route, useHistory } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
 import { GET_ALL_PLANTS } from './queries'
@@ -39,7 +39,18 @@ function PlantsContainer(props: PlantsContainerProps) {
 
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :( {error.message}</p>;
+  if (error) {
+    switch(error.message) {
+      case "Unautarized": 
+        return (
+          <Redirect
+            to={{
+            pathname: "/logout"
+          }}
+      />)
+      default: return <p>Error :( {error.message}</p>;
+    } 
+  }
 
   if (data?.plants?.length === 0) return (
     <WithNavBar>

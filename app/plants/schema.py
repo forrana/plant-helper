@@ -1,5 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
+from graphql import GraphQLError
 from django.utils import timezone
 
 from .models import Plant, Room, House
@@ -29,7 +30,7 @@ class Query(graphene.ObjectType):
     def resolve_plants(self, info, **kwargs):
         try:
             if not info.context.user.is_authenticated:
-                return Plant.objects.none()
+                raise GraphQLError('Unauthorized')
             else:
                 return Plant.objects \
                     .order_by("watered") \
@@ -61,7 +62,7 @@ class CreatePlant(graphene.Mutation):
     @classmethod
     def mutate(root, id, info, plant_name, scientific_name):
         if not info.context.user.is_authenticated:
-            return CreatePlant(ok=False)
+            raise GraphQLError('Unauthorized')
         plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user)
         ok = True
         return CreatePlant(plant=plant, ok=ok)
