@@ -1,7 +1,6 @@
 import React, { useReducer, Dispatch, useEffect } from 'react';
 import {
-  Switch,
-  Route
+  Switch
 } from "react-router-dom";
 import PlantsContainer from './components/Plants/PlantsContainer'
 

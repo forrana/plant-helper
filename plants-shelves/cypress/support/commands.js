@@ -23,3 +23,26 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('login', () => {
+  cy.get('input[name=login]').type("user1")
+  cy.get('input[name=password]').type(`123456{enter}`)
+})
+
+Cypress.Commands.add('logout', () => {
+  cy.visit('/logout');
+  cy.url().should('include', '/login')
+})
+
+Cypress.Commands.add('create', () => {
+    cy.get('[data-test=create-btn]').click()
+})
+
+Cypress.Commands.add('getSessionStorage', (key) => {
+  cy.window().then((window) => window.sessionStorage.getItem(key))
+})
+
+Cypress.Commands.add('setSessionStorage', (key, value) => {
+  cy.window().then((window) => {
+    window.sessionStorage.setItem(key, value)
+  })
+})

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Redirect, Route, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
 import { GET_ALL_PLANTS } from './queries'
@@ -41,7 +41,7 @@ function PlantsContainer(props: PlantsContainerProps) {
   if (loading) return <p>Loading...</p>;
   if (error) {
     switch(error.message) {
-      case "Unautarized": 
+      case "Unauthorized":
         return (
           <Redirect
             to={{
