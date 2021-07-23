@@ -9,7 +9,7 @@ interface PlantsListProps extends PlantsData {}
 const PlantsList: React.FC<PlantsListProps> = (props) => {
     return (
       <section className={styles.plants}>
-          <section className={styles.plantsList}>
+          <section className={styles.plantsList} data-test="plant-list-container">
             {
               props.plants.map((item, index) => <Plant plant={item} index={index} key={index} />)
             }

@@ -24,6 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 Cypress.Commands.add('login', () => {
+  cy.visit('/login');
   cy.get('input[name=login]').type("user1")
   cy.get('input[name=password]').type(`123456{enter}`)
 })
@@ -33,8 +34,14 @@ Cypress.Commands.add('logout', () => {
   cy.url().should('include', '/login')
 })
 
-Cypress.Commands.add('create', () => {
+Cypress.Commands.add('create', (name, scientificName) => {
     cy.get('[data-test=create-btn]').click()
+    cy.get('[data-test=name-input]').type(name)
+    cy.get('[data-test=sc-name-input]').type("scientificName{enter}")
+})
+
+Cypress.Commands.add('delete', () => {
+  cy.get('[data-test=plant-controls-15] > [data-test=remove-btn]').click()
 })
 
 Cypress.Commands.add('getSessionStorage', (key) => {

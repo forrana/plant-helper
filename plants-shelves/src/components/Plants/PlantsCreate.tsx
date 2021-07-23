@@ -47,7 +47,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   if (submitted) return <Redirect push to="/"/>
 
   if (loading) return  <Spinner color="primary" />
-  
+
   if (error) {
     return  <ErrorHandler error={error} />
   }
@@ -61,6 +61,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
         <Label for="name">Name:</Label>
         <Input type="text" name="name" id="name" placeholder="Plant name"
           value={plantName}
+          data-test="name-input"
           onChange={handlePlantNameInputChange}
           required
         />
@@ -70,6 +71,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
         <AutoCompleteInput
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
+          data-test="sc-name-input"
           setValue={setScientificName}
           onChange={handleScientificNameInputChange}
           required

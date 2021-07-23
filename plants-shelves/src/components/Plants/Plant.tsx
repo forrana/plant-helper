@@ -104,13 +104,13 @@ function Plant({ plant, index }: PlantProps) {
       )
 
     return (
-      <Card className={`${styles.plant} ${styles[backgroundColor()]}`}>
+      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-test={`plant-card-${plant.id}`}>
         <Badge color="light">{plant.id}</Badge>
         <CardBody>
-          <section className={styles.controls}>
-            <Button outline onClick={toWater} title="Water" className={uiStyles.roundButton}>&#128166;</Button>
-            <Button outline onClick={toggleEditMode} title="Edit" className={uiStyles.roundButton}>&#x270E;</Button>
-            <Button outline onClick={toggleModal} title="Remove" className={uiStyles.roundButton}>&#x1F5D1;</Button>
+          <section className={styles.controls} data-test={`plant-controls-${plant.id}`}>
+            <Button outline onClick={toWater} title="Water" data-test="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
+            <Button outline onClick={toggleEditMode} title="Edit" data-test="edit-btn" className={uiStyles.roundButton}>&#x270E;</Button>
+            <Button outline onClick={toggleModal} title="Remove" data-test="remove-btn" className={uiStyles.roundButton}>&#x1F5D1;</Button>
           </section>
           <div className={styles.image}>&#129716;</div>
           <CardTitle tag="h5">{plant.name}</CardTitle>
