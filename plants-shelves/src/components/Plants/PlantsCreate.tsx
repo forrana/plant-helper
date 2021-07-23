@@ -7,6 +7,7 @@ import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
+import ErrorHandler from './ErrorHandler';
 
 
 interface PlantsCreateProps { action?: () => any }
@@ -48,16 +49,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   if (loading) return  <Spinner color="primary" />
   
   if (error) {
-    switch(error.message) {
-      case "Unauthorized":
-        return (
-          <Redirect
-            to={{
-            pathname: "/logout"
-          }}
-      />)
-      default: return <p>Error :( {error.message}</p>;
-    } 
+    return  <ErrorHandler error={error} />
   }
 
   return (

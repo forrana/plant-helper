@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
 import { GET_ALL_PLANTS } from './queries'
@@ -8,6 +8,7 @@ import PlantsDispatch from './PlantsDispatch'
 import { PlantsData } from './models'
 import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
+import ErrorHandler from './ErrorHandler';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -40,16 +41,7 @@ function PlantsContainer(props: PlantsContainerProps) {
 
   if (loading) return <p>Loading...</p>;
   if (error) {
-    switch(error.message) {
-      case "Unauthorized":
-        return (
-          <Redirect
-            to={{
-            pathname: "/logout"
-          }}
-      />)
-      default: return <p>Error :( {error.message}</p>;
-    } 
+    return  <ErrorHandler error={error} />
   }
 
   if (data?.plants?.length === 0) return (

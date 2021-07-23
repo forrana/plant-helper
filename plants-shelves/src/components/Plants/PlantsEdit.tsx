@@ -9,6 +9,7 @@ import { PlantData } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
+import ErrorHandler from './ErrorHandler';
 
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
@@ -46,7 +47,9 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   if (loading) return  <Spinner color="primary" />
 
-  if (error)  return  <p>Error :( {error.message}</p>;
+  if (error) {
+    return  <ErrorHandler error={error} />
+  }
 
   return (
     <Form
