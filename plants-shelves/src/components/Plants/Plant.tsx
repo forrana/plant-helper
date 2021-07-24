@@ -104,10 +104,10 @@ function Plant({ plant, index }: PlantProps) {
       )
 
     return (
-      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-test={`plant-card-${plant.id}`}>
+      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-test={`plant-card-${index}`}>
         <Badge color="light">{plant.id}</Badge>
         <CardBody>
-          <section className={styles.controls} data-test={`plant-controls-${plant.id}`}>
+          <section className={styles.controls} data-test={`plant-controls-${index}`}>
             <Button outline onClick={toWater} title="Water" data-test="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
             <Button outline onClick={toggleEditMode} title="Edit" data-test="edit-btn" className={uiStyles.roundButton}>&#x270E;</Button>
             <Button outline onClick={toggleModal} title="Remove" data-test="remove-btn" className={uiStyles.roundButton}>&#x1F5D1;</Button>
@@ -124,8 +124,8 @@ function Plant({ plant, index }: PlantProps) {
           <ModalBody>
             Warning! This action is irreversible.
           </ModalBody>
-          <ModalFooter>
-            <Button color="danger" onClick={confirmDeletion}>Delete!</Button>
+          <ModalFooter className={uiStyles.footer}>
+            <Button color="danger" onClick={confirmDeletion} data-test="modal-button-delete">Delete!</Button>
             <Button color="secondary" onClick={toggleModal}>Cancel!</Button>
           </ModalFooter>
         </Modal>

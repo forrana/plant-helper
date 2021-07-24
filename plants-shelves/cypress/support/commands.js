@@ -31,7 +31,6 @@ Cypress.Commands.add('login', () => {
 
 Cypress.Commands.add('logout', () => {
   cy.visit('/logout');
-  cy.url().should('include', '/login')
 })
 
 Cypress.Commands.add('create', (name, scientificName) => {
@@ -40,16 +39,23 @@ Cypress.Commands.add('create', (name, scientificName) => {
     cy.get('[data-test=sc-name-input]').type("scientificName{enter}")
 })
 
-Cypress.Commands.add('delete', () => {
-  cy.get('[data-test=plant-controls-15] > [data-test=remove-btn]').click()
+Cypress.Commands.add('delete', (index=0) => {
+  cy.get(`[data-test=plant-controls-${index}] > [data-test=remove-btn]`).click()
+  cy.get('[data-test=modal-button-delete]').click()
 })
 
-Cypress.Commands.add('getSessionStorage', (key) => {
-  cy.window().then((window) => window.sessionStorage.getItem(key))
+Cypress.Commands.add('getLocalStorageValue', (key) => {
+  cy.window().then((window) => window.localStorage.getItem(key))
 })
 
-Cypress.Commands.add('setSessionStorage', (key, value) => {
+Cypress.Commands.add('setLocalStorage', (key, value) => {
   cy.window().then((window) => {
-    window.sessionStorage.setItem(key, value)
+    window.localStorage.setItem(key, value)
+  })
+})
+
+Cypress.Commands.add('cleanLocalStorageKey', (key) => {
+  cy.window().then((window) => {
+    window.localStorage.removeItem(key)
   })
 })

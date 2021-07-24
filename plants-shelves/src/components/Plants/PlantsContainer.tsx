@@ -44,10 +44,10 @@ function PlantsContainer(props: PlantsContainerProps) {
     return  <ErrorHandler error={error} />
   }
 
-  if (data?.plants?.length === 0) return (
+  if (props.state.plants.length === 0) return (
     <WithNavBar>
       <main>
-        <p> No plants yet, create the first one! </p>
+        <p data-test="message-no-plants"> No plants yet, create the first one! </p>
         <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
           Create!
         </Button>
