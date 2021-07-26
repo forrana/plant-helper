@@ -7,10 +7,10 @@ describe('Main features', () => {
         cy.logout()
     })
 
-    it('Allow to create plant', () => {
-        const name = "Aloe 1"
-        const scName = "Aloe Vera"
+    const name = "Aloe 1"
+    const scName = "Aloe Vera"
 
+    it('Allow to create plant', () => {
         cy.get("[data-test=message-no-plants]").should("exist")
         cy.create(name, scName)
         cy.contains(name)
@@ -20,22 +20,53 @@ describe('Main features', () => {
 })
 
 describe('When token expired features', () => {
+    const name = "Aloe 1"
+    const scName = "Aloe Vera"
+
     beforeEach(() => {
+        cy.contains("Login")
         cy.login()
         cy.wait(300);
     })
-    it('Logout on page reload', async () => {
+
+    afterEach(() => {
+        cy.logout()
+        cy.contains("Login")
+    })
+
+    it('Logout on page reload', () => {
         cy.clearLocalStorage();
         cy.wait(300);
         cy.reload();
         cy.url().should('include', '/login');
     })
-    it('Logout on create', async () => {
-        const name = "Aloe 1"
-        const scName = "Aloe Vera"
+
+    it('Logout on create', () => {
         cy.clearLocalStorage();
         cy.wait(100);
         cy.create(name, scName)
         cy.url().should('include', '/login')
+    })
+
+    it('Logout on edit', () => {
+        const randomName = `plant-${Cypress._.random(0, 1e6)}`
+        cy.create(name, scName)
+        cy.clearLocalStorage()
+        cy.wait(100)
+        cy.editName(0 ,randomName)
+        cy.url().should('include', '/login')
+        cy.login()
+        cy.delete()
+    })
+
+    it('Logout on delete', () => {
+        const randomName = `plant-${Cypress._.random(0, 1e6)}`
+        cy.create(name, scName)
+        cy.clearLocalStorage()
+        cy.wait(100)
+        cy.delete()
+        cy.url().should('include', '/login')
+        cy.login()
+        cy.delete()
     })
 })

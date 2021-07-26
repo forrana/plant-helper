@@ -5,7 +5,6 @@ describe('The Login Page', () => {
   })
 
   it('Allow to login and logout', () => {
-    cy.visit('/login');
     cy.login();
     cy.url().should('not.include', '/login');
     cy.contains("Logout").click();

@@ -44,6 +44,11 @@ Cypress.Commands.add('delete', (index=0) => {
   cy.get('[data-test=modal-button-delete]').click()
 })
 
+Cypress.Commands.add('editName', (index=0, name) => {
+  cy.get(`[data-test=plant-controls-${index}] > [data-test=edit-btn]`).click()
+  cy.get('[data-test=plant-name-input]').type(`${name}{enter}`)
+})
+
 Cypress.Commands.add('getLocalStorageValue', (key) => {
   cy.window().then((window) => window.localStorage.getItem(key))
 })
