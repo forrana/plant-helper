@@ -9,6 +9,7 @@ import PlantsDispatch from './PlantsDispatch'
 import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
+import ErrorHandler from './ErrorHandler';
 
 interface PlantProps extends PlantData { index: number }
 interface WhenToWaterProps { daysUntilNextWatering: number }
@@ -47,9 +48,23 @@ function Plant({ plant, index }: PlantProps) {
     const [waterPlant, wateringStatus] = useMutation(WATER_PLANT, {
       onCompleted: (data: { waterPlant: PlantData }) => {
         dispatch && dispatch({ type: 'update', plant: data.waterPlant.plant, index: index })
-      }
+      },
+      onError: (e) => console.error('Error creating plant:', e)
     });
+
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
+
+    const [deletePlant, deletingStatus] = useMutation(DELETE_PLANT, {
+      onCompleted: () => {
+        dispatch && dispatch({ type: 'delete', index: index })
+      },
+      onError: (e) => console.error('Error creating plant:', e)
+    });
+
+    const confirmDeletion = () => {
+      deletePlant({variables: { plantId: plant.id } });
+      toggleModal()
+    }
     const plantHealth = (plant.daysUntilNextWatering / plant.daysBetweenWatering)*100;
     // TODO should be memoized perhaps?
     const healthColor = () => {
@@ -78,20 +93,15 @@ function Plant({ plant, index }: PlantProps) {
         }
     }
 
-    const [deletePlant, deletingStatus] = useMutation(DELETE_PLANT, {
-      onCompleted: () => {
-        dispatch && dispatch({ type: 'delete', index: index })
-      }
-    });
-    const confirmDeletion = () => {
-      deletePlant({variables: { plantId: plant.id } });
-      toggleModal()
-    }
-
     if (wateringStatus.loading || deletingStatus.loading) return  <Spinner color="primary" />
 
-    if (wateringStatus.error)  return  <p> Watering error :( {wateringStatus.error} </p>;
-    if (deletingStatus.error)  return  <p> Deleting error :( {deletingStatus.error}</p>;
+    if (wateringStatus.error) {
+      return  <ErrorHandler error={wateringStatus.error} />
+    }
+
+    if (deletingStatus.error) {
+      return  <ErrorHandler error={deletingStatus.error} />
+    }
 
     if (isEditMode)
       return (

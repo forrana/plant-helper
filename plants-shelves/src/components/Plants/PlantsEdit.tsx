@@ -20,12 +20,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [scientificName, setScientificName] = useState(plant.scientificName);
 
   const [updatePlant, { loading, error }] = useMutation(UPDATE_PLANT, {
-    // TODO move to the separate function
     onCompleted: (data: { updatePlant: PlantData }) => {
       dispatch && dispatch({ type: 'update', plant: data.updatePlant.plant, index: index});
       action && action();
       setSubmitted(true);
-    }
+    },
+    onError: (e) => console.error('Error creating plant:', e)
   });
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <div className={styles.image}>&#129716;</div>
 
       <FormGroup>
-        <Input type="text" title="Plant name" name="name" id="name" placeholder="Plant name"
+        <Input type="text" title="Plant name" name="name" id="name" data-test="plant-name-input" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
           required
