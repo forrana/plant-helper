@@ -74,8 +74,12 @@ class WaterPlant(graphene.Mutation):
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, info, id, plant_id):
-        plant = Plant.objects.get(pk=plant_id)
+    def mutate(root, id, info, plant_id):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        if not plant:
+            raise GraphQLError('Unauthorized')
         plant.watered = timezone.now()
         plant.save()
         ok = True
@@ -90,8 +94,12 @@ class UpdatePlant(graphene.Mutation):
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, info, id, plant_id, plant_name, scientific_name):
-        plant = Plant.objects.get(pk=plant_id)
+    def mutate(root, id, info, plant_id, plant_name, scientific_name):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        if not plant:
+            raise GraphQLError('Unauthorized')
         plant.name = plant_name
         plant.scientific_name = scientific_name
         plant.save()
@@ -105,8 +113,12 @@ class DeletePlant(graphene.Mutation):
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, info, id, plant_id):
-        plant = Plant.objects.get(pk=plant_id)
+    def mutate(root, id, info, plant_id):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        if not plant:
+            raise GraphQLError('Unauthorized')
         plant.delete()
         ok = True
         return DeletePlant(plant=plant, ok=ok)
