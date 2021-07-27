@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState } from 'react';
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
 import { GET_ALL_PLANTS } from './queries'
@@ -9,6 +8,7 @@ import { PlantsData } from './models'
 import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
+import CreateModal from './CreateModal';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -35,9 +35,8 @@ function PlantsContainer(props: PlantsContainerProps) {
     }
   );
 
-  const history = useHistory();
-  const goToCreatePage = () => history.push("/create");
-
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal);
 
   if (loading) return <p>Loading...</p>;
   if (error) {
@@ -48,10 +47,11 @@ function PlantsContainer(props: PlantsContainerProps) {
     <WithNavBar>
       <main>
         <p data-test="message-no-plants"> No plants yet, create the first one! </p>
-        <Button onClick={goToCreatePage} outline color="primary" title="Add new plant">
+        <Button onClick={toggleModal} outline color="primary" title="Add new plant" data-test="empty-view-create-button">
           Create!
         </Button>
       </main>
+      <CreateModal isOpen={modal} toggleAction={toggleModal} />
     </WithNavBar>
   )
 
