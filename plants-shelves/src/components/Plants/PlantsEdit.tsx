@@ -63,7 +63,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <div className={styles.image}>&#129716;</div>
 
       <FormGroup>
-        <Input type="text" title="Plant name" name="name" id="name" data-test="plant-name-input" placeholder="Plant name"
+        <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
           required

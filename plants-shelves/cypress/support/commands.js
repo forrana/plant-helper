@@ -34,23 +34,23 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('create', (name, scientificName) => {
-    cy.get('[data-test=create-btn]').click()
-    cy.get('[data-test=name-input]').type(name)
-    cy.get('[data-test=sc-name-input]').type("scientificName{enter}")
+    cy.get('[data-testid=create-btn]').click()
+    cy.get('[data-testid=name-input]').type(name)
+    cy.get('[data-testid=sc-name-input]').type("scientificName{enter}")
 })
 
 Cypress.Commands.add('delete', (index=0) => {
-  cy.get(`[data-test=plant-controls-${index}] > [data-test=remove-btn]`).click()
-  cy.get('[data-test=modal-button-delete]').click()
+  cy.get(`[data-testid=plant-controls-${index}] > [data-testid=remove-btn]`).click()
+  cy.get('[data-testid=modal-button-delete]').click()
 })
 
 Cypress.Commands.add('water', (index=0) => {
-  cy.get(`[data-test=plant-controls-${index}] > [data-test=water-btn]`).click()
+  cy.get(`[data-testid=plant-controls-${index}] > [data-testid=water-btn]`).click()
 })
 
 Cypress.Commands.add('editName', (index=0, name) => {
-  cy.get(`[data-test=plant-controls-${index}] > [data-test=edit-btn]`).click()
-  cy.get('[data-test=plant-name-input]').type(`${name}{enter}`)
+  cy.get(`[data-testid=plant-controls-${index}] > [data-testid=edit-btn]`).click()
+  cy.get('[data-testid=plant-name-input]').type(`${name}{enter}`)
 })
 
 Cypress.Commands.add('getLocalStorageValue', (key) => {

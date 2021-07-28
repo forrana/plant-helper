@@ -114,13 +114,13 @@ function Plant({ plant, index }: PlantProps) {
       )
 
     return (
-      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-test={`plant-card-${index}`}>
+      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-testid={`plant-card-${index}`}>
         <Badge color="light">{plant.id}</Badge>
         <CardBody>
-          <section className={styles.controls} data-test={`plant-controls-${index}`}>
-            <Button outline onClick={toWater} title="Water" data-test="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
-            <Button outline onClick={toggleEditMode} title="Edit" data-test="edit-btn" className={uiStyles.roundButton}>&#x270E;</Button>
-            <Button outline onClick={toggleModal} title="Remove" data-test="remove-btn" className={uiStyles.roundButton}>&#x1F5D1;</Button>
+          <section className={styles.controls} data-testid={`plant-controls-${index}`}>
+            <Button outline onClick={toWater} title="Water" data-testid="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
+            <Button outline onClick={toggleEditMode} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>&#x270E;</Button>
+            <Button outline onClick={toggleModal} title="Remove" data-testid="remove-btn" className={uiStyles.roundButton}>&#x1F5D1;</Button>
           </section>
           <div className={styles.image}>&#129716;</div>
           <CardTitle tag="h5">{plant.name}</CardTitle>
@@ -135,7 +135,7 @@ function Plant({ plant, index }: PlantProps) {
             Warning! This action is irreversible.
           </ModalBody>
           <ModalFooter className={uiStyles.footer}>
-            <Button color="danger" onClick={confirmDeletion} data-test="modal-button-delete">Delete!</Button>
+            <Button color="danger" onClick={confirmDeletion} data-testid="modal-button-delete">Delete!</Button>
             <Button color="secondary" onClick={toggleModal}>Cancel!</Button>
           </ModalFooter>
         </Modal>

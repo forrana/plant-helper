@@ -7,12 +7,8 @@ import {
     NavItem,
     NavLink,
     NavbarText,
-    Modal,
-    ModalHeader,
-    ModalBody
   } from 'reactstrap';
 import UserContext from '../User/UserContext'
-import { PlantsCreate } from './PlantsCreate';
 import uiStyles from '../UI/UIElements.module.css'
 import CreateModal from './CreateModal';
 
@@ -27,7 +23,7 @@ const PlantsNavBar = () => {
         <NavbarBrand>Plants Shelves</NavbarBrand>
         <Nav className="mr-auto" navbar>
             <NavItem>
-              <Button onClick={toggleModal} data-test="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
+              <Button onClick={toggleModal} data-testid="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
                 &#10133;
               </Button>
             </NavItem>

@@ -25,7 +25,7 @@ const WithNavBar = ({ children }: any) => {
 
 function PlantsContainer(props: PlantsContainerProps) {
   const dispatch = useContext(PlantsDispatch);
-
+  // eslint-disable-next-line
   const { loading, data, error } = useQuery<PlantsData>(
     GET_ALL_PLANTS,
     {
@@ -46,8 +46,8 @@ function PlantsContainer(props: PlantsContainerProps) {
   if (props.state.plants.length === 0) return (
     <WithNavBar>
       <main>
-        <p data-test="message-no-plants"> No plants yet, create the first one! </p>
-        <Button onClick={toggleModal} outline color="primary" title="Add new plant" data-test="empty-view-create-button">
+        <p data-testid="message-no-plants"> No plants yet, create the first one! </p>
+        <Button onClick={toggleModal} outline color="primary" title="Add new plant" data-testid="empty-view-create-button">
           Create!
         </Button>
       </main>
