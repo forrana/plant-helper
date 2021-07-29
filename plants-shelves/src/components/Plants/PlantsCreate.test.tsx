@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
 
 import { GlobalState, PlantType } from './models';
-import { GET_ALL_PLANTS, WATER_PLANT } from './queries';
+import { ADD_PLANT } from './queries';
 import { PlantsCreate } from './PlantsCreate';
 
 const newPlant: PlantType = {
@@ -18,8 +18,8 @@ const newPlant: PlantType = {
 const mocksWithPlant: any = [
   {
     request: {
-      query: WATER_PLANT,
-      variables: { name: newPlant.name, scientificName: newPlant.scientificName}
+      query: ADD_PLANT,
+      variables: { plantName: newPlant.name, scientificName: newPlant.scientificName}
     },
     result: {
       data:  newPlant,
@@ -35,10 +35,32 @@ test('Component should render without failing', async () => {
   );
 });
 
-test('Should be able to create a plant', async () => {
+test('Should allow to create plant', async () => {
   render(
     <MockedProvider mocks={mocksWithPlant} addTypename={false}>
       <PlantsCreate action={() => {}}/>
     </MockedProvider>,
   );
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByTestId("name-input"),
+      { target: { value: newPlant.name } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByTestId("sc-name-input"),
+      { target: { value: newPlant.scientificName } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.click(
+      screen.getByText(/Add plant/i),
+      { target: { value: newPlant.scientificName } }
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
 });
