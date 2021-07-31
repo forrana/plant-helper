@@ -31,7 +31,8 @@ function PlantsContainer(props: PlantsContainerProps) {
     {
       onCompleted: (data: PlantsData) => {
         dispatch && dispatch({ type: 'load', plants: data.plants })
-      }
+      },
+      onError: (e) => console.error('Error getting plants:', e)
     }
   );
 

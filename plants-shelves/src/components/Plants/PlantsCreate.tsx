@@ -10,7 +10,7 @@ import AutoCompleteInput from '../UI/AutoCompleteInput';
 import ErrorHandler from './ErrorHandler';
 
 
-interface PlantsCreateProps { action?: () => any }
+interface PlantsCreateProps { action?: () => void; }
 
 function PlantsCreate({ action }: PlantsCreateProps) {
   const dispatch = useContext(PlantsDispatch);

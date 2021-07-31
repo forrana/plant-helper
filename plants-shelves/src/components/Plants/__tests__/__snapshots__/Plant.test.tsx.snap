@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should indicate 1 day to water 1`] = `
+<div>
+  <div
+    class="plant danger card"
+    data-testid="plant-card-0"
+  >
+    <span
+      class="badge badge-light"
+    >
+      1
+    </span>
+    <div
+      class="card-body"
+    >
+      <section
+        class="controls"
+        data-testid="plant-controls-0"
+      >
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="water-btn"
+          title="Water"
+          type="button"
+        >
+          💦
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="edit-btn"
+          title="Edit"
+          type="button"
+        >
+          ✎
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="remove-btn"
+          title="Remove"
+          type="button"
+        >
+          🗑
+        </button>
+      </section>
+      <div
+        class="image"
+      >
+        🪴
+      </div>
+      <h5
+        class="card-title"
+      >
+        Aloe 1
+      </h5>
+      <h6
+        class="mb-2 text-muted card-subtitle"
+      >
+        Aloe Vera 1
+      </h6>
+      <div
+        class="text-center"
+      >
+        Water in 
+        1
+         day
+      </div>
+      <div
+        class="progress"
+      >
+        <div
+          aria-valuemax="100"
+          aria-valuemin="0"
+          aria-valuenow="14.285714285714285"
+          class="progress-bar bg-danger"
+          role="progressbar"
+          style="width: 14.285714285714285%;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should indicate 2 days to water 1`] = `
+<div>
+  <div
+    class="plant warning card"
+    data-testid="plant-card-0"
+  >
+    <span
+      class="badge badge-light"
+    >
+      1
+    </span>
+    <div
+      class="card-body"
+    >
+      <section
+        class="controls"
+        data-testid="plant-controls-0"
+      >
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="water-btn"
+          title="Water"
+          type="button"
+        >
+          💦
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="edit-btn"
+          title="Edit"
+          type="button"
+        >
+          ✎
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="remove-btn"
+          title="Remove"
+          type="button"
+        >
+          🗑
+        </button>
+      </section>
+      <div
+        class="image"
+      >
+        🪴
+      </div>
+      <h5
+        class="card-title"
+      >
+        Aloe 1
+      </h5>
+      <h6
+        class="mb-2 text-muted card-subtitle"
+      >
+        Aloe Vera 1
+      </h6>
+      <div
+        class="text-center"
+      >
+        2
+         days until watering
+      </div>
+      <div
+        class="progress"
+      >
+        <div
+          aria-valuemax="100"
+          aria-valuemin="0"
+          aria-valuenow="28.57142857142857"
+          class="progress-bar bg-warning"
+          role="progressbar"
+          style="width: 28.57142857142857%;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should indicate 4 days to water 1`] = `
+<div>
+  <div
+    class="plant info card"
+    data-testid="plant-card-0"
+  >
+    <span
+      class="badge badge-light"
+    >
+      1
+    </span>
+    <div
+      class="card-body"
+    >
+      <section
+        class="controls"
+        data-testid="plant-controls-0"
+      >
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="water-btn"
+          title="Water"
+          type="button"
+        >
+          💦
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="edit-btn"
+          title="Edit"
+          type="button"
+        >
+          ✎
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="remove-btn"
+          title="Remove"
+          type="button"
+        >
+          🗑
+        </button>
+      </section>
+      <div
+        class="image"
+      >
+        🪴
+      </div>
+      <h5
+        class="card-title"
+      >
+        Aloe 1
+      </h5>
+      <h6
+        class="mb-2 text-muted card-subtitle"
+      >
+        Aloe Vera 1
+      </h6>
+      <div
+        class="text-center"
+      >
+        4
+         days until watering
+      </div>
+      <div
+        class="progress"
+      >
+        <div
+          aria-valuemax="100"
+          aria-valuemin="0"
+          aria-valuenow="57.14285714285714"
+          class="progress-bar bg-info"
+          role="progressbar"
+          style="width: 57.14285714285714%;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Should indicate water me 1`] = `
+<div>
+  <div
+    class="plant alarm card"
+    data-testid="plant-card-0"
+  >
+    <span
+      class="badge badge-light"
+    >
+      1
+    </span>
+    <div
+      class="card-body"
+    >
+      <section
+        class="controls"
+        data-testid="plant-controls-0"
+      >
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="water-btn"
+          title="Water"
+          type="button"
+        >
+          💦
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="edit-btn"
+          title="Edit"
+          type="button"
+        >
+          ✎
+        </button>
+        <button
+          class="roundButton btn btn-outline-secondary"
+          data-testid="remove-btn"
+          title="Remove"
+          type="button"
+        >
+          🗑
+        </button>
+      </section>
+      <div
+        class="image"
+      >
+        🪴
+      </div>
+      <h5
+        class="card-title"
+      >
+        Aloe 1
+      </h5>
+      <h6
+        class="mb-2 text-muted card-subtitle"
+      >
+        Aloe Vera 1
+      </h6>
+      <div
+        class="text-center"
+      >
+        Water me!
+      </div>
+      <div
+        class="progress"
+      >
+        <div
+          aria-valuemax="100"
+          aria-valuemin="0"
+          aria-valuenow="0"
+          class="progress-bar bg-danger"
+          role="progressbar"
+          style="width: 0%;"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

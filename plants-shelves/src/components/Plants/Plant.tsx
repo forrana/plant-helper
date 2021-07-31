@@ -16,11 +16,6 @@ interface WhenToWaterProps { daysUntilNextWatering: number }
 
 
 function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
-  if(daysUntilNextWatering > 1)
-    return (
-      <div className="text-center">{daysUntilNextWatering} days until watering</div>
-    )
-
   if(daysUntilNextWatering === 1)
     return (
       <div className="text-center">Water in {daysUntilNextWatering} day</div>
@@ -32,7 +27,7 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
     )
 
   return (
-    <div className="text-center">Uups! Something went wrong!</div>
+    <div className="text-center">{daysUntilNextWatering} days until watering</div>
   )
 }
 
@@ -58,7 +53,7 @@ function Plant({ plant, index }: PlantProps) {
       onCompleted: () => {
         dispatch && dispatch({ type: 'delete', index: index })
       },
-      onError: (e) => console.error('Error creating plant:', e)
+      onError: (e) => console.error('Error deleting plant:', e)
     });
 
     const confirmDeletion = () => {

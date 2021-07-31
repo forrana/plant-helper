@@ -1,10 +1,12 @@
 import React from 'react';
 import { act, render, screen } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+import { MemoryRouter } from 'react-router-dom';
 
-import PlantsContainer from './PlantsContainer';
-import { GlobalState, PlantType } from './models';
-import { GET_ALL_PLANTS } from './queries';
+import PlantsContainer from '../PlantsContainer';
+import { GlobalState, PlantType } from '../models';
+import { GET_ALL_PLANTS } from '../queries';
+import { getRandomString } from '../utils';
 
 const emptyMocks: any = [
   {
@@ -19,9 +21,9 @@ const emptyMocks: any = [
   },
 ];
 const emptyState: GlobalState = { plants: [] };
-const plant: PlantType = { 
+const plant: PlantType = {
   id: 1,
-  name: "Aloe 1", 
+  name: "Aloe 1",
   scientificName: "Aloe Vera 1" ,
   daysUntilNextWatering: 6,
   daysBetweenWatering: 7
@@ -36,6 +38,30 @@ const mocksWithPlant: any = [
         plants: [plant],
       },
     },
+  },
+];
+const errorMessage: string = getRandomString(10)
+
+const mocksWithError: any = [
+  {
+    request: {
+      query: GET_ALL_PLANTS,
+    },
+    error: {
+        message: errorMessage
+
+      },
+  },
+];
+
+const mocksWithUnauthorizedError: any = [
+  {
+    request: {
+      query: GET_ALL_PLANTS,
+    },
+    error: {
+        message: "Unauthorized"
+      },
   },
 ];
 const stateWithPlant: GlobalState = { plants: [plant] };
@@ -83,3 +109,38 @@ test('Show existing plant', async () => {
   const plantName = screen.getByText(plant.name);
   expect(plantName).toBeInTheDocument();
 });
+
+test('Show error', async () => {
+  render(
+    <MockedProvider mocks={mocksWithError} addTypename={false}>
+      <PlantsContainer state={stateWithPlant}/>
+    </MockedProvider>,
+  );
+
+  await act(async () => {
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+  const error = screen.getByText(new RegExp(errorMessage, "i"));
+
+  expect(error).toBeInTheDocument();
+});
+
+test('Redirect on unautharized error', async () => {
+  const {container} = render(
+    <MemoryRouter>
+      <MockedProvider mocks={mocksWithUnauthorizedError} addTypename={false}>
+        <PlantsContainer state={stateWithPlant}/>
+      </MockedProvider>
+    </MemoryRouter>,
+  );
+
+  expect(container).toHaveTextContent("Loading...")
+
+  await act(async () => {
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+  expect(container).not.toHaveTextContent("Loading...")
+});
+

@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Match snapshot 1`] = `
+<div>
+  <form
+    autocomplete="off"
+    class=""
+    data-testid="plant-create-form"
+  >
+    <div
+      class="form-group"
+    >
+      <label
+        class=""
+        for="name"
+      >
+        Name:
+      </label>
+      <input
+        class="form-control"
+        data-testid="name-input"
+        id="name"
+        name="name"
+        placeholder="Plant name"
+        required=""
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      class="form-group"
+    >
+      <label
+        class=""
+        for="scientificName"
+      >
+        Scientific name:
+      </label>
+      <input
+        class="form-control"
+        data-testid="sc-name-input"
+        id="scientificName"
+        name="scientificName"
+        placeholder="Scientific name"
+        required=""
+        type="text"
+        value=""
+      />
+    </div>
+    <button
+      class="btn btn-secondary"
+      type="submit"
+    >
+      Add plant
+    </button>
+  </form>
+</div>
+`;
