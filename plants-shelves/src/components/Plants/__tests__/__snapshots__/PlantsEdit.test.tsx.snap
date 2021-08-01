@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Match snapshot 1`] = `
+<div>
+  <form
+    autocomplete="off"
+    class=""
+  >
+    <section
+      class="controls"
+    >
+      <button
+        class="roundButton btn btn-outline-success"
+        title="Save!"
+        type="submit"
+      >
+        ✓
+      </button>
+      <button
+        class="roundButton btn btn-outline-danger"
+        title="Cancel!"
+        type="button"
+      >
+        ❌
+      </button>
+    </section>
+    <div
+      class="image"
+    >
+      🪴
+    </div>
+    <div
+      class="form-group"
+    >
+      <input
+        class="form-control"
+        data-testid="plant-name-input"
+        id="name"
+        name="name"
+        placeholder="Plant name"
+        required=""
+        title="Plant name"
+        type="text"
+        value="Aloe 1"
+      />
+    </div>
+    <div
+      class="form-group"
+    >
+      <input
+        class="form-control"
+        data-testid="plant-scientific-name-input"
+        id="scientificName"
+        name="scientificName"
+        placeholder="Scientific name"
+        required=""
+        type="text"
+        value="Aloe Vera"
+      />
+      <ul
+        class="option list-group"
+      />
+    </div>
+  </form>
+</div>
+`;

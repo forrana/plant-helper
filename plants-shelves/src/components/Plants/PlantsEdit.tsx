@@ -72,6 +72,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <FormGroup>
         <AutoCompleteInput
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
+          data-testid="plant-scientific-name-input"
           value={scientificName}
           setValue={setScientificName}
           onChange={handleScientificNameInputChange}
