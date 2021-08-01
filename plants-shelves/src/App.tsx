@@ -17,6 +17,45 @@ import Logout from './components/User/Logout';
 import Signup from './components/User/Signup';
 import { PrivateRoute, PublicRoute } from './components/Auth/AuthRoutes';
 
+import {
+  ApolloProvider,
+  createHttpLink,
+  ApolloClient,
+  InMemoryCache,
+} from "@apollo/client";
+import { setContext } from '@apollo/client/link/context';
+
+
+const graphQLink = createHttpLink({
+  uri: "http://localhost:8000/graphql/",
+});
+
+const cache = new InMemoryCache();
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const userStateStr:string|null = localStorage.getItem(USER_STATE_STORAGE_KEY);
+  let token = null;
+  if(userStateStr !== null) {
+    const userState: UserState = JSON.parse(userStateStr);
+    token = userState.token;
+  }
+    // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      Authorization: token ? `JWT ${token}` : "",
+    }
+  }
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(graphQLink),
+  cache,
+  credentials: "include",
+  resolvers: {},
+});
+
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
   const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, initialUserState);
@@ -26,7 +65,7 @@ function App() {
   }, [userState]);
 
   return (
-    <div>
+    <ApolloProvider client={client}>
       <UserDispatch.Provider value={userDispatch}>
         <UserContext.Provider value={userState}>
           <PlantsDispatch.Provider value={dispatch}>
@@ -47,7 +86,7 @@ function App() {
           </PlantsDispatch.Provider>
         </UserContext.Provider>
       </UserDispatch.Provider>
-    </div>
+    </ApolloProvider>
   );
 }
 

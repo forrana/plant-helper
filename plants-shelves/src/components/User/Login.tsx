@@ -19,7 +19,7 @@ function Login() {
   const goToHomePage = () => history.push("/");
 
 
-  const [loginUser, { loading, error }] = useMutation(LOG_IN, {
+  const [loginUser, { client, loading, error }] = useMutation(LOG_IN, {
     onCompleted: (data: any) => {
       setLogin("");
       setPassword("");
@@ -31,13 +31,14 @@ function Login() {
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
         if(token.length && username.length) {
-          dispatch && 
+          dispatch &&
             dispatch({
                 type: 'login',
                 token,
                 username
             })
-          goToHomePage()
+          client.resetStore();
+          goToHomePage();
         } else {
           const error = {
             message: "Something went wrong during login, please try again later",
@@ -46,7 +47,8 @@ function Login() {
           setLoginErrors([error]);
         }
       }
-    }
+    },
+    onError: (e) => console.error('Login error:', e)
   });
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
