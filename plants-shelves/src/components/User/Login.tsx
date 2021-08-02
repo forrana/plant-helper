@@ -106,7 +106,7 @@ function Login() {
           }
         </FormGroup>
         <section className={styles.controls}>
-          <Button type="submit">Login</Button>
+          <Button type="submit" data-testid="login-submit-button">Login</Button>
           <Link to="/signup" className={styles.link}>Signup</Link>
         </section>
       </Form>

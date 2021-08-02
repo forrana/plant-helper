@@ -32,7 +32,7 @@ const mocksWithPlant: any = [
   {
     request: {
       query: UPDATE_PLANT,
-      variables: { plantName: "error", scientificName: plant.scientificName}
+      variables: { plantId: plant.id, plantName: "error", scientificName: plant.scientificName}
     },
     error:
       { message: "Something went wrong" },
