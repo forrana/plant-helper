@@ -30,7 +30,7 @@ function Login() {
         setLoginErrors([]);
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
-        if(token.length && username.length) {
+        if(token?.length && username?.length) {
           dispatch &&
             dispatch({
                 type: 'login',
@@ -101,7 +101,7 @@ function Login() {
           />
           {
             loginErrors.map((error, index) =>
-              <FormFeedback key={index}>{ error.message }</FormFeedback>
+              <FormFeedback key={index} data-testid="login-error-message">{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
