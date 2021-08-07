@@ -36,7 +36,8 @@ function Signup() {
         setPasswordConfirmation("");
         setEmail("");
       }
-    }
+    },
+    onError: (e) => console.error('Signup error:', e)
   });
 
   const getFieldErrors = (field: string): Array<Error> => {
