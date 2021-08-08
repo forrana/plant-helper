@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import UserDispatch from "./UserDispatch";
+import { useUserDispatch } from "./UserDispatch";
 
 function Logout() {
-    const dispatch = useContext(UserDispatch);
-    
-    useEffect(() => {        
-        dispatch && dispatch({
+    const dispatch = useUserDispatch();
+
+    useEffect(() => {
+        dispatch({
             type: 'logout'
         });
     }, [dispatch]);

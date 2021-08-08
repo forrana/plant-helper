@@ -31,8 +31,7 @@ function Login() {
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
         if(token?.length && username?.length) {
-          dispatch &&
-            dispatch({
+          dispatch && dispatch({
                 type: 'login',
                 token,
                 username
