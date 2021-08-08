@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Match snapshot 1`] = `
+<div>
+  <main>
+    <form
+      autocomplete="off"
+      class="container"
+    >
+      <div
+        class="form-group"
+      >
+        <label
+          class=""
+          for="login"
+        >
+          Login:
+        </label>
+        <input
+          aria-invalid="false"
+          autocomplete="off"
+          class="form-control"
+          id="login"
+          name="username"
+          placeholder="Enter login"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class=""
+          for="email"
+        >
+          Email:
+        </label>
+        <input
+          aria-invalid="false"
+          autocomplete="off"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+          required=""
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class=""
+          for="password"
+        >
+          Password:
+        </label>
+        <input
+          aria-invalid="false"
+          autocomplete="off"
+          class="form-control"
+          id="password"
+          name="password1"
+          placeholder="Enter password"
+          required=""
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        class="form-group"
+      >
+        <label
+          class=""
+          for="password-confirmation"
+        >
+          Password confirmation:
+        </label>
+        <input
+          aria-invalid="false"
+          autocomplete="off"
+          class="form-control"
+          id="password-confirmation"
+          name="password2"
+          placeholder="Re-enter password"
+          required=""
+          type="password"
+          value=""
+        />
+      </div>
+      <section
+        class="controls"
+      >
+        <button
+          class="btn btn-secondary"
+          data-testid="signup-submit-button"
+          type="submit"
+        >
+          Create
+        </button>
+      </section>
+    </form>
+  </main>
+</div>
+`;

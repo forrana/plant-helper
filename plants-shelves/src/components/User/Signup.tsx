@@ -84,7 +84,7 @@ function Signup() {
           />
           {
             getFieldErrors("username").map((error, index) =>
-              <FormFeedback key={index}>{ error.message }</FormFeedback>
+              <FormFeedback key={index} data-testid="signup-username-error">{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
@@ -99,7 +99,7 @@ function Signup() {
           />
           {
             getFieldErrors("email").map((error, index) =>
-              <FormFeedback key={index}>{ error.message }</FormFeedback>
+              <FormFeedback key={index} data-testid="signup-email-error">{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
@@ -114,7 +114,7 @@ function Signup() {
           />
           {
             getFieldErrors("password1").map((error, index) =>
-              <FormFeedback key={index}>{ error.message }</FormFeedback>
+              <FormFeedback key={index} data-testid="signup-password-1-error">{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
@@ -129,12 +129,12 @@ function Signup() {
           />
           {
             getFieldErrors("password2").map((error, index) =>
-              <FormFeedback key={index}>{ error.message }</FormFeedback>
+              <FormFeedback key={index} data-testid="signup-password-2-error">{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
         <section className={styles.controls}>
-          <Button type="submit">Create</Button>
+          <Button type="submit" data-testid="signup-submit-button">Create</Button>
         </section>
       </Form>
     </main>

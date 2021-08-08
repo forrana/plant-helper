@@ -14,8 +14,19 @@ const user = {
  };
 
 const error = {
-  message: "Please, enter valid credentials.",
-  code: "invalid_credentials"
+  message: "User already exist.",
+  code: "invalid_username"
+}
+
+const passwordError = {
+  message: "Passwords doesn't match.",
+  code: "invalid_password"
+}
+
+
+const emailError = {
+  message: "Incorrect email.",
+  code: "invalid_password"
 }
 
 const genericErrorMessage = "Something went wrong"
@@ -32,14 +43,103 @@ const mocksWithUser: any = [
       data: {
         register: {
           success: true,
-          errors: []
+          errors: null
         }
       }
     },
   },
 ];
 
+const mocksWithPassword1Errors: any = [
+  {
+    request: {
+      query: CREATE_USER,
+      variables: {
+        ...user
+      }
+    },
+    result:{
+      data: {
+        register: {
+          errors: {
+            password1:[
+              passwordError
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+const mocksWithPassword2Errors: any = [
+  {
+    request: {
+      query: CREATE_USER,
+      variables: {
+        ...user
+      }
+    },
+    result:{
+      data: {
+        register: {
+          errors: {
+            password2:[
+              passwordError
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+const mocksWithEmailErrors: any = [
+  {
+    request: {
+      query: CREATE_USER,
+      variables: {
+        ...user
+      }
+    },
+    result:{
+      data: {
+        register: {
+          errors: {
+            email:[
+              emailError
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+
 const mocksWithErrors: any = [
+  {
+    request: {
+      query: CREATE_USER,
+      variables: {
+        ...user
+      }
+    },
+    result:{
+      data: {
+        register: {
+          errors: {
+            username:[
+              error
+            ]
+          }
+        }
+      }
+    }
+  }
+];
+
+const mocksWithGenericErrors: any = [
   {
     request: {
       query: CREATE_USER,
@@ -57,17 +157,6 @@ const mocksWithErrors: any = [
           }
         }
       }
-    }
-  },
-  {
-    request: {
-      query: CREATE_USER,
-      variables: {
-        ...user
-      }
-    },
-    error:{
-      message: genericErrorMessage
     }
   }
 ];
@@ -109,21 +198,21 @@ test('Allow to signup', async () => {
 
   await act(async () => {
     fireEvent.change(
-      screen.getByPlaceholderText("Enter password:"),
+      screen.getByLabelText("Password:"),
       { target: { value: user.password1 } }
     )
   });
 
   await act(async () => {
     fireEvent.change(
-      screen.getByPlaceholderText("Re-enter password:"),
+      screen.getByLabelText("Password confirmation:"),
       { target: { value: user.password1 } }
     )
   });
 
   await act(async () => {
     fireEvent.click(
-      screen.getByTestId("login-submit-button")
+      screen.getByTestId("signup-submit-button")
     )
     await new Promise(resolve => setTimeout(resolve, 0));
   });
@@ -131,134 +220,238 @@ test('Allow to signup', async () => {
   expect(screen.getByLabelText("Password:")).not.toHaveValue(user.password1)
 })
 
-// test('Don\'t submit with empty fields', async () => {
-//   const { container } = render(
-//      <MemoryRouter>
-//        <MockedProvider mocks={mocksWithUser} addTypename={false}>
-//        <Signup />
-//        </MockedProvider>
-//      </MemoryRouter>,
-//    );
+test('Show signup errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithErrors} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Login:"),
-//        { target: { value: null } }
-//      )
-//    });
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByPlaceholderText("Enter password:"),
-//        { target: { value: user.password1 } }
-//      )
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.click(
-//        screen.getByTestId("login-submit-button")
-//      )
-//      await new Promise(resolve => setTimeout(resolve, 0));
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
 
-//    expect(screen.getByLabelText("Password:")).toHaveValue(user.password)
-//  })
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
 
-// test('Show login errors', async () => {
-//   const { container } = render(
-//      <MemoryRouter>
-//        <MockedProvider mocks={mocksWithErrors} addTypename={false}>
-//        <Signup />
-//        </MockedProvider>
-//      </MemoryRouter>,
-//    );
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Login:"),
-//        { target: { value: user.username } }
-//      )
-//    });
+   expect(screen.getByTestId("signup-username-error")).toBeVisible()
+ })
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Password:"),
-//        { target: { value: user.password } }
-//      )
-//    });
 
-//    await act(async () => {
-//      fireEvent.click(
-//        screen.getByTestId("login-submit-button")
-//      )
-//      await new Promise(resolve => setTimeout(resolve, 0));
-//    });
+test('Show password1 errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithPassword1Errors} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
 
-//    expect(screen.getByTestId("login-error-message")).toBeVisible()
-//  })
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
 
-//  test('Show error if there is no token returned', async () => {
-//   const { container } = render(
-//      <MemoryRouter>
-//        <MockedProvider mocks={mocksWithEmptyToken} addTypename={false}>
-//        <Signup />
-//        </MockedProvider>
-//      </MemoryRouter>,
-//    );
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Login:"),
-//        { target: { value: user.username } }
-//      )
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Password:"),
-//        { target: { value: user.password } }
-//      )
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.click(
-//        screen.getByTestId("login-submit-button")
-//      )
-//      await new Promise(resolve => setTimeout(resolve, 0));
-//    });
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
 
-//    expect(screen.getByTestId("login-error-message")).toBeVisible()
-//  })
+   expect(screen.getByTestId("signup-password-1-error")).toBeVisible()
+ })
 
-//  test('Show general error on server error', async () => {
-//   const { container } = render(
-//      <MemoryRouter>
-//        <MockedProvider mocks={mocksWithErrors} addTypename={false}>
-//        <Signup />
-//        </MockedProvider>
-//      </MemoryRouter>,
-//    );
+ test('Show password2 errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithPassword2Errors} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Login:"),
-//        { target: { value: "error" } }
-//      )
-//    });
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.change(
-//        screen.getByLabelText("Password:"),
-//        { target: { value: user.password } }
-//      )
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
 
-//    await act(async () => {
-//      fireEvent.click(
-//        screen.getByTestId("login-submit-button")
-//      )
-//      await new Promise(resolve => setTimeout(resolve, 0));
-//    });
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
 
-//    expect(screen.getByText(new RegExp(genericErrorMessage, "i"))).toBeVisible()
-//  })
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+   expect(screen.getByTestId("signup-password-2-error")).toBeVisible()
+ })
+
+ test('Show email errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithEmailErrors} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
+
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+   expect(screen.getByTestId("signup-email-error")).toBeVisible()
+ })
+
+ test('Show generic errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithGenericErrors} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
+
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+   expect(screen.getByTestId("signup-email-error")).toBeVisible()
+ })
