@@ -161,6 +161,19 @@ const mocksWithGenericErrors: any = [
   }
 ];
 
+const mocksWithServerError: any = [
+  {
+    request: {
+      query: CREATE_USER,
+      variables: {
+        ...user
+      }
+    },
+    error
+  }
+];
+
+
 test('Match snapshot', async () => {
   const {container} = render(
     <MemoryRouter>
@@ -454,4 +467,52 @@ test('Show password1 errors', async () => {
   });
 
    expect(screen.getByTestId("signup-email-error")).toBeVisible()
+ })
+
+ test('Show generic errors', async () => {
+  const { container } = render(
+     <MemoryRouter>
+       <MockedProvider mocks={mocksWithServerError} addTypename={false}>
+       <Signup />
+       </MockedProvider>
+     </MemoryRouter>,
+   );
+
+   await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Login:"),
+      { target: { value: user.username } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Email:"),
+      { target: { value: user.email } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByLabelText("Password confirmation:"),
+      { target: { value: user.password1 } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.click(
+      screen.getByTestId("signup-submit-button")
+    )
+    await new Promise(resolve => setTimeout(resolve, 0));
+  });
+
+  const message = screen.getByText(new RegExp(error.message, "i"));
+  expect(message).toBeVisible()
  })

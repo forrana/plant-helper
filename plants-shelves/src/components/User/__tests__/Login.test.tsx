@@ -5,6 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { MemoryRouter } from 'react-router-dom';
 import Login from '../Login';
 import { LOG_IN } from '../queries';
+import { customRender } from '../TestUtils';
 
 const user = {
   username: "username",
@@ -88,26 +89,33 @@ const mocksWithEmptyToken: any = [
   },
 ];
 
+const providerProps = {
+  value: () => undefined,
+}
+
 
 test('Match snapshot', async () => {
-  const {container} = render(
+  const {container} = customRender(
     <MemoryRouter>
       <MockedProvider mocks={mocksWithUser} addTypename={false}>
         <Login />
       </MockedProvider>
     </MemoryRouter>,
-  );
 
+    {providerProps}
+  );
   expect(container).toMatchSnapshot()
 });
 
 test('Allow to login', async () => {
- const { container } = render(
+  const {container} = customRender(
     <MemoryRouter>
       <MockedProvider mocks={mocksWithUser} addTypename={false}>
-      <Login />
+        <Login />
       </MockedProvider>
     </MemoryRouter>,
+
+    {providerProps}
   );
 
   await act(async () => {
@@ -135,14 +143,15 @@ test('Allow to login', async () => {
 })
 
 test('Don\'t submit with empty fields', async () => {
-  const { container } = render(
-     <MemoryRouter>
-       <MockedProvider mocks={mocksWithUser} addTypename={false}>
-       <Login />
-       </MockedProvider>
-     </MemoryRouter>,
-   );
+  const {container} = customRender(
+    <MemoryRouter>
+      <MockedProvider mocks={mocksWithUser} addTypename={false}>
+        <Login />
+      </MockedProvider>
+    </MemoryRouter>,
 
+    {providerProps}
+  );
    await act(async () => {
      fireEvent.change(
        screen.getByLabelText("Login:"),
@@ -168,16 +177,18 @@ test('Don\'t submit with empty fields', async () => {
  })
 
 test('Show login errors', async () => {
-  const { container } = render(
-     <MemoryRouter>
-       <MockedProvider mocks={mocksWithErrors} addTypename={false}>
-       <Login />
-       </MockedProvider>
-     </MemoryRouter>,
-   );
+  const {container} = customRender(
+    <MemoryRouter>
+      <MockedProvider mocks={mocksWithErrors} addTypename={false}>
+        <Login />
+      </MockedProvider>
+    </MemoryRouter>,
 
-   await act(async () => {
-     fireEvent.change(
+    {providerProps}
+  );
+
+  await act(async () => {
+    fireEvent.change(
        screen.getByLabelText("Login:"),
        { target: { value: user.username } }
      )
@@ -201,13 +212,15 @@ test('Show login errors', async () => {
  })
 
  test('Show error if there is no token returned', async () => {
-  const { container } = render(
-     <MemoryRouter>
-       <MockedProvider mocks={mocksWithEmptyToken} addTypename={false}>
-       <Login />
-       </MockedProvider>
-     </MemoryRouter>,
-   );
+   const {container} = customRender(
+    <MemoryRouter>
+      <MockedProvider mocks={mocksWithEmptyToken} addTypename={false}>
+        <Login />
+      </MockedProvider>
+    </MemoryRouter>,
+
+    {providerProps}
+  );
 
    await act(async () => {
      fireEvent.change(
@@ -234,13 +247,15 @@ test('Show login errors', async () => {
  })
 
  test('Show general error on server error', async () => {
-  const { container } = render(
-     <MemoryRouter>
-       <MockedProvider mocks={mocksWithErrors} addTypename={false}>
-       <Login />
-       </MockedProvider>
-     </MemoryRouter>,
-   );
+  const {container} = customRender(
+    <MemoryRouter>
+      <MockedProvider mocks={mocksWithErrors} addTypename={false}>
+        <Login />
+      </MockedProvider>
+    </MemoryRouter>,
+
+    {providerProps}
+  );
 
    await act(async () => {
      fireEvent.change(

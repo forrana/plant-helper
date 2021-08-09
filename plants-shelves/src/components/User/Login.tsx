@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 
 import { Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 import { LOG_IN } from './queries'
 import styles from "./Login.module.css"
 import { LoginError } from "./models"
-import UserDispatch from './UserDispatch'
+import { useUserDispatch } from './UserDispatch'
 
 function Login() {
-  const dispatch = useContext(UserDispatch);
+  const dispatch = useUserDispatch();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [loginErrors, setLoginErrors] = useState<Array<LoginError>>([]);
@@ -31,7 +31,7 @@ function Login() {
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
         if(token?.length && username?.length) {
-          dispatch && dispatch({
+          dispatch({
                 type: 'login',
                 token,
                 username
