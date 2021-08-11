@@ -15,8 +15,6 @@ const globalReducer = (state: GlobalState, action: GlobalReducerAction) => {
     case 'delete':
       const leftPlants = state.plants.filter( (plant, index) => index !== action.index )
       return { plants: leftPlants }
-    default:
-      throw new Error();
   }
 }
 
