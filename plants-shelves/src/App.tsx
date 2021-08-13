@@ -9,7 +9,7 @@ import { globalReducer, initialGlobalState } from './components/Plants/GlobalRed
 import PlantsDispatch from './components/Plants/PlantsDispatch'
 
 import { UserReducerAction, UserState } from './components/User/models'
-import { userReducer, initialUserState, USER_STATE_STORAGE_KEY } from './components/User/UserReducer'
+import { userReducer, getInitialState, USER_STATE_STORAGE_KEY } from './components/User/UserReducer'
 import UserContext from './components/User/UserContext'
 import UserDispatch from './components/User/UserDispatch'
 import Login from './components/User/Login';
@@ -58,7 +58,7 @@ const client = new ApolloClient({
 
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
-  const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, initialUserState);
+  const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, getInitialState());
 
   useEffect(() => {
     localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify(userState));

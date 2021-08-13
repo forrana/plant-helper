@@ -20,9 +20,7 @@ const userReducer = (state: UserState, action: UserReducerAction) => {
       return { token: action.token, username: action.username };
     case 'logout':
       return { ...emptyState };
-    default:
-      throw new Error("Unknown userReducer action");
   }
 }
 
-export { userReducer, initialUserState, USER_STATE_STORAGE_KEY };
+export { userReducer, initialUserState, getInitialState, USER_STATE_STORAGE_KEY };

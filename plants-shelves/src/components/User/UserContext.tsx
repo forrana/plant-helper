@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { UserState } from './models'
-import { initialUserState } from './UserReducer'
+import { getInitialState } from './UserReducer'
 
-const UserContext = createContext<UserState>(initialUserState);
+const UserContext = createContext<UserState>(getInitialState());
 
 export default UserContext;
