@@ -12,8 +12,6 @@ const getInitialState: () => UserState = () => {
   return emptyState;
 }
 
-const initialUserState: UserState  = getInitialState();
-
 const userReducer = (state: UserState, action: UserReducerAction) => {
   switch (action.type) {
     case 'login':
@@ -23,4 +21,4 @@ const userReducer = (state: UserState, action: UserReducerAction) => {
   }
 }
 
-export { userReducer, initialUserState, getInitialState, USER_STATE_STORAGE_KEY };
+export { userReducer, getInitialState, USER_STATE_STORAGE_KEY };
