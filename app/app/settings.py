@@ -178,10 +178,12 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS headers setup
+FE_HOST = os.environ['FE_HOST']
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
-       'http://localhost:3000',
+       f'http://{FE_HOST}:3000',
+       f'https://{FE_HOST}',
 )
 
 AUTH_USER_MODEL = 'users.CustomUser'

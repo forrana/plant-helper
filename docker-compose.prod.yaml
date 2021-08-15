@@ -3,8 +3,6 @@ version: "3.9"
 services:
   db:
     image: postgres
-    volumes:
-      - ./data/db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
@@ -12,24 +10,24 @@ services:
     ports:
       - "5432:5432"
   app:
+    image: gcr.io/plant-helper/backend
     build: ./app
     command: python manage.py runserver ${HOST}:8000
-    volumes:
-      - ./app:/usr/src/app
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - HOST=localhost
+      - FE_HOST=localhost
+
   web:
+    image: gcr.io/plant-helper/web
     build: ./plants-shelves
     command: npm start
-    volumes:
-      - ./plants-shelves:/app
     ports:
-      - "3000:3000"
+      - "443:3000"
     depends_on:
       - db
     environment:
+      - HTTPS=true
       - REACT_APP_GQL_HOST=localhost
