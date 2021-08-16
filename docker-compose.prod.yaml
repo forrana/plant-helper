@@ -22,7 +22,9 @@ services:
 
   web:
     image: gcr.io/plant-helper/web
-    build: ./plants-shelves
+    build:
+      context: ./plants-shelves
+      dockerfile: Dockerfile-prod
     command: npm start
     ports:
       - "443:3000"
