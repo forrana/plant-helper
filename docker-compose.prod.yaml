@@ -12,7 +12,7 @@ services:
   app:
     image: gcr.io/plant-helper/backend
     build: ./app
-    command: python manage.py runserver ${HOST}:8000
+    command: /usr/src/app/docker-entrypoint.sh
     ports:
       - "8000:8000"
     depends_on:

@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3-slim
 ENV PYTHONUNBUFFERED=1
 
 #RUN apt-get update \
@@ -10,7 +10,7 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt
 COPY . .
+RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 8000
-CMD ["python", "./app/manage.py", "migrate"]
-CMD ["python", "./app/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "./manage.py", "runserver", "0.0.0.0:8000"]
