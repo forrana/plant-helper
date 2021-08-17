@@ -21,9 +21,9 @@ COPY ./build ./build
 
 FROM node:16.1.0-slim
 WORKDIR /app
-
 RUN npm install -g serve
 
 COPY --from=0 /app/build ./
+COPY --from=0 /app/serve.json ./
 # start app
-CMD ["serve", "-s build", "-l 433"]
+CMD ["serve", "-l 433"]

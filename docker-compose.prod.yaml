@@ -25,9 +25,9 @@ services:
     build:
       context: ./plants-shelves
       dockerfile: Dockerfile-prod
-    command: npm start
+    command: serve /app -c /app/serve.json
     ports:
-      - "443:3000"
+      - "5000:5000"
     depends_on:
       - db
     environment:
