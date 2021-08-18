@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     environment:
-      - FE_HOST=localhost
+      - FE_HOST=${HOST}
 
   web:
     image: gcr.io/plant-helper/web
@@ -27,9 +27,9 @@ services:
       dockerfile: Dockerfile-prod
     command: serve /app -c /app/serve.json
     ports:
-      - "5000:5000"
+      - "443:5000"
     depends_on:
       - db
     environment:
       - HTTPS=true
-      - REACT_APP_GQL_HOST=localhost
+      - REACT_APP_GQL_HOST=${HOST}
