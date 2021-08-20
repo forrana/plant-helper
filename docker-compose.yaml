@@ -13,7 +13,7 @@ services:
       - "5432:5432"
   app:
     build: ./app
-    command: python manage.py runserver ${HOST}:8000
+    command: /usr/src/app/docker-entrypoint.sh
     volumes:
       - ./app:/usr/src/app
     ports:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     environment:
-      - HOST=localhost
+      - HOST=0.0.0.0
   web:
     build: ./plants-shelves
     command: npm start
@@ -31,5 +31,3 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    environment:
-      - REACT_APP_GQL_HOST=localhost
