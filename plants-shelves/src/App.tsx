@@ -26,8 +26,10 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 
+const host = process.env.REACT_APP_GQL_HOST || window.location.hostname
+
 const graphQLink = createHttpLink({
-  uri: `http://${process.env.REACT_APP_GQL_HOST}:8000/graphql/`,
+  uri: `http://${host}:8000/graphql/`,
 });
 
 const cache = new InMemoryCache();
