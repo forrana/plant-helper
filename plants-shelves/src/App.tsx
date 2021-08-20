@@ -26,7 +26,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 
-const host = process.env.REACT_APP_GQL_HOST || window.location.hostname
+const host = window.location.hostname
 
 const graphQLink = createHttpLink({
   uri: `http://${host}:8000/graphql/`,
