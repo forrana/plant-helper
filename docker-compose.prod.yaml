@@ -1,8 +1,14 @@
 version: "3.8"
 
+volumes:
+  plast-db:
+    driver: local
+
 services:
   db:
     image: postgres
+    volumes:
+      - plast-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
