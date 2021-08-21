@@ -1,5 +1,8 @@
 {% if data.verifyAccount.success %}
     <h1>User email is successfully verified!</h1>
+    <h2>You can login now
+        <a href="http://plast.ml">plast.ml</a>
+    </h2>
 {% else %}
     {% for error in data.verifyAccount.errors.nonFieldErrors %}
         <h1>{{ error.message }}</h1>
