@@ -101,6 +101,15 @@ exports[`Match snapshot 1`] = `
         >
           Create
         </button>
+        <button
+          class="btn btn-link"
+        >
+          <a
+            href="/login"
+          >
+            Login
+          </a>
+        </button>
       </section>
     </form>
   </main>

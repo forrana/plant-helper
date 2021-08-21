@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
+import { useHistory } from "react-router-dom";
 
 import { CREATE_USER } from './queries'
 import styles from "./Login.module.css"
 import { SignupErrors, Error } from './models';
+import { Link } from 'react-router-dom';
 
 function Signup() {
   const [username, setLogin] = useState("");
@@ -12,6 +14,7 @@ function Signup() {
   const [password2, setPasswordConfirmation] = useState("");
   const [email, setEmail] = useState("");
   const [signupErrors, setSignupErrors] = useState<SignupErrors>({});
+  const history = useHistory()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.target.name;
@@ -35,6 +38,7 @@ function Signup() {
         setPassword("");
         setPasswordConfirmation("");
         setEmail("");
+        history.push("/");
       }
     },
     onError: (e) => console.error('Signup error:', e)
@@ -135,6 +139,9 @@ function Signup() {
         </FormGroup>
         <section className={styles.controls}>
           <Button type="submit" data-testid="signup-submit-button">Create</Button>
+          <Button color="link">
+            <Link to="/login">Login</Link>
+          </Button>
         </section>
       </Form>
     </main>
