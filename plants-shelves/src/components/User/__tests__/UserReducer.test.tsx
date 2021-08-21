@@ -1,11 +1,11 @@
 import React from 'react';
 import { getRandomString } from '../../Plants/utils';
 import { UserReducerAction } from '../models';
-import { getInitialState, initialUserState, userReducer, USER_STATE_STORAGE_KEY } from '../UserReducer';
+import { getInitialState, userReducer, USER_STATE_STORAGE_KEY } from '../UserReducer';
 
 
 test('Should log in user', () => {
-    const initialState = { ...initialUserState }
+    const initialState = { ...getInitialState() }
     const loggedInState = { token: getRandomString(10), username: "username"}
     const action: UserReducerAction = { type: "login", ...loggedInState }
     const newState = userReducer(initialState, action)
