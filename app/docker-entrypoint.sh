@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Import env vars
+export $(cat .env | xargs)
+
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py makemigrations
