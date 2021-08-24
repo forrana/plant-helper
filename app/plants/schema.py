@@ -124,6 +124,7 @@ class DeletePlant(graphene.Mutation):
         plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
         if not plant:
             raise GraphQLError('Unauthorized')
+        plant.symbol.delete()
         plant.delete()
         ok = True
         return DeletePlant(plant=plant, ok=ok)
