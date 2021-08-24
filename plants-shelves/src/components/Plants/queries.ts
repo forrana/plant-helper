@@ -15,6 +15,9 @@ const ADD_PLANT = gql`
     createPlant(plantName: $plantName, scientificName: $scientificName) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+        symbol {
+          userWideId
+        }
       }
     }
   }
@@ -25,6 +28,9 @@ const WATER_PLANT = gql`
     waterPlant(plantId: $plantId) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+        symbol {
+          userWideId
+        }
       }
     }
   }
@@ -35,6 +41,9 @@ const UPDATE_PLANT = gql`
     updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+        symbol {
+          userWideId
+        }
       }
     }
   }

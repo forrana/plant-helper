@@ -4,6 +4,11 @@ export interface PlantType {
   scientificName: string;
   daysUntilNextWatering: number;
   daysBetweenWatering: number;
+  symbol: SymbolType;
+}
+
+export interface SymbolType {
+  userWideId: number
 }
 
 export interface PlantsData {

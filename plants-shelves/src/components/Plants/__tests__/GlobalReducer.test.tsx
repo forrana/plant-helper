@@ -10,7 +10,10 @@ test('Should add new plant to plants', () => {
         name: "Aloe",
         scientificName: "Aloe Vera",
         daysUntilNextWatering: 7,
-        daysBetweenWatering: 7
+        daysBetweenWatering: 7,
+        symbol: {
+          userWideId: 1
+        }
       }
     let action: GlobalReducerAction = { type: "add", plant: plant }
     let newState = globalReducer(initialState, action)
@@ -24,7 +27,10 @@ test('Should load list of plants', () => {
         name: "Aloe",
         scientificName: "Aloe Vera",
         daysUntilNextWatering: 7,
-        daysBetweenWatering: 7
+        daysBetweenWatering: 7,
+        symbol: {
+          userWideId: 1
+        }
       }
     let action: GlobalReducerAction = { type: "load", plants: [plant] }
     let newState = globalReducer(initialState, action)
@@ -37,7 +43,10 @@ test('Should update a plant', () => {
         name: "Aloe",
         scientificName: "Aloe Vera",
         daysUntilNextWatering: 1,
-        daysBetweenWatering: 7
+        daysBetweenWatering: 7,
+        symbol: {
+          userWideId: 1
+        }
       }
     let initialState = { ...initialGlobalState, plants: [plant] }
     let action: GlobalReducerAction = { type: "update", index: 0, plant: {...plant, daysUntilNextWatering: 7}}
@@ -51,7 +60,10 @@ test('Should delete a plant', () => {
         name: "Aloe",
         scientificName: "Aloe Vera",
         daysUntilNextWatering: 7,
-        daysBetweenWatering: 7
+        daysBetweenWatering: 7,
+        symbol: {
+          userWideId: 1
+        }
       }
     let initialState = { ...initialGlobalState, plants: [plant]}
     let action: GlobalReducerAction = { type: "delete", index: 0 }

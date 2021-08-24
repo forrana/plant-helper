@@ -26,7 +26,10 @@ const plant: PlantType = {
   name: "Aloe 1",
   scientificName: "Aloe Vera 1" ,
   daysUntilNextWatering: 6,
-  daysBetweenWatering: 7
+  daysBetweenWatering: 7,
+  symbol: {
+    userWideId: 1
+  }
  };
 const mocksWithPlant: any = [
   {

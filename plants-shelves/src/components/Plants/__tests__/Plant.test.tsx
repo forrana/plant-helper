@@ -12,7 +12,10 @@ const getPlantWithXDaysToWater = (days: number): PlantType => ({
   name: "Aloe 1",
   scientificName: "Aloe Vera 1" ,
   daysUntilNextWatering: days,
-  daysBetweenWatering: 7
+  daysBetweenWatering: 7,
+  symbol: {
+    userWideId: 1
+  }
 })
 
 const plantUnWatered: PlantType = getPlantWithXDaysToWater(0)
@@ -24,7 +27,10 @@ const plantWIthErrornousId: PlantType = {
   name: "Aloe 1",
   scientificName: "Aloe Vera 1" ,
   daysUntilNextWatering: 7,
-  daysBetweenWatering: 7
+  daysBetweenWatering: 7,
+  symbol: {
+    userWideId: 1
+  }
 }
 
 const errorMessage: string = `error-${getRandomString(10)}`

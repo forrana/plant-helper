@@ -101,7 +101,7 @@ function Plant({ plant, index }: PlantProps) {
     if (isEditMode)
       return (
         <Card className={styles.plant}>
-          <Badge color="light">{plant.id}</Badge>
+          <Badge color="light">{plant.symbol.userWideId}</Badge>
           <CardBody>
             <PlantsEdit plant={plant} index={index} action={toggleEditMode}/>
           </CardBody>
@@ -110,7 +110,7 @@ function Plant({ plant, index }: PlantProps) {
 
     return (
       <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-testid={`plant-card-${index}`}>
-        <Badge color="light">{plant.id}</Badge>
+        <Badge color="light">{plant.symbol.userWideId}</Badge>
         <CardBody>
           <section className={styles.controls} data-testid={`plant-controls-${index}`}>
             <Button outline onClick={toWater} title="Water" data-testid="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
