@@ -19,9 +19,17 @@ class Room(models.Model):
     def __str__(self):
         return f"{self.house.house_name}.{self.room_name}"
 
+
+class Symbol(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+    user_wide_id = models.IntegerField(default=1)
+    class Meta:
+        ordering = ["user_wide_id"]
+
 class Plant(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, blank=True, null=True)
+    symbol = models.OneToOneField(Symbol, on_delete=models.CASCADE, blank=False, null=True)
     name = models.CharField(max_length=200)
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
@@ -38,6 +46,19 @@ class Plant(models.Model):
     @property
     def days_between_watering(self):
         return self.time_between_watering.days
+
+    def save(self, *args, **kwargs):
+        is_new = True if not self.pk else False
+        super(Plant, self).save(*args, **kwargs)
+        if is_new:
+            symbol_id = 1
+            last_symbol = Symbol.objects.filter(user=self.owner).last()
+            if last_symbol:
+                symbol_id = last_symbol.user_wide_id + 1
+            symbol = Symbol(user=self.owner, user_wide_id=symbol_id)
+            symbol.save()
+            self.symbol = symbol
+            self.save()
 
     def __str__(self):
         prefix = ""

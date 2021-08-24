@@ -3,6 +3,9 @@ const GET_ALL_PLANTS = gql`
 query {
   plants {
     id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+    symbol {
+      userWideId
+    }
   }
 }
 `;

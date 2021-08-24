@@ -3,7 +3,7 @@ import graphene
 from graphql import GraphQLError
 from django.utils import timezone
 
-from .models import Plant, Room, House
+from .models import Plant, Room, House, Symbol
 
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
@@ -16,6 +16,11 @@ class RoomType(DjangoObjectType):
     class Meta:
         model = Room
         fields = ("id", "room_name", "house", "plants")
+
+class SymbolType(DjangoObjectType):
+    class Meta:
+        model = Symbol
+        fields = ("id", "user_wide_id")
 
 class HouseType(DjangoObjectType):
     class Meta:
