@@ -124,7 +124,7 @@ function Plant({ plant, index }: PlantProps) {
           <Progress value={ plantHealth } color={ healthColor() }/>
         </CardBody>
 
-        <Modal isOpen={modal} toggle={toggleModal}>
+        <Modal isOpen={modal} toggle={toggleModal} autoFocus={false}>
           <ModalHeader toggle={toggleModal}>Delete plant {plant.name} </ModalHeader>
           <ModalBody>
             Warning! This action is irreversible.

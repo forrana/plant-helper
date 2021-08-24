@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Input, Spinner } from 'reactstrap';
@@ -55,6 +55,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     <Form
       onSubmit={handleFormSubmit}
       autoComplete="off"
+      autoFocus={false}
     >
       <section className={styles.controls}>
         <Button outline color="success" title="Save!" className={uiStyles.roundButton} type="submit">&#10003;</Button>
@@ -66,6 +67,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
         <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
           onChange={handlePlantNameInputChange}
+          autoFocus={true}
           required
         />
       </FormGroup>

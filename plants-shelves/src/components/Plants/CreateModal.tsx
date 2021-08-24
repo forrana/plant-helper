@@ -14,7 +14,7 @@ interface PlantsNavBarProps {
 const CreateModal = ({isOpen, toggleAction}: PlantsNavBarProps) => {
   return (
     <>
-      <Modal isOpen={isOpen} toggle={toggleAction}>
+      <Modal isOpen={isOpen} toggle={toggleAction} autoFocus={false}>
             <ModalHeader toggle={toggleAction}>Create new plant </ModalHeader>
             <ModalBody>
               <PlantsCreate action={toggleAction} />

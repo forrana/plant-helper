@@ -64,6 +64,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           value={plantName}
           data-testid="name-input"
           onChange={handlePlantNameInputChange}
+          autoFocus={true}
           required
         />
       </FormGroup>
