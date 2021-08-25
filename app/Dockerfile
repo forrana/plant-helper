@@ -13,4 +13,4 @@ COPY . .
 RUN chmod +x docker-entrypoint.sh
 
 EXPOSE 8000
-CMD ["python", "./manage.py", "runserver"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app.wsgi"]

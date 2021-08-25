@@ -5,3 +5,4 @@ django-cors-headers>=3.7.0
 pyyaml
 django-graphql-jwt==0.3.0
 django-graphql-auth
+gunicorn
