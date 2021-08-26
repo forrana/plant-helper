@@ -13,7 +13,10 @@ const plant: PlantType = {
   name: "Aloe 1",
   scientificName: "Aloe Vera" ,
   daysUntilNextWatering: 0,
-  daysBetweenWatering: 7
+  daysBetweenWatering: 7,
+  symbol: {
+    userWideId: 1
+  }
  };
 
 const newName = getRandomString(10)
@@ -23,7 +26,7 @@ const mocksWithPlant: any = [
   {
     request: {
       query: UPDATE_PLANT,
-      variables: { plantId: plant.id, plantName: newName, scientificName: newScName }
+      variables: { plantId: plant.id, plantName: newName, scientificName: newScName, daysBetweenWatering: plant.daysBetweenWatering }
     },
     result: {
       data:  plant,
@@ -32,7 +35,16 @@ const mocksWithPlant: any = [
   {
     request: {
       query: UPDATE_PLANT,
-      variables: { plantId: plant.id, plantName: "error", scientificName: plant.scientificName}
+      variables: { plantId: plant.id, plantName: newName, scientificName: newScName, daysBetweenWatering: 15 }
+    },
+    result: {
+      data:  {...plant, daysBetweenWatering: 15},
+    },
+  },
+  {
+    request: {
+      query: UPDATE_PLANT,
+      variables: { plantId: plant.id, plantName: "error", scientificName: plant.scientificName, daysBetweenWatering: plant.daysBetweenWatering}
     },
     error:
       { message: "Something went wrong" },
@@ -73,6 +85,13 @@ test('Allow to edit plant', async () => {
     fireEvent.change(
       screen.getByTestId("plant-scientific-name-input"),
       { target: { value: newScName } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByTestId("days-between-watering-input"),
+      { target: { value: 15 } }
     )
   });
 

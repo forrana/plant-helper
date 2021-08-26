@@ -18,6 +18,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
   const [scientificName, setScientificName] = useState(plant.scientificName);
+  const [daysBetweenWatering, setDaysBetweenWatering] = useState(plant.daysBetweenWatering)
+
 
   const [updatePlant, { loading, error }] = useMutation(UPDATE_PLANT, {
     onCompleted: (data: { updatePlant: PlantData }) => {
@@ -36,10 +38,14 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     setScientificName(event.target.value);
   };
 
+  const handleDaysBetweenWateringInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDaysBetweenWatering(parseInt(event.target.value))
+  }
+
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      updatePlant({ variables: { plantId: plant.id, plantName, scientificName } })
+      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWatering } })
     }
   }
 
@@ -66,6 +72,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <FormGroup>
         <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
+          bsSize="sm"
           onChange={handlePlantNameInputChange}
           autoFocus={true}
           required
@@ -73,6 +80,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <AutoCompleteInput
+          bsSize="sm"
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           data-testid="plant-scientific-name-input"
           value={scientificName}
@@ -80,6 +88,22 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           onChange={handleScientificNameInputChange}
           required
           />
+      </FormGroup>
+      <FormGroup>
+        <section className={styles.label}>
+          <span className="icon-droplet"></span>
+          <h4 className={styles.header}><span className="icon-droplet"></span></h4>
+        </section>
+        <Input type="range" name="daysBetweenWatering" id="daysBetweenWatering" placeholder="Days between watering"
+            value={daysBetweenWatering}
+            data-testid="days-between-watering-input"
+            onChange={handleDaysBetweenWateringInputChange}
+            autoFocus={true}
+            min={1}
+            max={30}
+            required
+          />
+        <small>{daysBetweenWatering} day(s)</small>
       </FormGroup>
     </Form>
   )

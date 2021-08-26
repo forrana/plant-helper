@@ -11,8 +11,8 @@ query {
 `;
 
 const ADD_PLANT = gql`
-  mutation CreatePlant($plantName: String!, $scientificName: String!) {
-    createPlant(plantName: $plantName, scientificName: $scientificName) {
+  mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWatering: Int!) {
+    createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWatering: $daysBetweenWatering) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
         symbol {
@@ -37,8 +37,8 @@ const WATER_PLANT = gql`
 `;
 
 const UPDATE_PLANT = gql`
-  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!) {
-    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName) {
+  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWatering: Int!) {
+    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWatering: $daysBetweenWatering) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
         symbol {

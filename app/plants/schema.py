@@ -1,5 +1,6 @@
 from graphene_django import DjangoObjectType
 import graphene
+import datetime
 from graphql import GraphQLError
 from django.utils import timezone
 
@@ -60,15 +61,18 @@ class CreatePlant(graphene.Mutation):
     class Arguments:
         plant_name = graphene.String()
         scientific_name = graphene.String()
+        days_between_watering = graphene.Int()
 
     ok = graphene.Boolean()
     plant = graphene.Field(lambda: PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_name, scientific_name):
+    def mutate(root, id, info, plant_name, scientific_name, days_between_watering):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user)
+        plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user,
+                                     time_between_watering = datetime.timedelta(days=days_between_watering)
+                                     )
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 
@@ -95,11 +99,12 @@ class UpdatePlant(graphene.Mutation):
         plant_id = graphene.ID()
         plant_name = graphene.String()
         scientific_name = graphene.String()
+        days_between_watering = graphene.Int()
     ok = graphene.Boolean()
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_id, plant_name, scientific_name):
+    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
@@ -107,6 +112,7 @@ class UpdatePlant(graphene.Mutation):
             raise GraphQLError('Unauthorized')
         plant.name = plant_name
         plant.scientific_name = scientific_name
+        plant.time_between_watering = datetime.timedelta(days=days_between_watering)
         plant.save()
         ok = True
         return UpdatePlant(plant=plant, ok=ok)

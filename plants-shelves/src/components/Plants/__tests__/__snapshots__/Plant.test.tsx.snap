@@ -61,9 +61,11 @@ exports[`Should indicate 1 day to water 1`] = `
       <div
         class="text-center"
       >
-        Water in 
-        1
-         day
+        <small>
+          Water in 
+          1
+           day
+        </small>
       </div>
       <div
         class="progress"
@@ -143,8 +145,10 @@ exports[`Should indicate 2 days to water 1`] = `
       <div
         class="text-center"
       >
-        2
-         days until watering
+        <small>
+          2
+           days until watering
+        </small>
       </div>
       <div
         class="progress"
@@ -224,8 +228,10 @@ exports[`Should indicate 4 days to water 1`] = `
       <div
         class="text-center"
       >
-        4
-         days until watering
+        <small>
+          4
+           days until watering
+        </small>
       </div>
       <div
         class="progress"
@@ -305,7 +311,9 @@ exports[`Should indicate water me 1`] = `
       <div
         class="text-center"
       >
-        Water me!
+        <small>
+          Water me!
+        </small>
       </div>
       <div
         class="progress"

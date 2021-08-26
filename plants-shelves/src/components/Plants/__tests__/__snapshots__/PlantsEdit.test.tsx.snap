@@ -33,7 +33,7 @@ exports[`Match snapshot 1`] = `
       class="form-group"
     >
       <input
-        class="form-control"
+        class="form-control-sm form-control"
         data-testid="plant-name-input"
         id="name"
         name="name"
@@ -48,7 +48,7 @@ exports[`Match snapshot 1`] = `
       class="form-group"
     >
       <input
-        class="form-control"
+        class="form-control-sm form-control"
         data-testid="plant-scientific-name-input"
         id="scientificName"
         name="scientificName"
@@ -60,6 +60,40 @@ exports[`Match snapshot 1`] = `
       <ul
         class="option list-group"
       />
+    </div>
+    <div
+      class="form-group"
+    >
+      <section
+        class="label"
+      >
+        <span
+          class="icon-droplet"
+        />
+        <h4
+          class="header"
+        >
+          <span
+            class="icon-droplet"
+          />
+        </h4>
+      </section>
+      <input
+        class="form-control-range"
+        data-testid="days-between-watering-input"
+        id="daysBetweenWatering"
+        max="30"
+        min="1"
+        name="daysBetweenWatering"
+        placeholder="Days between watering"
+        required=""
+        type="range"
+        value="7"
+      />
+      <small>
+        7
+         day(s)
+      </small>
     </div>
   </form>
 </div>

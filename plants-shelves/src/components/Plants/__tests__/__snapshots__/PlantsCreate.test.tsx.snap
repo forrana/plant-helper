@@ -47,8 +47,46 @@ exports[`Match snapshot 1`] = `
         value=""
       />
     </div>
+    <div
+      class="form-group"
+    >
+      <section
+        class="label"
+      >
+        <span
+          class="icon-droplet"
+        />
+        <h4
+          class="header"
+        >
+          <span
+            class="icon-droplet"
+          />
+        </h4>
+      </section>
+      <input
+        class="form-control-range"
+        data-testid="days-between-watering-input"
+        id="daysBetweenWatering"
+        max="30"
+        min="1"
+        name="daysBetweenWatering"
+        placeholder="Days between watering"
+        required=""
+        type="range"
+        value="7"
+      />
+      <div
+        class="text-center"
+      >
+        <small>
+          7
+           day(s) between waterings
+        </small>
+      </div>
+    </div>
     <button
-      class="btn btn-secondary"
+      class="button btn btn-secondary"
       type="submit"
     >
       Add plant

@@ -18,16 +18,16 @@ interface WhenToWaterProps { daysUntilNextWatering: number }
 function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
   if(daysUntilNextWatering === 1)
     return (
-      <div className="text-center">Water in {daysUntilNextWatering} day</div>
+      <div className="text-center"><small>Water in {daysUntilNextWatering} day</small></div>
     )
 
   if(daysUntilNextWatering < 1)
     return (
-      <div className="text-center">Water me!</div>
+      <div className="text-center"><small>Water me!</small></div>
     )
 
   return (
-    <div className="text-center">{daysUntilNextWatering} days until watering</div>
+    <div className="text-center"><small>{daysUntilNextWatering} days until watering</small></div>
   )
 }
 

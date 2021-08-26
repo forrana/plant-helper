@@ -12,14 +12,17 @@ const newPlant: PlantType = {
   name: "Aloe 1",
   scientificName: "Aloe Vera 1" ,
   daysUntilNextWatering: 0,
-  daysBetweenWatering: 7
+  daysBetweenWatering: 7,
+  symbol: {
+    userWideId: 1
+  }
  };
 
 const mocksWithPlant: any = [
   {
     request: {
       query: ADD_PLANT,
-      variables: { plantName: newPlant.name, scientificName: newPlant.scientificName}
+      variables: { plantName: newPlant.name, scientificName: newPlant.scientificName, daysBetweenWatering: newPlant.daysBetweenWatering }
     },
     result: {
       data:  newPlant,
@@ -28,7 +31,16 @@ const mocksWithPlant: any = [
   {
     request: {
       query: ADD_PLANT,
-      variables: { plantName: "error", scientificName: newPlant.scientificName}
+      variables: { plantName: newPlant.name, scientificName: newPlant.scientificName, daysBetweenWatering: 15 }
+    },
+    result: {
+      data:  { ...newPlant, daysBetweenWatering: 15 },
+    },
+  },
+  {
+    request: {
+      query: ADD_PLANT,
+      variables: { plantName: "error", scientificName: newPlant.scientificName, daysBetweenWatering: newPlant.daysBetweenWatering}
     },
     error:
       { message: "Something went wrong" },
@@ -36,30 +48,6 @@ const mocksWithPlant: any = [
 ];
 
 const mockCallback = jest.fn(() => null)
-
-const createPlant = async (screen: Screen) => {
-  await act(async () => {
-    fireEvent.change(
-      screen.getByTestId("name-input"),
-      { target: { value: newPlant.name } }
-    )
-  });
-
-  await act(async () => {
-    fireEvent.change(
-      screen.getByTestId("sc-name-input"),
-      { target: { value: newPlant.scientificName } }
-    )
-  });
-
-  await act(async () => {
-    fireEvent.click(
-      screen.getByText(/Add plant/i),
-      { target: { value: newPlant.scientificName } }
-    )
-    await new Promise(resolve => setTimeout(resolve, 0));
-  });
-}
 
 test('Match snapshot', async () => {
   const {container} = render(
@@ -93,6 +81,13 @@ test('Allow to create plant', async () => {
     fireEvent.change(
       screen.getByTestId("sc-name-input"),
       { target: { value: newPlant.scientificName } }
+    )
+  });
+
+  await act(async () => {
+    fireEvent.change(
+      screen.getByTestId("days-between-watering-input"),
+      { target: { value: 15 } }
     )
   });
 

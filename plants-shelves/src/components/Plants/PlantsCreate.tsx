@@ -8,6 +8,7 @@ import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
 import ErrorHandler from './ErrorHandler';
+import styles from "./Plant.module.css"
 
 
 interface PlantsCreateProps { action?: () => void; }
@@ -17,6 +18,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
+  const [daysBetweenWatering, setDaysBetweenWatering] = useState(7)
 
   const [addPlant, { loading, error }] = useMutation(ADD_PLANT, {
     onCompleted: (data: { createPlant: PlantData }) => {
@@ -37,10 +39,14 @@ function PlantsCreate({ action }: PlantsCreateProps) {
     setScientificName(event.target.value);
   };
 
+  const handleDaysBetweenWateringInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDaysBetweenWatering(parseInt(event.target.value))
+  }
+
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      addPlant({ variables: { plantName, scientificName } })
+      addPlant({ variables: { plantName, scientificName, daysBetweenWatering } })
     }
   }
 
@@ -79,7 +85,23 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           required
           />
       </FormGroup>
-      <Button type="submit">Add plant</Button>
+      <FormGroup>
+        <section className={styles.label}>
+          <span className="icon-droplet"></span>
+          <h4 className={styles.header}><span className="icon-droplet"></span></h4>
+        </section>
+        <Input type="range" name="daysBetweenWatering" id="daysBetweenWatering" placeholder="Days between watering"
+            value={daysBetweenWatering}
+            data-testid="days-between-watering-input"
+            onChange={handleDaysBetweenWateringInputChange}
+            autoFocus={true}
+            min={1}
+            max={30}
+            required
+          />
+        <div className="text-center"><small>{daysBetweenWatering} day(s) between waterings</small></div>
+      </FormGroup>
+      <Button type="submit" className={styles.button}>Add plant</Button>
     </Form>
   )
 }

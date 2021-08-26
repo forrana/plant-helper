@@ -38,6 +38,22 @@
   display: flex;
 }
 
+.label {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+}
+
+.header {
+  margin-bottom: 0;
+  margin-left: -0.3em;
+}
+
+.button {
+  width: 100%;
+}
+
 @keyframes alarm {
   from {background-color: var(--alarm-bg-color);}
   to {background-color: var(--default-bg-color);}
