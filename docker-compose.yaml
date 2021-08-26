@@ -17,7 +17,7 @@ services:
       - "5432:5432"
   app:
     build: ./app
-    command: /usr/src/app/docker-entrypoint.sh
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app:/usr/src/app
     ports:
