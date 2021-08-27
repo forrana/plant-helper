@@ -28,9 +28,6 @@ services:
 
   web:
     image: gcr.io/plant-helper/web
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     build:
       context: ./plants-shelves
       dockerfile: Dockerfile-prod
@@ -42,10 +39,3 @@ services:
     environment:
       - HTTPS=true
       - REACT_APP_GQL_HOST=${HOST}
-
-  certbot:
-    image: certbot/certbot
-    command: certbot certonly
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
