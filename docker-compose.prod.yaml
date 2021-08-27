@@ -22,7 +22,9 @@ services:
     depends_on:
       - db
     environment:
-      - FE_HOST=${HOST}
+      - HOST=${HOST}
+      - EMAIL_ACCOUNT=${EMAIL_ACCOUNT}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
 
   web:
     image: gcr.io/plant-helper/web
