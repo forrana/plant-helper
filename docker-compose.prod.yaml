@@ -19,8 +19,6 @@ services:
     image: gcr.io/plant-helper/backend
     build: ./app
     command: /usr/src/app/docker-entrypoint.sh
-    ports:
-      - "8000:8000"
     depends_on:
       - db
     environment:
@@ -31,11 +29,10 @@ services:
     build:
       context: ./plants-shelves
       dockerfile: Dockerfile-prod
-    command: serve /app -c /app/serve.json
     ports:
-      - "80:5000"
-    depends_on:
-      - db
+      - "80:80"
+    links:
+      - app
     environment:
       - HTTPS=true
       - REACT_APP_GQL_HOST=${HOST}
