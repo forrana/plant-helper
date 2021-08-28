@@ -30,7 +30,7 @@ const host = window.location.hostname
 const protocol = window.location.protocol
 
 const graphQLink = createHttpLink({
-  uri: `${protocol}//${host}/api/`,
+  uri: `${protocol}//${host}/api/graphql/`,
 });
 
 const cache = new InMemoryCache();
