@@ -22,4 +22,3 @@ RUN apk add certbot certbot-nginx
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=0 /app/build /usr/share/nginx/html
-# RUN certbot --nginx -n -d plast.ml -d www.plast.ml --email plant.assistant.ml@gmail.com --agree-tos

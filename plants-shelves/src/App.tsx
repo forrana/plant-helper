@@ -27,9 +27,10 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const host = window.location.hostname
+const protocol = window.location.protocol
 
 const graphQLink = createHttpLink({
-  uri: `http://${host}/api/`,
+  uri: `${protocol}//${host}/api/`,
 });
 
 const cache = new InMemoryCache();
