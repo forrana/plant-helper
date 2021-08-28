@@ -5,6 +5,8 @@ volumes:
     driver: local
   plast-web-nginx:
     driver: local
+  plast-web-certificates:
+    driver: local
 
 services:
   db:
@@ -21,6 +23,8 @@ services:
     image: gcr.io/plant-helper/backend
     build: ./app
     command: /usr/src/app/docker-entrypoint.sh
+    ports:
+      - "8000:8000"
     depends_on:
       - db
     environment:
@@ -32,6 +36,7 @@ services:
     image: gcr.io/plant-helper/web
     volumes:
       - plast-web-nginx:/etc/nginx
+      - plast-web-certificates:/etc/letsencrypt
     build:
       context: ./plants-shelves
       dockerfile: Dockerfile-prod
@@ -39,4 +44,6 @@ services:
       - "80:80"
       - "443:443"
     links:
+      - app
+    depends_on:
       - app
