@@ -30,7 +30,8 @@ services:
 
   web:
     image: gcr.io/plant-helper/web
-    volumes: plast-web-nginx:/etc/nginx
+    volumes:
+      - plast-web-nginx:/etc/nginx
     build:
       context: ./plants-shelves
       dockerfile: Dockerfile-prod
