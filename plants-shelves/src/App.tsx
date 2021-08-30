@@ -34,6 +34,23 @@ const graphQLink = createHttpLink({
 });
 
 const cache = new InMemoryCache();
+const isBrowser = typeof window !== 'undefined';
+// Copy pasted from https://docs.djangoproject.com/en/3.2/ref/csrf/
+const getCookie = (name: string) => {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+};
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -44,10 +61,12 @@ const authLink = setContext((_, { headers }) => {
     token = userState.token;
   }
     // return the headers to the context so httpLink can read them
+  const csrftoken = getCookie('csrftoken');
   return {
     headers: {
       ...headers,
       Authorization: token ? `JWT ${token}` : "",
+      "X-CSRFToken": csrftoken || "",
     }
   }
 });
