@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Input, Spinner } from 'reactstrap';
@@ -10,6 +10,7 @@ import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
+import pot from './images/pot.jpeg'
 
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
@@ -67,8 +68,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
         <Button outline color="success" title="Save!" className={uiStyles.roundButton} type="submit">&#10003;</Button>
         <Button outline color="danger" title="Cancel!" onClick={action} className={uiStyles.roundButton}>&#10060;</Button>
       </section>
-      <div className={styles.image}>&#129716;</div>
-
+      <img src={pot} alt="plant pot" className={styles.image}/>
       <FormGroup>
         <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}

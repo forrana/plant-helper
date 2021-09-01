@@ -24,11 +24,11 @@ exports[`Match snapshot 1`] = `
         ❌
       </button>
     </section>
-    <div
+    <img
+      alt="plant pot"
       class="image"
-    >
-      🪴
-    </div>
+      src="pot.jpeg"
+    />
     <div
       class="form-group"
     >

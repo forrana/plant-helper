@@ -43,11 +43,11 @@ exports[`Should indicate 1 day to water 1`] = `
           🗑
         </button>
       </section>
-      <div
+      <img
+        alt="plant pot"
         class="image"
-      >
-        🪴
-      </div>
+        src="pot.jpeg"
+      />
       <h5
         class="card-title"
       >
@@ -127,11 +127,11 @@ exports[`Should indicate 2 days to water 1`] = `
           🗑
         </button>
       </section>
-      <div
+      <img
+        alt="plant pot"
         class="image"
-      >
-        🪴
-      </div>
+        src="pot.jpeg"
+      />
       <h5
         class="card-title"
       >
@@ -210,11 +210,11 @@ exports[`Should indicate 4 days to water 1`] = `
           🗑
         </button>
       </section>
-      <div
+      <img
+        alt="plant pot"
         class="image"
-      >
-        🪴
-      </div>
+        src="pot.jpeg"
+      />
       <h5
         class="card-title"
       >
@@ -293,11 +293,11 @@ exports[`Should indicate water me 1`] = `
           🗑
         </button>
       </section>
-      <div
+      <img
+        alt="plant pot"
         class="image"
-      >
-        🪴
-      </div>
+        src="pot.jpeg"
+      />
       <h5
         class="card-title"
       >

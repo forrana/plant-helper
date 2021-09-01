@@ -10,6 +10,7 @@ import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
+import pot from './images/pot.jpeg'
 
 interface PlantProps extends PlantData { index: number }
 interface WhenToWaterProps { daysUntilNextWatering: number }
@@ -117,7 +118,7 @@ function Plant({ plant, index }: PlantProps) {
             <Button outline onClick={toggleEditMode} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>&#x270E;</Button>
             <Button outline onClick={toggleModal} title="Remove" data-testid="remove-btn" className={uiStyles.roundButton}>&#x1F5D1;</Button>
           </section>
-          <div className={styles.image}>&#129716;</div>
+          <img src={pot} alt="plant pot" className={styles.image}/>
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>
           <WhenToWater daysUntilNextWatering={plant.daysUntilNextWatering}/>
