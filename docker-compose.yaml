@@ -24,6 +24,10 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      - HOST=${HOST}
+      - EMAIL_ACCOUNT=${EMAIL_ACCOUNT}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
   web:
     build: ./plants-shelves
     command: npm start

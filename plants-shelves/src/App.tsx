@@ -28,13 +28,13 @@ import { setContext } from '@apollo/client/link/context';
 
 const host = window.location.hostname
 const protocol = window.location.protocol
+const DEV_URL = `${protocol}//${host}:8000/graphql/`
 
 const graphQLink = createHttpLink({
   uri: `${protocol}//${host}/api/graphql/`,
 });
 
 const cache = new InMemoryCache();
-const isBrowser = typeof window !== 'undefined';
 // Copy pasted from https://docs.djangoproject.com/en/3.2/ref/csrf/
 const getCookie = (name: string) => {
   let cookieValue = null;
