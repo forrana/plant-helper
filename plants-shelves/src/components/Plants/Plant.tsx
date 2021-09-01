@@ -10,7 +10,7 @@ import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
-import pot from './images/pot.jpeg'
+import pot from './images/pot.png'
 
 interface PlantProps extends PlantData { index: number }
 interface WhenToWaterProps { daysUntilNextWatering: number }

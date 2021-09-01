@@ -10,7 +10,7 @@ import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
-import pot from './images/pot.jpeg'
+import pot from './images/pot.png'
 
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
