@@ -30,10 +30,12 @@ function Login() {
         setLoginErrors([]);
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
+        const refreshToken: string = data?.tokenAuth?.refreshToken;
         if(token?.length && username?.length) {
           dispatch({
                 type: 'login',
                 token,
+                refreshToken,
                 username
             })
           client.resetStore();
