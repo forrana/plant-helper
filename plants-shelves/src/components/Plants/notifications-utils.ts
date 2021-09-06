@@ -18,7 +18,7 @@ async function createNotificationSubscription(pushServerPublicKey: string) {
     });
   }
 
-async function askPermission(pushServerPublicKey: string = VAPID_PUBLIC, rejectAction: () => any, acceptAction: (subscriptin: PushSubscription) => any) {
+async function askPermission(rejectAction: () => any, acceptAction: (subscriptin: PushSubscription) => any, pushServerPublicKey: string = VAPID_PUBLIC) {
     if (!('serviceWorker' in navigator)) {
         // Service Worker isn't supported on this browser, disable or hide UI.
         return;

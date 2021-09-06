@@ -57,6 +57,14 @@ const DELETE_PLANT = gql`
   }
 `;
 
+const CREATE_SUBSCRIPTION = gql`
+  mutation CreateSubscription($endpoint: String!, p256dh: String!, auth: String!, permission_given: Boolean!) {
+    createSubscription(endpoint: $endpoint, p256dh: $p256dh, auth: $auth, permission_given: $permission_given) {
+      ok
+    }
+  }
+`
 
 
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT }
+
+export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION}
