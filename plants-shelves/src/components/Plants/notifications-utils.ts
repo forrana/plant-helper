@@ -1,13 +1,5 @@
 const VAPID_PUBLIC: string = "BFZvVqR_GKulrPLvUl5iGfOms1z5A6pmA1osiJ6k3-NHKKdmyKxQPfAxYnCLtsxL_pNVkzqzVZ3CgPpvkN7TG5M"
 
-interface Subscription {
-    endpoint: string,
-    keys: {
-        p256dh: string,
-        auth: string
-    }
-}
-
 async function createNotificationSubscription(pushServerPublicKey: string) {
     //wait for service worker installation to be ready
     const serviceWorker = await navigator.serviceWorker.ready;

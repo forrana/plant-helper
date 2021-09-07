@@ -15,6 +15,17 @@ export interface PlantsData {
   plants: PlantType[];
 }
 
+export interface Subscription {
+  endpoint: string,
+  p256dh: string,
+  auth: string,
+  permission_given: boolean
+}
+
+export interface SubscriptionData {
+  subscription: Subscription
+}
+
 export interface PlantData {
   plant: PlantType;
 }

@@ -9,6 +9,7 @@ import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
 import CreateModal from './CreateModal';
+import ManagePushSubscription from './ManagePushSubscription';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -17,6 +18,7 @@ interface PlantsContainerProps {
 const WithNavBar = ({ children }: any) => {
   return (
     <>
+      <ManagePushSubscription />
       <PlantsNavBar />
       {children}
     </>
