@@ -66,8 +66,8 @@ const GET_SUBSCRIPTION = gql`
 `
 
 const CREATE_SUBSCRIPTION = gql`
-  mutation CreateSubscription($endpoint: String!, $p256dh: String!, $auth: String!, $permission_given: Boolean!) {
-    createSubscription(endpoint: $endpoint, p256dh: $p256dh, auth: $auth, permission_given: $permission_given) {
+  mutation CreateSubscription($endpoint: String!, $p256dh: String!, $auth: String!, $permissionGiven: Boolean!) {
+    createSubscription(endpoint: $endpoint, p256dh: $p256dh, auth: $auth, permissionGiven: $permissionGiven) {
       ok
     }
   }

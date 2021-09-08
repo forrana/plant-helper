@@ -19,14 +19,25 @@ function ManagePushSubscription() {
 
       const [subscribeToNotifications] = useMutation(CREATE_SUBSCRIPTION, {
         onCompleted: (data: { createSubscription: any }) => {
+            console.log("subscription", data)
         },
-        onError: (e) => console.error('Error creating plant:', e)
+        onError: (e) => console.error('Error creating subscription:', e)
       });
 
 
     React.useEffect(
      function () {
-        askPermission(() => null, (subscriptin: PushSubscription) => console.log(subscriptin))
+        askPermission(() => null, (subscriptin: PushSubscription) => {
+            const parsedSubscriptoin = JSON.parse(JSON.stringify(subscriptin))
+            subscribeToNotifications({ variables:
+                {
+                    endpoint: parsedSubscriptoin.endpoint,
+                    p256dh: parsedSubscriptoin.keys.p256dh,
+                    auth: parsedSubscriptoin.keys.auth,
+                    permissionGiven: true
+                }
+            })
+        })
      }
     , [])
     return (
