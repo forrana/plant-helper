@@ -23,7 +23,7 @@ export interface Subscription {
 }
 
 export interface SubscriptionData {
-  subscription: Subscription
+  subscription: boolean
 }
 
 export interface PlantData {

@@ -59,9 +59,7 @@ const DELETE_PLANT = gql`
 
 const GET_SUBSCRIPTION = gql`
   query {
-    subscription {
-      endpoint, p256dh, auth, permissionGiven
-    }
+    subscription
   }
 `
 
