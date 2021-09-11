@@ -12,12 +12,14 @@ class Command(BaseCommand):
             .annotate(when_to_water=ExpressionWrapper( \
                 (F('watered') + F('time_between_watering')), output_field=DateTimeField())) \
             .filter(when_to_water__lte = timezone.now()).order_by("owner").values_list('owner')
+        owners_set = set()
         for owner in unwatered_plants:
-            self.stdout.write(self.style.SUCCESS(owner))
+            owners_set.add(owner)
+        self.stdout.write(self.style.SUCCESS('owner set:  "%s"' % owners_set))
+        for owner in owners_set:
             try:
                 subscription = PushSubscription.objects.get(user = owner)
                 payload = {"title": "Water me!", "message": "Some of your plants need to be watered!"}
                 send_to_subscription(subscription, payload)
-                self.stdout.write(self.style.SUCCESS('subscriptoin -  "%s"' % subscription.auth))
             except PushSubscription.DoesNotExist:
                 self.stdout.write(self.style.SUCCESS('subscriptoin for user not exist  "%s"' % owner))
