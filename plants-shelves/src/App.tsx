@@ -29,9 +29,10 @@ import { setContext } from '@apollo/client/link/context';
 const host = window.location.hostname
 const protocol = window.location.protocol
 const DEV_URL = `${protocol}//${host}:8000/graphql/`
+const PROD_URL = `${protocol}//${host}/api/graphql/`
 
 const graphQLink = createHttpLink({
-  uri: `${protocol}//${host}/api/graphql/`,
+  uri: PROD_URL,
 });
 
 const cache = new InMemoryCache();

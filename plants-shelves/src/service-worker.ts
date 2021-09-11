@@ -77,4 +77,24 @@ self.addEventListener('message', (event) => {
   }
 });
 
+// Push notifications
+
+self.addEventListener('push', function(event) {
+  if (event.data) {
+    const data = event.data.json();
+    showLocalNotification(data.title || "title", data.message || "message", self.registration);
+    console.log('Push event', data);
+  } else {
+    console.log('Push event but no data');
+  }
+})
+const showLocalNotification = (title: string, body: string, swRegistration: any) => {
+  const options = {
+    body,
+    icon: "icon-192.png"
+    // here you can add more properties like icon, image, vibrate, etc.
+  }
+  swRegistration.showNotification(title, options)
+}
+
 // Any other custom service worker logic can go here.

@@ -29,6 +29,7 @@ services:
       - HOST=${HOST}
       - EMAIL_ACCOUNT=${EMAIL_ACCOUNT}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - VAPID_PRIVATE=${VAPID_PRIVATE}
 
   web:
     image: gcr.io/plant-helper/web
