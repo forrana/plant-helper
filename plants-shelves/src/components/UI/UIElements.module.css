@@ -7,3 +7,7 @@
 .footer {
   justify-content: space-between;
 }
+
+img {
+  height: 3em;
+}

@@ -26,7 +26,7 @@
 }
 
 .image {
-  height: 9em;
+  height: 6em;
   width: auto;
   object-fit: contain;
 }
@@ -54,6 +54,17 @@
 
 .button {
   width: 100%;
+}
+
+.badge {
+  position: absolute;
+  top: calc(46.5%);
+  left: calc(50% - 0.6em);
+  border-radius: 50%;
+  font-size: 0.8em;
+  background-color: #d84412;
+  color: azure;
+  font-weight: bolder;
 }
 
 @keyframes alarm {

@@ -20,7 +20,7 @@ const PlantsNavBar = () => {
   return (
     <>
       <Navbar color="light" light expand="md">
-        <NavbarBrand>Plants Shelves</NavbarBrand>
+        <NavbarBrand><img src="icon-192.png"/></NavbarBrand>
         <Nav className="mr-auto" navbar>
             <NavItem>
               <Button onClick={toggleModal} data-testid="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
