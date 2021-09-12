@@ -16,8 +16,6 @@ def _send_notification(subscription, payload, ttl):
     webpush_settings = getattr(settings, 'WEBPUSH_SETTINGS', {})
     vapid_private_key = webpush_settings.get('VAPID_PRIVATE_KEY')
     vapid_admin_email = webpush_settings.get('VAPID_ADMIN_EMAIL')
-    print(vapid_admin_email)
-    print(vapid_private_key)
     # Vapid keys are optional, and mandatory only for Chrome.
     # If Vapid key is provided, include vapid key and claims
     if vapid_private_key:
