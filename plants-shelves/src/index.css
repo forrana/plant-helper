@@ -40,3 +40,12 @@ main {
 .icon-droplet:after {
   content: "\1f4a7"
 }
+
+.alert {
+  position: absolute;
+  z-index: 1;
+  top: 40%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

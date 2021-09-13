@@ -24,6 +24,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
+import ServiceWorkerWrapper from './ServiceWorkerWrapper';
 
 
 const host = window.location.hostname
@@ -31,8 +32,16 @@ const protocol = window.location.protocol
 const DEV_URL = `${protocol}//${host}:8000/graphql/`
 const PROD_URL = `${protocol}//${host}/api/graphql/`
 
+let graphQLURL: () => string = () => {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    return DEV_URL
+  } else {
+    return PROD_URL
+  }
+}
+
 const graphQLink = createHttpLink({
-  uri: PROD_URL,
+  uri: graphQLURL(),
 });
 
 const cache = new InMemoryCache();
@@ -92,6 +101,7 @@ function App() {
       <UserDispatch.Provider value={userDispatch}>
         <UserContext.Provider value={userState}>
           <PlantsDispatch.Provider value={dispatch}>
+            <ServiceWorkerWrapper />
             <Switch>
               <PublicRoute path="/login">
                 <Login/>
