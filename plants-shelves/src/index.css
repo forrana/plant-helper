@@ -41,6 +41,14 @@ main {
   content: "\1f4a7"
 }
 
+.icon-eye:after {
+  content: "\01F50D"
+}
+
+.icon-save:after {
+  content: "\1F4BE";
+}
+
 .alert {
   position: absolute;
   z-index: 1;
@@ -48,4 +56,17 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.card-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: .5rem;
+}
+
+.card-subtitle {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

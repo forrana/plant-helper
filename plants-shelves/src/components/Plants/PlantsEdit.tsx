@@ -1,13 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-import { Button, Form, FormGroup, Input, Spinner } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Spinner } from 'reactstrap';
 
-import { UPDATE_PLANT } from './queries'
+import { DELETE_PLANT, UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
+import editStyles from "./PlantsEdit.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
@@ -50,37 +51,57 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     }
   }
 
+  const [modal, setModal] = useState(false);
+  const toggleModal = () => setModal(!modal);
+
+  const [deletePlant, deletingStatus] = useMutation(DELETE_PLANT, {
+    onCompleted: () => {
+      dispatch && dispatch({ type: 'delete', index: index })
+    },
+    onError: (e) => console.error('Error deleting plant:', e)
+  });
+
+  const confirmDeletion = () => {
+    deletePlant({variables: { plantId: plant.id } });
+    toggleModal()
+  }
+
   if (submitted) return <Redirect push to="/"/>
 
-  if (loading) return  <Spinner color="primary" />
+  if (loading || deletingStatus.loading) return  <Spinner color="primary" />
 
   if (error) {
     return  <ErrorHandler error={error} />
   }
 
+  if (deletingStatus.error) {
+    return  <ErrorHandler error={deletingStatus.error} />
+  }
+
   return (
+    <>
     <Form
       onSubmit={handleFormSubmit}
       autoComplete="off"
       autoFocus={false}
     >
-      <section className={styles.controls}>
-        <Button outline color="success" title="Save!" className={uiStyles.roundButton} type="submit">&#10003;</Button>
-        <Button outline color="danger" title="Cancel!" onClick={action} className={uiStyles.roundButton}>&#10060;</Button>
+      <section className={styles.viewControls}>
+        <span></span>
+        <Button outline color="danger" onClick={toggleModal} title="Remove" data-testid="remove-btn">Delete!</Button>
       </section>
-      <img src={pot} alt="plant pot" className={styles.image}/>
+      <img src={pot} alt="plant pot" className={editStyles.image}/>
       <FormGroup>
+        <Label for="name">Name:</Label>
         <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
-          bsSize="sm"
           onChange={handlePlantNameInputChange}
           autoFocus={true}
           required
         />
       </FormGroup>
       <FormGroup>
+        <Label for="scientificName">Scientific name:</Label>
         <AutoCompleteInput
-          bsSize="sm"
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           data-testid="plant-scientific-name-input"
           value={scientificName}
@@ -103,9 +124,25 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
             max={30}
             required
           />
-        <small>{daysBetweenWatering} day(s)</small>
+        <small>Time between waterings, {daysBetweenWatering} day(s)</small>
       </FormGroup>
+      <section className={styles.viewControls}>
+        <Button color="success" title="Save!" type="submit">Save changes!</Button>
+        <Button outline color="danger" title="Cancel!" onClick={action}>Cancel</Button>
+      </section>
     </Form>
+    <Modal isOpen={modal} toggle={toggleModal} autoFocus={false}>
+        <ModalHeader toggle={toggleModal}>Delete plant {plant.name} </ModalHeader>
+        <ModalBody>
+          Warning! This action is irreversible.
+        </ModalBody>
+        <ModalFooter className={uiStyles.footer}>
+          <Button color="danger" onClick={confirmDeletion} data-testid="modal-button-delete">Delete!</Button>
+          <Button color="secondary" onClick={toggleModal}>Cancel!</Button>
+        </ModalFooter>
+    </Modal>
+
+    </>
   )
 }
 
