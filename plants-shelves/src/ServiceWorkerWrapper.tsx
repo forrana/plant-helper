@@ -14,14 +14,13 @@ const ServiceWorkerWrapper: FC = () => {
   };
 
   useEffect(() => {
-    console.log("register SW");
     serviceWorkerRegistration.register({ onUpdate: onSWUpdate });
   }, []);
 
   const reloadPage = () => {
     waitingWorker?.postMessage({ type: 'SKIP_WAITING' });
     setShowReload(false);
-    window.location.reload();
+    window.location.replace(window.location.href);
   };
 
   return (
