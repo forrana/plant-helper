@@ -34,6 +34,7 @@ class Plant(models.Model):
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
     time_between_watering = models.DurationField(default=datetime.timedelta(days=7))
+    postpone_days = models.DurationField(default=datetime.timedelta(days=0))
     planted = models.DateTimeField(default=timezone.now)
     watered = models.DateTimeField(default=timezone.now)
     repoted = models.DateTimeField(default=timezone.now)
@@ -41,7 +42,7 @@ class Plant(models.Model):
 
     @property
     def days_until_next_watering(self):
-        return ((self.time_between_watering + self.watered) - timezone.now() + datetime.timedelta(days=1)).days
+        return ((self.time_between_watering + self.watered - self.postpone_days) - timezone.now() + datetime.timedelta(days=1)).days
 
     @property
     def days_between_watering(self):
