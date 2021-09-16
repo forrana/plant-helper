@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { PlantData } from './models'
-import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner, Badge,
+import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner, Badge, ButtonGroup,
        } from 'reactstrap';
-import { WATER_PLANT } from './queries'
+import { POSTPONE_WATERING, WATER_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch'
 import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
@@ -48,7 +48,16 @@ function Plant({ plant, index }: PlantProps) {
       onError: (e) => console.error('Error creating plant:', e)
     });
 
+    const [postponeWatering, postponeWateringStatus] = useMutation(POSTPONE_WATERING, {
+      onCompleted: (data: { postponeWatering: PlantData }) => {
+        dispatch && dispatch({ type: 'update', plant: data.postponeWatering.plant, index: index })
+      },
+      onError: (e) => console.error('Error postponing watering plant:', e)
+    });
+
+
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
+    const toPostponeWatering = () => postponeWatering({variables: {plantId: plant.id, postponeDays: 1}})
 
     const plantHealth = (plant.daysUntilNextWatering / plant.daysBetweenWatering)*100;
     // TODO should be memoized perhaps?
@@ -104,7 +113,10 @@ function Plant({ plant, index }: PlantProps) {
           </section>
           <section className={styles.imageGroup}>
             <WhenToWater daysUntilNextWatering={plant.daysUntilNextWatering}/>
+            <ButtonGroup className={styles.progressGroup}>
               <Progress value={ plantHealth } color={ healthColor() } className={styles.progressBar}>{plant.daysUntilNextWatering}</Progress>
+              <Button size="sm" outline onClick={toPostponeWatering} title="Postpone Watering">+1</Button>
+            </ButtonGroup>
           </section>
           <section>
             <Button size="sm" outline onClick={toWater} title="Water" data-testid="water-btn" className={uiStyles.roundButton + " " + styles.waterButton}>&#128166;</Button>

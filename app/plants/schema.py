@@ -1,3 +1,5 @@
+from django.db.models.expressions import ExpressionWrapper, F
+from django.db.models.fields import DateTimeField
 from graphene_django import DjangoObjectType
 import graphene
 import datetime
@@ -39,7 +41,9 @@ class Query(graphene.ObjectType):
                 raise GraphQLError('Unauthorized')
             else:
                 return Plant.objects \
-                    .order_by("watered") \
+                    .annotate(when_to_water=ExpressionWrapper( \
+                        (F('watered') + F('time_between_watering') + F('postpone_days')), output_field=DateTimeField())) \
+                    .order_by("when_to_water") \
                     .select_related("room") \
                     .filter(owner=info.context.user)
         except Plant.DoesNotExist:
@@ -92,6 +96,26 @@ class WaterPlant(graphene.Mutation):
         plant.watered = timezone.now()
         watered_at_entry = WateredAtEntry(plant=plant, watered_date=plant.watered)
         watered_at_entry.save()
+        plant.postpone_days = datetime.timedelta(days=0)
+        plant.save()
+        ok = True
+        return WaterPlant(plant=plant, ok=ok)
+
+class PostponeWatering(graphene.Mutation):
+    class Arguments:
+        plant_id = graphene.ID()
+        days     = graphene.Int()
+    ok = graphene.Boolean()
+    plant = graphene.Field(PlantType)
+
+    @classmethod
+    def mutate(root, id, info, plant_id, days):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        if not plant:
+            raise GraphQLError('Unauthorized')
+        plant.postpone_days = (plant.postpone_days + datetime.timedelta(days=days))
         plant.save()
         ok = True
         return WaterPlant(plant=plant, ok=ok)
@@ -142,5 +166,6 @@ class Mutation(graphene.AbstractType, graphene.ObjectType):
     water_plant  = WaterPlant.Field()
     update_plant = UpdatePlant.Field()
     delete_plant = DeletePlant.Field()
+    postpone_watering = PostponeWatering.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

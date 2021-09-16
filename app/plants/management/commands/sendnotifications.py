@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         unwatered_plants = Plant.objects \
             .annotate(when_to_water=ExpressionWrapper( \
-                (F('watered') + F('time_between_watering') - F('postpone_days')), output_field=DateTimeField())) \
+                (F('watered') + F('time_between_watering') + F('postpone_days')), output_field=DateTimeField())) \
             .filter(when_to_water__lte = timezone.now()).order_by("owner").values_list('owner')
         owners_set = set()
         for owner in unwatered_plants:

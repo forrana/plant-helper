@@ -36,6 +36,19 @@ const WATER_PLANT = gql`
   }
 `;
 
+const POSTPONE_WATERING = gql`
+  mutation PostponeWatering($plantId: ID!, $postponeDays: Int!) {
+    postponeWatering(plantId: $plantId, days: $postponeDays) {
+      plant {
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering
+        symbol {
+          userWideId
+        }
+      }
+    }
+  }
+`;
+
 const UPDATE_PLANT = gql`
   mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWatering: Int!) {
     updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWatering: $daysBetweenWatering) {
@@ -73,4 +86,4 @@ const CREATE_SUBSCRIPTION = gql`
 
 
 
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION, GET_SUBSCRIPTION}
+export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION, GET_SUBSCRIPTION, POSTPONE_WATERING}
