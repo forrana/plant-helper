@@ -72,3 +72,7 @@ class Plant(models.Model):
             return f"{prefix}.{plant_name}"
         else:
             return plant_name
+
+class WateredAtEntry(models.Model):
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    watered_date = models.DateTimeField(default=timezone.now)

@@ -4,7 +4,7 @@ import datetime
 from graphql import GraphQLError
 from django.utils import timezone
 
-from .models import Plant, Room, House, Symbol
+from .models import Plant, Room, House, Symbol, WateredAtEntry
 
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
@@ -90,6 +90,8 @@ class WaterPlant(graphene.Mutation):
         if not plant:
             raise GraphQLError('Unauthorized')
         plant.watered = timezone.now()
+        watered_at_entry = WateredAtEntry(plant=plant, watered_date=plant.watered)
+        watered_at_entry.save()
         plant.save()
         ok = True
         return WaterPlant(plant=plant, ok=ok)
