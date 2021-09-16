@@ -99,7 +99,7 @@ function Plant({ plant, index }: PlantProps) {
         <CardBody className={styles.narrowCard}>
           <section className={styles.controls} data-testid={`plant-controls-${index}`}>
             <Button size="sm" outline onClick={toggleEditModal} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>
-              <i className="icon-eye" />
+              <i className="icon icon-settings" />
             </Button>
           </section>
           <section className={styles.imageGroup}>

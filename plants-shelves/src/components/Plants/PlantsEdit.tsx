@@ -112,8 +112,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <section className={styles.label}>
-          <span className="icon-droplet"></span>
-          <h4 className={styles.header}><span className="icon-droplet"></span></h4>
+          <i className="icon icon-droplet"></i>
+          <h4 className={styles.header}><i className="icon icon-droplet"></i></h4>
         </section>
         <Input type="range" name="daysBetweenWatering" id="daysBetweenWatering" placeholder="Days between watering"
             value={daysBetweenWatering}

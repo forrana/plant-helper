@@ -37,12 +37,17 @@ main {
   justify-content: center;
 }
 
+i.icon {
+  font-style: initial;
+}
+
 .icon-droplet:after {
   content: "\1f4a7"
 }
 
-.icon-eye:after {
-  content: "\01F50D"
+.icon-settings:after {
+  font-size: large;
+  content: "⚙️";
 }
 
 .icon-save:after {
