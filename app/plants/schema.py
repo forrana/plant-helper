@@ -11,6 +11,7 @@ from .models import Plant, Room, House, Symbol, WateredAtEntry
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
     days_between_watering = graphene.Int()
+    days_postpone = graphene.Int()
     class Meta:
         model = Plant
         fields = "__all__"
@@ -126,11 +127,12 @@ class UpdatePlant(graphene.Mutation):
         plant_name = graphene.String()
         scientific_name = graphene.String()
         days_between_watering = graphene.Int()
+        postpone_days = graphene.Int()
     ok = graphene.Boolean()
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering):
+    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering, postpone_days):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
@@ -139,6 +141,7 @@ class UpdatePlant(graphene.Mutation):
         plant.name = plant_name
         plant.scientific_name = scientific_name
         plant.time_between_watering = datetime.timedelta(days=days_between_watering)
+        plant.postpone_days = datetime.timedelta(days=postpone_days)
         plant.save()
         ok = True
         return UpdatePlant(plant=plant, ok=ok)

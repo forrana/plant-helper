@@ -5,6 +5,7 @@ export interface PlantType {
   daysUntilNextWatering: number;
   daysBetweenWatering: number;
   symbol: SymbolType;
+  daysPostpone: number;
 }
 
 export interface SymbolType {

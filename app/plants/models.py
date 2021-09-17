@@ -48,6 +48,10 @@ class Plant(models.Model):
     def days_between_watering(self):
         return self.time_between_watering.days
 
+    @property
+    def days_postpone(self):
+        return self.postpone_days.days
+
     def save(self, *args, **kwargs):
         is_new = True if not self.pk else False
         super(Plant, self).save(*args, **kwargs)

@@ -102,17 +102,13 @@
 }
 
 .progressGroup button {
-  height: 1.2em;
+  height: 1.1em;
   padding: 0;
   font-size: 0.8em;
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
-}
-
-.waterButton {
-
 }
 
 @keyframes alarm {

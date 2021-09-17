@@ -21,6 +21,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [plantName, setPlantName] = useState(plant.name);
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWatering, setDaysBetweenWatering] = useState(plant.daysBetweenWatering)
+  const [postponeDays, setPostponeDays] = useState(plant.daysPostpone)
 
 
   const [updatePlant, { loading, error }] = useMutation(UPDATE_PLANT, {
@@ -44,10 +45,14 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     setDaysBetweenWatering(parseInt(event.target.value))
   }
 
+  const handleDaysPostponeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPostponeDays(parseInt(event.target.value))
+  }
+
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWatering } })
+      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWatering, postponeDays } })
     }
   }
 
@@ -107,6 +112,18 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           value={scientificName}
           setValue={setScientificName}
           onChange={handleScientificNameInputChange}
+          required
+          />
+      </FormGroup>
+      <FormGroup>
+        <Label for="postponeDays">Postpone days:</Label>
+        <Input
+          min={0} max={100} type="number" step="1"
+          name="postponeDays" id="postponeDays" placeholder="Postpone days"
+          data-testid="plant-days-postpone-input"
+          value={postponeDays}
+          setValue={setPostponeDays}
+          onChange={handleDaysPostponeInputChange}
           required
           />
       </FormGroup>
