@@ -105,12 +105,8 @@ function Plant({ plant, index }: PlantProps) {
 
     return (
       <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-testid={`plant-card-${index}`}>
+        <Badge color="light" className={styles.badge}>{plant.symbol.userWideId}</Badge>
         <CardBody className={styles.narrowCard}>
-          <section className={styles.controls} data-testid={`plant-controls-${index}`}>
-            <Button size="sm" outline onClick={toggleEditModal} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>
-              <i className="icon icon-settings" />
-            </Button>
-          </section>
           <section className={styles.imageGroup}>
             <WhenToWater daysUntilNextWatering={plant.daysUntilNextWatering}/>
             <ButtonGroup className={styles.progressGroup}>
@@ -118,10 +114,12 @@ function Plant({ plant, index }: PlantProps) {
               <Button size="sm" outline onClick={toPostponeWatering} title="Postpone Watering">+1</Button>
             </ButtonGroup>
           </section>
-          <section>
+          <section className={styles.actions}>
             <Button size="sm" outline onClick={toWater} title="Water" data-testid="water-btn" className={uiStyles.roundButton + " " + styles.waterButton}>&#128166;</Button>
-            <Badge color="light" className={styles.badge}>{plant.symbol.userWideId}</Badge>
             <img src={pot} alt="plant pot" className={styles.image}/>
+            <Button size="sm" outline onClick={toggleEditModal} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>
+              <i className="icon icon-settings" />
+            </Button>
           </section>
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>

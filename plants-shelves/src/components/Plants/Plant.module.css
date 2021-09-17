@@ -26,10 +26,9 @@
 }
 
 .image {
-  height: 6em;
+  height: 5em;
   width: auto;
   object-fit: contain;
-  margin-left: -1em;
 }
 
 .plant .controls {
@@ -70,11 +69,17 @@
   width: 100%;
 }
 
+.actions {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr 0.9fr;
+  justify-items: center;
+  align-items: center;
+}
+
 .badge {
-  position: relative;
-  top: 1.9em;
-  left: calc(29% - 0.6em);
-  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
   font-size: 0.8em;
   background-color: #d84412;
   color: azure;
@@ -107,9 +112,7 @@
 }
 
 .waterButton {
-  position: absolute;
-  left: 7%;
-  top: 27%;
+
 }
 
 @keyframes alarm {
