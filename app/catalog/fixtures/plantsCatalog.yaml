@@ -1,35 +1,334 @@
-- model: catalog.plantentry
+- fields:
+    days_between_watering_dormant: 15 00:00:00
+    days_between_watering_growing: 10 00:00:00
+    nick_name: Aloe
+    nick_names:
+    - Aloe
+    scientific_name: Aloe Vera
+  model: catalog.plantentry
   pk: 1
-  fields:
-    nick_name: Aloe vera
-    scientific_name: Aloe vera
-- model: catalog.plantentry
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 5 00:00:00
+    nick_name: common ivy, english ivy, european ivy, ivy
+    nick_names:
+    - Common Ivy
+    - English Ivy
+    - European Ivy
+    - Ivy
+    scientific_name: Hedera helix
+  model: catalog.plantentry
   pk: 2
-  fields:
-    nick_name: Sansevieria Hahnii
-    scientific_name: Dracaena trifasciata
-- model: catalog.plantentry
-  pk: 3
-  fields:
-    nick_name: Peace lily
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Peace Lily
+    nick_names:
+    - Peace Lily
     scientific_name: Spathiphyllum
-- model: catalog.plantentry
+  model: catalog.plantentry
+  pk: 3
+- fields:
+    days_between_watering_dormant: 30 00:00:00
+    days_between_watering_growing: 21 00:00:00
+    nick_name: Snake Plant
+    nick_names:
+    - Snake Plant
+    scientific_name: Sansevieria
+  model: catalog.plantentry
   pk: 4
-  fields:
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
     nick_name: Monstera
-    scientific_name: Monstera Adansonii
-- model: catalog.plantentry
+    nick_names:
+    - Monstera
+    scientific_name: Philodendron
+  model: catalog.plantentry
   pk: 5
-  fields:
-    nick_name: Laceleaf
-    scientific_name: Anthurium
-- model: catalog.plantentry
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Devil's ivy, golden pothos
+    nick_names:
+    - Devil'S Ivy
+    - Golden Pothos
+    scientific_name: Epipremnum aureum
+  model: catalog.plantentry
   pk: 6
-  fields:
-    nick_name: Chinese evergreen
-    scientific_name: Aglaonema
-- model: catalog.plantentry
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Lucky Bamboo
+    nick_names:
+    - Lucky Bamboo
+    scientific_name: Dracaena sanderiana
+  model: catalog.plantentry
   pk: 7
-  fields:
-    nick_name: Flamingo flower
+- fields:
+    days_between_watering_dormant: 21 00:00:00
+    days_between_watering_growing: 14 00:00:00
+    nick_name: Christmas cactus
+    nick_names:
+    - Christmas Cactus
+    scientific_name: Schlumbergera
+  model: catalog.plantentry
+  pk: 8
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: sword fern, boston fern
+    nick_names:
+    - Sword Fern
+    - Boston Fern
+    scientific_name: Nephrolepis exaltata
+  model: catalog.plantentry
+  pk: 9
+- fields:
+    days_between_watering_dormant: 14 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Laceleaf, flamingo flower
+    nick_names:
+    - Laceleaf
+    - Flamingo Flower
     scientific_name: Anthurium
+  model: catalog.plantentry
+  pk: 10
+- fields:
+    days_between_watering_dormant: 30 00:00:00
+    days_between_watering_growing: 21 00:00:00
+    nick_name: African violets, violets
+    nick_names:
+    - African Violets
+    - Violets
+    scientific_name: Saintpaulia
+  model: catalog.plantentry
+  pk: 11
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Dwarf Cavendish, dwarf banana, banana
+    nick_names:
+    - Dwarf Cavendish
+    - Dwarf Banana
+    - Banana
+    scientific_name: Musa acuminata
+  model: catalog.plantentry
+  pk: 12
+- fields:
+    days_between_watering_dormant: 6 00:00:00
+    days_between_watering_growing: 4 00:00:00
+    nick_name: Coffee arabica, coffee
+    nick_names:
+    - Coffee Arabica
+    - Coffee
+    scientific_name: Coffea
+  model: catalog.plantentry
+  pk: 13
+- fields:
+    days_between_watering_dormant: 6 00:00:00
+    days_between_watering_growing: 4 00:00:00
+    nick_name: Citrus, lemon
+    nick_names:
+    - Citrus
+    - Lemon
+    scientific_name: Citrus
+  model: catalog.plantentry
+  pk: 14
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: fig, benjamin fig, ficus tree, ficus
+    nick_names:
+    - Fig
+    - Benjamin Fig
+    - Ficus Tree
+    - Ficus
+    scientific_name: Ficus benjamina
+  model: catalog.plantentry
+  pk: 15
+- fields:
+    days_between_watering_dormant: 6 00:00:00
+    days_between_watering_growing: 4 00:00:00
+    nick_name: Mango, mango tree
+    nick_names:
+    - Mango
+    - Mango Tree
+    scientific_name: Mangifera indica
+  model: catalog.plantentry
+  pk: 16
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Spiderwort
+    nick_names:
+    - Spiderwort
+    scientific_name: Tradescantia
+  model: catalog.plantentry
+  pk: 17
+- fields:
+    days_between_watering_dormant: 14 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: dragon tree, dracena
+    nick_names:
+    - Dragon Tree
+    - Dracena
+    scientific_name: dracena marginata
+  model: catalog.plantentry
+  pk: 18
+- fields:
+    days_between_watering_dormant: 14 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: parlor palm
+    nick_names:
+    - Parlor Palm
+    scientific_name: Chamaedorea elegans
+  model: catalog.plantentry
+  pk: 19
+- fields:
+    days_between_watering_dormant: 14 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Areca Palm
+    nick_names:
+    - Areca Palm
+    scientific_name: Dypsis lutescens
+  model: catalog.plantentry
+  pk: 20
+- fields:
+    days_between_watering_dormant: 14 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Chinese Money Plant
+    nick_names:
+    - Chinese Money Plant
+    scientific_name: Pilea peperomioides
+  model: catalog.plantentry
+  pk: 21
+- fields:
+    days_between_watering_dormant: 15 00:00:00
+    days_between_watering_growing: 10 00:00:00
+    nick_name: Dragon Fruit, White-fleshed pitahaya
+    nick_names:
+    - Dragon Fruit
+    - White-Fleshed Pitahaya
+    scientific_name: Selenicereus undatus
+  model: catalog.plantentry
+  pk: 22
+- fields:
+    days_between_watering_dormant: 30 00:00:00
+    days_between_watering_growing: 21 00:00:00
+    nick_name: fairy washboard, Haworthia
+    nick_names:
+    - Fairy Washboard
+    - Haworthia
+    scientific_name: Haworthia
+  model: catalog.plantentry
+  pk: 23
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Spider plant
+    nick_names:
+    - Spider Plant
+    scientific_name: Chlorophytum comosum
+  model: catalog.plantentry
+  pk: 24
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Venus flytrap
+    nick_names:
+    - Venus Flytrap
+    scientific_name: Dionaea muscipula
+  model: catalog.plantentry
+  pk: 25
+- fields:
+    days_between_watering_dormant: 21 00:00:00
+    days_between_watering_growing: 14 00:00:00
+    nick_name: jade plant, lucky plant, money plant, money tree
+    nick_names:
+    - Jade Plant
+    - Lucky Plant
+    - Money Plant
+    - Money Tree
+    scientific_name: Crassula ovata
+  model: catalog.plantentry
+  pk: 26
+- fields:
+    days_between_watering_dormant: 4 00:00:00
+    days_between_watering_growing: 2 00:00:00
+    nick_name: Avocado
+    nick_names:
+    - Avocado
+    scientific_name: Persea americana
+  model: catalog.plantentry
+  pk: 27
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Butterworts
+    nick_names:
+    - Butterworts
+    scientific_name: Pinguicula
+  model: catalog.plantentry
+  pk: 28
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Pitcher plant
+    nick_names:
+    - Pitcher Plant
+    scientific_name: Nepenthes
+  model: catalog.plantentry
+  pk: 29
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Sundews
+    nick_names:
+    - Sundews
+    scientific_name: Drosera
+  model: catalog.plantentry
+  pk: 30
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: chili pepper, chile, chilli, chilli pepper
+    nick_names:
+    - Chili Pepper
+    - Chile
+    - Chilli
+    - Chilli Pepper
+    scientific_name: capsicum
+  model: catalog.plantentry
+  pk: 31
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: mint, mint plant, peppermint
+    nick_names:
+    - Mint
+    - Mint Plant
+    - Peppermint
+    scientific_name: Mentha
+  model: catalog.plantentry
+  pk: 32
+- fields:
+    days_between_watering_dormant: 15 00:00:00
+    days_between_watering_growing: 10 00:00:00
+    nick_name: Widow's-thrill, kalanchoe
+    nick_names:
+    - Widow'S-Thrill
+    - Kalanchoe
+    scientific_name: Kalanchoe
+  model: catalog.plantentry
+  pk: 33
+- fields:
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
+    nick_name: Ananas, pineapple
+    nick_names:
+    - Ananas
+    - Pineapple
+    scientific_name: Ananas comosus
+  model: catalog.plantentry
+  pk: 34
