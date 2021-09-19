@@ -91,7 +91,9 @@ self.addEventListener('push', function(event) {
 const showLocalNotification = (title: string, body: string, swRegistration: any) => {
   const options = {
     body,
-    icon: "icon-192.png"
+    icon: "icon-192.png",
+    requireInteraction: true,
+    vibrate: [200, 100, 200]
     // here you can add more properties like icon, image, vibrate, etc.
   }
   swRegistration.showNotification(title, options)

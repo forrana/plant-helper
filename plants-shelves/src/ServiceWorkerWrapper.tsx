@@ -9,6 +9,7 @@ const ServiceWorkerWrapper: FC = () => {
 
   const onSWUpdate = (registration: ServiceWorkerRegistration) => {
     console.log("update recieved!");
+    alert("New version is available!");
     setShowReload(true);
     setWaitingWorker(registration.waiting);
   };
