@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
-import { PlantData } from './models'
+import { PlantData, PlantNickName } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
 import ErrorHandler from './ErrorHandler';
 import styles from "./Plant.module.css"
@@ -30,6 +30,12 @@ function PlantsCreate({ action }: PlantsCreateProps) {
     },
     onError: (e) => console.error('Error creating plant:', e)
   });
+
+  const setPlantSettings = (plantSuggestion: PlantNickName) => {
+    setPlantName(plantSuggestion.name);
+    setScientificName(plantSuggestion.plantEntry.scientificName);
+    setDaysBetweenWatering(plantSuggestion.plantEntry.daysBetweenWateringGrowingInt);
+  }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlantName(event.target.value);
@@ -66,9 +72,10 @@ function PlantsCreate({ action }: PlantsCreateProps) {
     >
       <FormGroup>
         <Label for="name">Name:</Label>
-        <Input type="text" name="name" id="name" placeholder="Plant name"
+        <AutoCompleteInput type="text" name="name" id="name" placeholder="Plant name"
           value={plantName}
           data-testid="name-input"
+          setValue={setPlantSettings}
           onChange={handlePlantNameInputChange}
           autoFocus={true}
           required
@@ -76,11 +83,10 @@ function PlantsCreate({ action }: PlantsCreateProps) {
       </FormGroup>
       <FormGroup>
         <Label for="scientificName">Scientific name:</Label>
-        <AutoCompleteInput
+        <Input
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
           data-testid="sc-name-input"
-          setValue={setScientificName}
           onChange={handleScientificNameInputChange}
           required
           />

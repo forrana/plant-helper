@@ -5,7 +5,7 @@ import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, M
 
 import { DELETE_PLANT, UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
-import { PlantData } from './models'
+import { PlantData, PlantNickName } from './models'
 import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import editStyles from "./PlantsEdit.module.css"
@@ -32,6 +32,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     },
     onError: (e) => console.error('Error creating plant:', e)
   });
+
+  const setPlantSettings = (plantSuggestion: PlantNickName) => {
+    setPlantName(plantSuggestion.name);
+    setScientificName(plantSuggestion.plantEntry.scientificName);
+    setDaysBetweenWatering(plantSuggestion.plantEntry.daysBetweenWateringGrowingInt);
+  }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlantName(event.target.value);
@@ -97,8 +103,9 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <img src={pot} alt="plant pot" className={editStyles.image}/>
       <FormGroup>
         <Label for="name">Name:</Label>
-        <Input type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
+        <AutoCompleteInput type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
+          setValue={setPlantSettings}
           onChange={handlePlantNameInputChange}
           autoFocus={true}
           required
@@ -106,11 +113,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <Label for="scientificName">Scientific name:</Label>
-        <AutoCompleteInput
+        <Input
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           data-testid="plant-scientific-name-input"
           value={scientificName}
-          setValue={setScientificName}
           onChange={handleScientificNameInputChange}
           required
           />

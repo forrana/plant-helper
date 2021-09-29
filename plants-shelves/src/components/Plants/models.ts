@@ -32,8 +32,16 @@ export interface PlantData {
 }
 
 export interface PlantSuggestion {
-  nickName: string
-  scientificName: string
+  nickName: string,
+  nickNames: Array<string>,
+  scientificName: string,
+  daysBetweenWateringGrowingInt: number,
+  daysBetweenWateringDormantInt: number
+}
+
+export interface PlantNickName {
+  name: string,
+  plantEntry: PlantSuggestion
 }
 
 export interface GlobalState extends PlantsData { }

@@ -1,21 +1,21 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Input, InputProps, ListGroup, ListGroupItem } from 'reactstrap';
-import { PLANT_ENTRY_BY_FRAGMENT } from '../Plants/catalogQueries';
-import { PlantSuggestion } from '../Plants/models';
+import { PLANT_ENTRY_BY_NICK_NAME_FRAGMENT } from '../Plants/catalogQueries';
+import { PlantNickName } from '../Plants/models';
 import styles from './AutoCompleteInput.module.css'
 
 interface PlantSuggestionsResponse {
-  plantEntriesByNameFragment: Array<PlantSuggestion>
+  nickNameEntriesByNameFragment: Array<PlantNickName>
 }
 
 interface AutoCompleteInputProps extends InputProps {
   value: string
-  setValue: (value: string) => any
+  setValue: (value: PlantNickName) => any
 }
 
 const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
-  const [options, setOptions] = useState<Array<PlantSuggestion>>([]);
+  const [options, setOptions] = useState<Array<PlantNickName>>([]);
   const [skipFetch, setSkipFetch] = useState<Boolean>(false);
 
   let {setValue, ...inputProps} = props;
@@ -33,17 +33,17 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
     if(isSkipFecth()) setSkipFetch(false)
   }
 
-  const handleOnClick = (nickName: string) => {
-    setValue(nickName);
+  const handleOnClick = (suggestion: PlantNickName) => {
+    setValue(suggestion);
     setSkipFetch(true);
     setOptions([]);
   }
 
-  useQuery(PLANT_ENTRY_BY_FRAGMENT, {
+  useQuery(PLANT_ENTRY_BY_NICK_NAME_FRAGMENT, {
     variables: { nameFragment: props.value },
     skip: isSkipFecth(),
     onCompleted: (data: PlantSuggestionsResponse) => {
-      setOptions(data.plantEntriesByNameFragment);
+      setOptions(data.nickNameEntriesByNameFragment);
     }
   })
   if(props?.value.length < 3)
@@ -63,7 +63,10 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
       <ListGroup className={styles.option}>
         {
           options.map(
-            (option, index) => <ListGroupItem key={index} onClick={() => handleOnClick(option.nickName)}>{option.nickName}</ListGroupItem>
+            (option, index) =>
+            <ListGroupItem key={index} onClick={() => handleOnClick(option)}>
+              {option.name} <small className="text-muted">({option.plantEntry.scientificName})</small>
+            </ListGroupItem>
           )
         }
       </ListGroup>
