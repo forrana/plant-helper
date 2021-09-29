@@ -27,6 +27,23 @@ const LOG_IN = gql`
 `;
 
 
+const REFRESH_TOKEN = gql`
+  mutation RefreshToken($refreshToken: String!) {
+    refreshToken(
+      refreshToken: $refreshToken
+    ) {
+      success,
+      errors,
+      payload,
+      refreshExpiresIn,
+      token,
+      refreshToken,
+      user {
+        id,
+        username,
+      }
+    }
+  }
+`
 
-
-export { CREATE_USER, LOG_IN }
+export { CREATE_USER, LOG_IN, REFRESH_TOKEN }
