@@ -18,7 +18,8 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
-  const [daysBetweenWatering, setDaysBetweenWatering] = useState(7)
+  const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(7)
+  const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(10)
 
   const [addPlant, { loading, error }] = useMutation(ADD_PLANT, {
     onCompleted: (data: { createPlant: PlantData }) => {
@@ -34,7 +35,8 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   const setPlantSettings = (plantSuggestion: PlantNickName) => {
     setPlantName(plantSuggestion.name);
     setScientificName(plantSuggestion.plantEntry.scientificName);
-    setDaysBetweenWatering(plantSuggestion.plantEntry.daysBetweenWateringGrowingInt);
+    setDaysBetweenWateringGrowing(plantSuggestion.plantEntry.daysBetweenWateringGrowingInt);
+    setDaysBetweenWateringDormant(plantSuggestion.plantEntry.daysBetweenWateringDormantInt);
   }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,14 +47,18 @@ function PlantsCreate({ action }: PlantsCreateProps) {
     setScientificName(event.target.value);
   };
 
-  const handleDaysBetweenWateringInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDaysBetweenWatering(parseInt(event.target.value))
+  const handleDaysBetweenWateringGrowingInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDaysBetweenWateringGrowing(parseInt(event.target.value))
+  }
+
+  const handleDaysBetweenWateringDormantInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDaysBetweenWateringDormant(parseInt(event.target.value))
   }
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      addPlant({ variables: { plantName, scientificName, daysBetweenWatering } })
+      addPlant({ variables: { plantName, scientificName, daysBetweenWateringGrowing, daysBetweenWateringDormant } })
     }
   }
 
@@ -96,16 +102,32 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           <i className="icon icon-droplet"></i>
           <h4 className={styles.header}><i className="icon icon-droplet"></i></h4>
         </section>
-        <Input type="range" name="daysBetweenWatering" id="daysBetweenWatering" placeholder="Days between watering"
-            value={daysBetweenWatering}
-            data-testid="days-between-watering-input"
-            onChange={handleDaysBetweenWateringInputChange}
+        <Input type="range" name="daysBetweenWateringGrowing" id="daysBetweenWateringGrowing" placeholder="Days between watering growing"
+            value={daysBetweenWateringGrowing}
+            data-testid="days-between-watering-growing-input"
+            onChange={handleDaysBetweenWateringGrowingInputChange}
             autoFocus={true}
             min={1}
             max={30}
             required
           />
-        <div className="text-center"><small>{daysBetweenWatering} day(s) between waterings</small></div>
+        <div className="text-center"><small><b>Growing season</b> {daysBetweenWateringGrowing} day(s) between waterings</small></div>
+      </FormGroup>
+      <FormGroup>
+        <section className={styles.label}>
+          <i className="icon icon-droplet"></i>
+          <h4 className={styles.header}><i className="icon icon-droplet"></i></h4>
+        </section>
+        <Input type="range" name="daysBetweenWateringDormant" id="daysBetweenWateringDormant" placeholder="Days between watering dormant"
+            value={daysBetweenWateringDormant}
+            data-testid="days-between-watering-dormant-input"
+            onChange={handleDaysBetweenWateringDormantInputChange}
+            autoFocus={true}
+            min={1}
+            max={30}
+            required
+          />
+        <div className="text-center"><small><b>Dormant season</b> {daysBetweenWateringDormant} day(s) between waterings</small></div>
       </FormGroup>
       <Button type="submit" className={styles.button}>Add plant</Button>
     </Form>

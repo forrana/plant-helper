@@ -1,3 +1,4 @@
+from .utils import is_growing_season
 from django.db.models.expressions import ExpressionWrapper, F
 from django.db.models.fields import DateTimeField
 from graphene_django import DjangoObjectType
@@ -8,9 +9,18 @@ from django.utils import timezone
 
 from .models import Plant, Room, House, Symbol, WateredAtEntry
 
+def get_time_between_watering_field_for_current_season(current_date):
+    if is_growing_season(current_date):
+        return "time_between_watering_growing"
+    else:
+        return "time_between_watering_dormant"
+
+
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
     days_between_watering = graphene.Int()
+    days_between_watering_growing = graphene.Int()
+    days_between_watering_dormant = graphene.Int()
     days_postpone = graphene.Int()
     class Meta:
         model = Plant
@@ -43,7 +53,7 @@ class Query(graphene.ObjectType):
             else:
                 return Plant.objects \
                     .annotate(when_to_water=ExpressionWrapper( \
-                        (F('watered') + F('time_between_watering') + F('postpone_days')), output_field=DateTimeField())) \
+                        (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
                     .order_by("when_to_water") \
                     .select_related("room") \
                     .filter(owner=info.context.user)
@@ -66,17 +76,19 @@ class CreatePlant(graphene.Mutation):
     class Arguments:
         plant_name = graphene.String()
         scientific_name = graphene.String()
-        days_between_watering = graphene.Int()
+        days_between_watering_growing = graphene.Int()
+        days_between_watering_dormant = graphene.Int()
 
     ok = graphene.Boolean()
     plant = graphene.Field(lambda: PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_name, scientific_name, days_between_watering):
+    def mutate(root, id, info, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user,
-                                     time_between_watering = datetime.timedelta(days=days_between_watering)
+                                     time_between_watering_growing = datetime.timedelta(days=days_between_watering_growing),
+                                     time_between_watering_dormant = datetime.timedelta(days=days_between_watering_dormant)
                                      )
         ok = True
         return CreatePlant(plant=plant, ok=ok)
@@ -126,13 +138,14 @@ class UpdatePlant(graphene.Mutation):
         plant_id = graphene.ID()
         plant_name = graphene.String()
         scientific_name = graphene.String()
-        days_between_watering = graphene.Int()
+        days_between_watering_growing = graphene.Int()
+        days_between_watering_dormant = graphene.Int()
         postpone_days = graphene.Int()
     ok = graphene.Boolean()
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering, postpone_days):
+    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant, postpone_days):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
@@ -140,7 +153,8 @@ class UpdatePlant(graphene.Mutation):
             raise GraphQLError('Unauthorized')
         plant.name = plant_name
         plant.scientific_name = scientific_name
-        plant.time_between_watering = datetime.timedelta(days=days_between_watering)
+        plant.time_between_watering_growing = datetime.timedelta(days=days_between_watering_growing)
+        plant.time_between_watering_dormant = datetime.timedelta(days=days_between_watering_dormant)
         plant.postpone_days = datetime.timedelta(days=postpone_days)
         plant.save()
         ok = True

@@ -1,4 +1,5 @@
-import datetime
+from .utils import is_growing_season
+from datetime import timedelta
 
 from django.db import models
 from django.conf import settings
@@ -33,20 +34,36 @@ class Plant(models.Model):
     name = models.CharField(max_length=200)
     scientific_name = models.CharField(max_length=200)
     description = models.CharField(max_length=1024, blank=True, default='')
-    time_between_watering = models.DurationField(default=datetime.timedelta(days=7))
-    postpone_days = models.DurationField(default=datetime.timedelta(days=0))
+    time_between_watering_growing = models.DurationField(default=timedelta(days=7))
+    time_between_watering_dormant = models.DurationField(default=timedelta(days=10))
+    postpone_days = models.DurationField(default=timedelta(days=0))
     planted = models.DateTimeField(default=timezone.now)
     watered = models.DateTimeField(default=timezone.now)
     repoted = models.DateTimeField(default=timezone.now)
     furtilized = models.DateTimeField(default=timezone.now)
 
     @property
+    def time_between_watering(self):
+        if is_growing_season(timezone.now()):
+            return self.time_between_watering_growing
+        else:
+            return self.time_between_watering_dormant
+
+    @property
     def days_until_next_watering(self):
-        return ((self.time_between_watering + self.watered + self.postpone_days) - timezone.now() + datetime.timedelta(days=1)).days
+        return ((self.time_between_watering + self.watered + self.postpone_days) - timezone.now() + timedelta(days=1)).days
 
     @property
     def days_between_watering(self):
         return self.time_between_watering.days
+
+    @property
+    def days_between_watering_growing(self):
+        return self.time_between_watering_growing.days
+
+    @property
+    def days_between_watering_dormant(self):
+        return self.time_between_watering_dormant.days
 
     @property
     def days_postpone(self):

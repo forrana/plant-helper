@@ -19,7 +19,10 @@ const CreateModal = ({isOpen, toggleAction, index, plant}: PlantsNavBarProps) =>
   return (
     <>
       <Modal isOpen={isOpen} toggle={toggleAction} autoFocus={false}>
-            <ModalHeader toggle={toggleAction}>Plant <b>{plant.symbol.userWideId}</b></ModalHeader>
+            <ModalHeader toggle={toggleAction}>
+              <b>{plant.symbol.userWideId}</b> - {plant.name}
+              <small className="text-muted"> ({plant.scientificName}) </small>
+            </ModalHeader>
             <ModalBody>
               <PlantsEdit index={index} plant={plant} action={toggleAction}/>
             </ModalBody>

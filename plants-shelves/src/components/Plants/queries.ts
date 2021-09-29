@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 const GET_ALL_PLANTS = gql`
 query {
   plants {
-    id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysPostpone
+    id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
     symbol {
       userWideId
     }
@@ -11,10 +11,10 @@ query {
 `;
 
 const ADD_PLANT = gql`
-  mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWatering: Int!) {
-    createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWatering: $daysBetweenWatering) {
+  mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!) {
+    createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant) {
       plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysPostpone
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
         }
@@ -27,7 +27,7 @@ const WATER_PLANT = gql`
   mutation WaterPlant($plantId: ID!) {
     waterPlant(plantId: $plantId) {
       plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysPostpone
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
         }
@@ -40,7 +40,7 @@ const POSTPONE_WATERING = gql`
   mutation PostponeWatering($plantId: ID!, $postponeDays: Int!) {
     postponeWatering(plantId: $plantId, days: $postponeDays) {
       plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysPostpone
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
         }
@@ -50,10 +50,10 @@ const POSTPONE_WATERING = gql`
 `;
 
 const UPDATE_PLANT = gql`
-  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWatering: Int!, $postponeDays: Int!) {
-    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWatering: $daysBetweenWatering, postponeDays: $postponeDays) {
+  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!) {
+    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant, postponeDays: $postponeDays) {
       plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysPostpone
+        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
         }
