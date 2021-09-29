@@ -1,4 +1,5 @@
 import csv
+from django.contrib.postgres import fields
 import yaml
 
 with open('plants.csv') as csvfile:
@@ -11,7 +12,7 @@ with open('plants.csv') as csvfile:
         nick_names_arr_sanitized = map(str.strip, nick_names_arr)
         nick_names_arr_capitalized = map(str.title, nick_names_arr_sanitized)
         nick_names_list = list(nick_names_arr_capitalized)
-        entry = {
+        plant_entry = {
             "model": "catalog.plantentry",
             "pk": pk,
             "fields": {
@@ -22,8 +23,17 @@ with open('plants.csv') as csvfile:
                 "days_between_watering_dormant": row[3] + " 00:00:00"
             }
         }
-        entries.append(entry)
+        entries.append(plant_entry)
+        for nick_name in nick_names_list:
+            nick_name_entry = {
+                "model": "catalog.nickname",
+                "fields": {
+                    "plant_entry": pk,
+                    "name": str.title(nick_name)
+                }
+            }
+            entries.append(nick_name_entry)
         pk += 1
     with open('plants.yaml', 'w+') as yamlfile:
         yamlfile.write(yaml.dump(entries))
-    
+
