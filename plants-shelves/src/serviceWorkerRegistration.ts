@@ -61,11 +61,8 @@ function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (config && config.onUpdate) {
-          config.onUpdate(registration);
-        }
-      });
+      // check for update every hour, otherwise no updates on mobile for SPA
+      setInterval(() => registration.update(), 1000 * 60 * 60);
 
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
