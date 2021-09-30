@@ -35,13 +35,8 @@ const REFRESH_TOKEN = gql`
       success,
       errors,
       payload,
-      refreshExpiresIn,
       token,
       refreshToken,
-      user {
-        id,
-        username,
-      }
     }
   }
 `

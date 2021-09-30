@@ -25,6 +25,7 @@ import {
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
 import ServiceWorkerWrapper from './ServiceWorkerWrapper';
+import { REFRESH_TOKEN } from './components/User/queries';
 
 
 const host = window.location.hostname
@@ -44,6 +45,35 @@ const graphQLink = createHttpLink({
   uri: graphQLURL(),
 });
 
+const isRefreshNeeded = (expAt: number) => {
+  if (Date.now() >= expAt * 1000) {
+    return true
+  }
+  return false;
+}
+
+const refreshAuthToken = async () => {
+  let userState: UserState  = getInitialState()
+  let refreshToken = userState.refreshToken;
+
+  if (refreshToken) {
+    const newToken = await client
+    .mutate({
+      mutation: REFRESH_TOKEN,
+      variables: { refreshToken },
+    })
+    .then(res => {
+      const newToken = res.data?.refreshToken?.token;
+      const newRefreshToken = res.data?.refreshToken?.refreshToken;
+      localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify({...userState, token: newToken, refreshToken: newRefreshToken}));
+      return newToken;
+    });
+
+  return newToken;
+  }
+};
+
+
 const cache = new InMemoryCache();
 // Copy pasted from https://docs.djangoproject.com/en/3.2/ref/csrf/
 const getCookie = (name: string) => {
@@ -62,23 +92,32 @@ const getCookie = (name: string) => {
   return cookieValue;
 };
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const userStateStr:string|null = localStorage.getItem(USER_STATE_STORAGE_KEY);
-  let token = null;
-  if(userStateStr !== null) {
-    const userState: UserState = JSON.parse(userStateStr);
-    token = userState.token;
-  }
-    // return the headers to the context so httpLink can read them
-  const csrftoken = getCookie('csrftoken');
-  return {
-    headers: {
-      ...headers,
-      Authorization: token ? `JWT ${token}` : "",
-      "X-CSRFToken": csrftoken || "",
+const authLink = setContext(async (request, { headers }) => {
+  if (request.operationName !== 'RefreshToken') {
+    let userState: UserState  = getInitialState()
+
+    let token = userState.token;
+
+    const shouldRefresh = isRefreshNeeded(userState.expAt);
+
+    if (token && shouldRefresh) {
+      const refreshPromise = await refreshAuthToken();
+
+      token = await refreshPromise;
+    }
+
+      // return the headers to the context so httpLink can read them
+    const csrftoken = getCookie('csrftoken');
+    return {
+      headers: {
+        ...headers,
+        Authorization: token ? `JWT ${token}` : "",
+        "X-CSRFToken": csrftoken || "",
+      }
     }
   }
+
+  return { headers };
 });
 
 const client = new ApolloClient({
