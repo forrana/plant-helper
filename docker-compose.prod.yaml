@@ -21,6 +21,7 @@ services:
       - "5432:5432"
   app:
     image: gcr.io/plant-helper/backend
+    pull_policy: always
     build: ./app
     command: /usr/src/app/docker-entrypoint.sh
     depends_on:
@@ -35,6 +36,7 @@ services:
 
   web:
     image: gcr.io/plant-helper/web
+    pull_policy: always
     volumes:
       - plast-web-nginx:/etc/nginx
       - plast-web-certificates:/etc/letsencrypt
