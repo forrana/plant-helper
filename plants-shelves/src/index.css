@@ -75,3 +75,9 @@ i.icon {
   overflow: hidden;
   white-space: nowrap;
 }
+
+.modal-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
