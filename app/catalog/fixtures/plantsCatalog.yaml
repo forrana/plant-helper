@@ -11,6 +11,7 @@
     name: Aloe
     plant_entry: 1
   model: catalog.nickname
+  pk: 1
 - fields:
     days_between_watering_dormant: 7 00:00:00
     days_between_watering_growing: 5 00:00:00
@@ -27,18 +28,22 @@
     name: Common Ivy
     plant_entry: 2
   model: catalog.nickname
+  pk: 2
 - fields:
     name: English Ivy
     plant_entry: 2
   model: catalog.nickname
+  pk: 3
 - fields:
     name: European Ivy
     plant_entry: 2
   model: catalog.nickname
+  pk: 4
 - fields:
     name: Ivy
     plant_entry: 2
   model: catalog.nickname
+  pk: 5
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -52,6 +57,7 @@
     name: Peace Lily
     plant_entry: 3
   model: catalog.nickname
+  pk: 6
 - fields:
     days_between_watering_dormant: 30 00:00:00
     days_between_watering_growing: 21 00:00:00
@@ -65,6 +71,7 @@
     name: Snake Plant
     plant_entry: 4
   model: catalog.nickname
+  pk: 7
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -78,6 +85,7 @@
     name: Monstera
     plant_entry: 5
   model: catalog.nickname
+  pk: 8
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -92,10 +100,12 @@
     name: Devil'S Ivy
     plant_entry: 6
   model: catalog.nickname
+  pk: 9
 - fields:
     name: Golden Pothos
     plant_entry: 6
   model: catalog.nickname
+  pk: 10
 - fields:
     days_between_watering_dormant: 7 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -109,6 +119,7 @@
     name: Lucky Bamboo
     plant_entry: 7
   model: catalog.nickname
+  pk: 11
 - fields:
     days_between_watering_dormant: 21 00:00:00
     days_between_watering_growing: 14 00:00:00
@@ -122,6 +133,7 @@
     name: Christmas Cactus
     plant_entry: 8
   model: catalog.nickname
+  pk: 12
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -136,10 +148,12 @@
     name: Sword Fern
     plant_entry: 9
   model: catalog.nickname
+  pk: 13
 - fields:
     name: Boston Fern
     plant_entry: 9
   model: catalog.nickname
+  pk: 14
 - fields:
     days_between_watering_dormant: 14 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -154,10 +168,12 @@
     name: Laceleaf
     plant_entry: 10
   model: catalog.nickname
+  pk: 15
 - fields:
     name: Flamingo Flower
     plant_entry: 10
   model: catalog.nickname
+  pk: 16
 - fields:
     days_between_watering_dormant: 30 00:00:00
     days_between_watering_growing: 21 00:00:00
@@ -172,10 +188,12 @@
     name: African Violets
     plant_entry: 11
   model: catalog.nickname
+  pk: 17
 - fields:
     name: Violets
     plant_entry: 11
   model: catalog.nickname
+  pk: 18
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -191,14 +209,17 @@
     name: Dwarf Cavendish
     plant_entry: 12
   model: catalog.nickname
+  pk: 19
 - fields:
     name: Dwarf Banana
     plant_entry: 12
   model: catalog.nickname
+  pk: 20
 - fields:
     name: Banana
     plant_entry: 12
   model: catalog.nickname
+  pk: 21
 - fields:
     days_between_watering_dormant: 6 00:00:00
     days_between_watering_growing: 4 00:00:00
@@ -213,10 +234,12 @@
     name: Coffee Arabica
     plant_entry: 13
   model: catalog.nickname
+  pk: 22
 - fields:
     name: Coffee
     plant_entry: 13
   model: catalog.nickname
+  pk: 23
 - fields:
     days_between_watering_dormant: 6 00:00:00
     days_between_watering_growing: 4 00:00:00
@@ -231,10 +254,12 @@
     name: Citrus
     plant_entry: 14
   model: catalog.nickname
+  pk: 24
 - fields:
     name: Lemon
     plant_entry: 14
   model: catalog.nickname
+  pk: 25
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -251,18 +276,22 @@
     name: Fig
     plant_entry: 15
   model: catalog.nickname
+  pk: 26
 - fields:
     name: Benjamin Fig
     plant_entry: 15
   model: catalog.nickname
+  pk: 27
 - fields:
     name: Ficus Tree
     plant_entry: 15
   model: catalog.nickname
+  pk: 28
 - fields:
     name: Ficus
     plant_entry: 15
   model: catalog.nickname
+  pk: 29
 - fields:
     days_between_watering_dormant: 6 00:00:00
     days_between_watering_growing: 4 00:00:00
@@ -277,10 +306,12 @@
     name: Mango
     plant_entry: 16
   model: catalog.nickname
+  pk: 30
 - fields:
     name: Mango Tree
     plant_entry: 16
   model: catalog.nickname
+  pk: 31
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -294,6 +325,7 @@
     name: Spiderwort
     plant_entry: 17
   model: catalog.nickname
+  pk: 32
 - fields:
     days_between_watering_dormant: 14 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -308,10 +340,12 @@
     name: Dragon Tree
     plant_entry: 18
   model: catalog.nickname
+  pk: 33
 - fields:
     name: Dracena
     plant_entry: 18
   model: catalog.nickname
+  pk: 34
 - fields:
     days_between_watering_dormant: 14 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -325,6 +359,7 @@
     name: Parlor Palm
     plant_entry: 19
   model: catalog.nickname
+  pk: 35
 - fields:
     days_between_watering_dormant: 14 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -338,6 +373,7 @@
     name: Areca Palm
     plant_entry: 20
   model: catalog.nickname
+  pk: 36
 - fields:
     days_between_watering_dormant: 14 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -351,6 +387,7 @@
     name: Chinese Money Plant
     plant_entry: 21
   model: catalog.nickname
+  pk: 37
 - fields:
     days_between_watering_dormant: 15 00:00:00
     days_between_watering_growing: 10 00:00:00
@@ -365,10 +402,12 @@
     name: Dragon Fruit
     plant_entry: 22
   model: catalog.nickname
+  pk: 38
 - fields:
     name: White-Fleshed Pitahaya
     plant_entry: 22
   model: catalog.nickname
+  pk: 39
 - fields:
     days_between_watering_dormant: 30 00:00:00
     days_between_watering_growing: 21 00:00:00
@@ -383,10 +422,12 @@
     name: Fairy Washboard
     plant_entry: 23
   model: catalog.nickname
+  pk: 40
 - fields:
     name: Haworthia
     plant_entry: 23
   model: catalog.nickname
+  pk: 41
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -400,6 +441,7 @@
     name: Spider Plant
     plant_entry: 24
   model: catalog.nickname
+  pk: 42
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -413,6 +455,7 @@
     name: Venus Flytrap
     plant_entry: 25
   model: catalog.nickname
+  pk: 43
 - fields:
     days_between_watering_dormant: 21 00:00:00
     days_between_watering_growing: 14 00:00:00
@@ -429,18 +472,22 @@
     name: Jade Plant
     plant_entry: 26
   model: catalog.nickname
+  pk: 44
 - fields:
     name: Lucky Plant
     plant_entry: 26
   model: catalog.nickname
+  pk: 45
 - fields:
     name: Money Plant
     plant_entry: 26
   model: catalog.nickname
+  pk: 46
 - fields:
     name: Money Tree
     plant_entry: 26
   model: catalog.nickname
+  pk: 47
 - fields:
     days_between_watering_dormant: 4 00:00:00
     days_between_watering_growing: 2 00:00:00
@@ -454,6 +501,7 @@
     name: Avocado
     plant_entry: 27
   model: catalog.nickname
+  pk: 48
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -467,6 +515,7 @@
     name: Butterworts
     plant_entry: 28
   model: catalog.nickname
+  pk: 49
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -480,6 +529,7 @@
     name: Pitcher Plant
     plant_entry: 29
   model: catalog.nickname
+  pk: 50
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -493,6 +543,7 @@
     name: Sundews
     plant_entry: 30
   model: catalog.nickname
+  pk: 51
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -509,18 +560,22 @@
     name: Chili Pepper
     plant_entry: 31
   model: catalog.nickname
+  pk: 52
 - fields:
     name: Chile
     plant_entry: 31
   model: catalog.nickname
+  pk: 53
 - fields:
     name: Chilli
     plant_entry: 31
   model: catalog.nickname
+  pk: 54
 - fields:
     name: Chilli Pepper
     plant_entry: 31
   model: catalog.nickname
+  pk: 55
 - fields:
     days_between_watering_dormant: 5 00:00:00
     days_between_watering_growing: 3 00:00:00
@@ -536,14 +591,17 @@
     name: Mint
     plant_entry: 32
   model: catalog.nickname
+  pk: 56
 - fields:
     name: Mint Plant
     plant_entry: 32
   model: catalog.nickname
+  pk: 57
 - fields:
     name: Peppermint
     plant_entry: 32
   model: catalog.nickname
+  pk: 58
 - fields:
     days_between_watering_dormant: 15 00:00:00
     days_between_watering_growing: 10 00:00:00
@@ -558,10 +616,12 @@
     name: Widow'S-Thrill
     plant_entry: 33
   model: catalog.nickname
+  pk: 59
 - fields:
     name: Kalanchoe
     plant_entry: 33
   model: catalog.nickname
+  pk: 60
 - fields:
     days_between_watering_dormant: 10 00:00:00
     days_between_watering_growing: 7 00:00:00
@@ -576,7 +636,9 @@
     name: Ananas
     plant_entry: 34
   model: catalog.nickname
+  pk: 61
 - fields:
     name: Pineapple
     plant_entry: 34
   model: catalog.nickname
+  pk: 62

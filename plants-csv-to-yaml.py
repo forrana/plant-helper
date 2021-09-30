@@ -5,6 +5,7 @@ import yaml
 with open('plants.csv') as csvfile:
     plantsreader = csv.reader(csvfile, delimiter=';', quotechar='\"')
     pk = 1
+    nick_name_pk = 1
     entries = []
     for row in plantsreader:
         print('| '.join(row))
@@ -27,12 +28,14 @@ with open('plants.csv') as csvfile:
         for nick_name in nick_names_list:
             nick_name_entry = {
                 "model": "catalog.nickname",
+                "pk": nick_name_pk,
                 "fields": {
                     "plant_entry": pk,
                     "name": str.title(nick_name)
                 }
             }
             entries.append(nick_name_entry)
+            nick_name_pk += 1
         pk += 1
     with open('plants.yaml', 'w+') as yamlfile:
         yamlfile.write(yaml.dump(entries))
