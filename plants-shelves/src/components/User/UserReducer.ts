@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import { UserReducerAction, UserState } from './models'
 
 const USER_STATE_STORAGE_KEY = "UserState"

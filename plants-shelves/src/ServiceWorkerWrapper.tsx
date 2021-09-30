@@ -5,11 +5,9 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 const ServiceWorkerWrapper: FC = () => {
   const [showReload, setShowReload] = React.useState(false);
   const [waitingWorker, setWaitingWorker] = React.useState<ServiceWorker | null>(null);
-  const onDismiss = () => setShowReload(false);
 
   const onSWUpdate = (registration: ServiceWorkerRegistration) => {
     console.log("update recieved!");
-    alert("New version is available!");
     setShowReload(true);
     setWaitingWorker(registration.waiting);
   };

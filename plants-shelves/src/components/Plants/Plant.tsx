@@ -48,7 +48,7 @@ function Plant({ plant, index }: PlantProps) {
       onError: (e) => console.error('Error creating plant:', e)
     });
 
-    const [postponeWatering, postponeWateringStatus] = useMutation(POSTPONE_WATERING, {
+    const [postponeWatering] = useMutation(POSTPONE_WATERING, {
       onCompleted: (data: { postponeWatering: PlantData }) => {
         dispatch && dispatch({ type: 'update', plant: data.postponeWatering.plant, index: index })
       },
