@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, InputProps, ListGroup, ListGroupItem } from 'reactstrap';
 import { PLANT_ENTRY_BY_NICK_NAME_FRAGMENT } from '../Plants/catalogQueries';
 import { PlantNickName } from '../Plants/models';
@@ -16,7 +16,7 @@ interface AutoCompleteInputProps extends InputProps {
 
 const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
   const [options, setOptions] = useState<Array<PlantNickName>>([]);
-  const [skipFetch, setSkipFetch] = useState<Boolean>(false);
+  const [skipFetch, setSkipFetch] = useState<Boolean>(true);
 
   let {setValue, ...inputProps} = props;
 
@@ -29,7 +29,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
     return true;
   }
 
-  const handleInputOnClick = () => {
+  const handleInputEvent = () => {
     if(isSkipFecth()) setSkipFetch(false)
   }
 
@@ -39,18 +39,23 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
     setOptions([]);
   }
 
+  const SEARCH_DEBOUNCE_TIMEOUT = 500;
+
+  const debounceValue = useDebounce(props.value, SEARCH_DEBOUNCE_TIMEOUT);
+
   useQuery(PLANT_ENTRY_BY_NICK_NAME_FRAGMENT, {
-    variables: { nameFragment: props.value },
+    variables: { nameFragment: debounceValue },
     skip: isSkipFecth(),
     onCompleted: (data: PlantSuggestionsResponse) => {
       setOptions(data.nickNameEntriesByNameFragment);
     }
   })
+
   if(props?.value.length < 3)
     return (
       <Input
         {...inputProps}
-        onClick={handleInputOnClick}
+        onKeyUp={handleInputEvent}
       />
     )
 
@@ -58,7 +63,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
     <>
       <Input
         {...inputProps}
-        onClick={handleInputOnClick}
+        onKeyUp={handleInputEvent}
       />
       <ListGroup className={styles.option}>
         {
@@ -75,3 +80,24 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
 }
 
 export default AutoCompleteInput
+
+function useDebounce(value: string, delay: number) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  );
+  return debouncedValue;
+}

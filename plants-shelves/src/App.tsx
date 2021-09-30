@@ -65,7 +65,8 @@ const refreshAuthToken = async () => {
     .then(res => {
       const newToken = res.data?.refreshToken?.token;
       const newRefreshToken = res.data?.refreshToken?.refreshToken;
-      localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify({...userState, token: newToken, refreshToken: newRefreshToken}));
+      const expAt = res.data?.refreshToken?.payload?.exp || Date();
+      localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify({...userState, token: newToken, refreshToken: newRefreshToken, expAt}));
       return newToken;
     });
 
