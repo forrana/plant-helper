@@ -17,14 +17,14 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "5432:5432"
   app:
     image: gcr.io/plant-helper/backend
     pull_policy: always
     build: ./app
     command: /usr/src/app/docker-entrypoint.sh
     depends_on:
+      - db
+    links:
       - db
     environment:
       - HOST=${HOST}
