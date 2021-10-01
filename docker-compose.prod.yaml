@@ -10,7 +10,7 @@ volumes:
 
 services:
   db:
-    image: postgres
+    image: postgres:13
     volumes:
       - plast-db:/var/lib/postgresql/data
     environment:
