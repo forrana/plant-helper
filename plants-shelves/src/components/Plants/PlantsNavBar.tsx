@@ -17,20 +17,10 @@ const PlantsNavBar = () => {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
 
-  const checkForUpdates = () => {
-    navigator.serviceWorker
-    .getRegistrations()
-    .then((regs) => regs.forEach((reg) => {
-      console.log("update:", reg)
-      reg.update()
-    }));
-  }
-
   return (
     <>
       <Navbar color="light" light expand="md">
         <NavbarBrand><img src="icon-192.png" alt="app logo"/></NavbarBrand>
-        <Button onClick={checkForUpdates}>U</Button>
         <Nav className="mr-auto" navbar>
             <NavItem>
               <Button onClick={toggleModal} data-testid="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
