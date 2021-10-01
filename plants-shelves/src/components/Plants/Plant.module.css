@@ -45,6 +45,11 @@
   justify-content: space-between;
 }
 
+.viewControls:first-of-type {
+  position: absolute;
+  left: calc(100% - 6em);
+}
+
 .narrowCard {
   padding: 0.3em;
 }
