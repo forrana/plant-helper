@@ -19,3 +19,9 @@ def is_growing_season(current_date):
         return True
     else:
         return False
+
+def get_time_between_watering_field_for_current_season(current_date):
+    if is_growing_season(current_date):
+        return "time_between_watering_growing"
+    else:
+        return "time_between_watering_dormant"

@@ -1,4 +1,4 @@
-from .utils import is_growing_season
+from .utils import get_time_between_watering_field_for_current_season
 from django.db.models.expressions import ExpressionWrapper, F
 from django.db.models.fields import DateTimeField
 from graphene_django import DjangoObjectType
@@ -8,13 +8,6 @@ from graphql import GraphQLError
 from django.utils import timezone
 
 from .models import Plant, Room, House, Symbol, WateredAtEntry
-
-def get_time_between_watering_field_for_current_season(current_date):
-    if is_growing_season(current_date):
-        return "time_between_watering_growing"
-    else:
-        return "time_between_watering_dormant"
-
 
 class PlantType(DjangoObjectType):
     days_until_next_watering = graphene.Int()
