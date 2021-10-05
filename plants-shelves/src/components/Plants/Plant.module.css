@@ -2,6 +2,11 @@
   margin: 0.25em;
   max-width: 47vw;
   width: 12em;
+  cursor: grab;
+}
+
+.draggedPlant {
+  opacity: 0.4;
 }
 
 .alarm {

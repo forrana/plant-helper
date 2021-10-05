@@ -65,6 +65,28 @@ class Query(graphene.ObjectType):
         except Plant.DoesNotExist:
             return None
 
+class CreateRoom(graphene.Mutation):
+    class Arguments:
+        plant_1_id = graphene.ID()
+        plant_2_id = graphene.ID()
+
+    ok = graphene.Boolean()
+    room = graphene.Field(lambda: RoomType)
+
+    @classmethod
+    def mutate(root, id, info, plant_1_id, plant_2_id):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        room = Room.objects.create(room_name="New room")
+        plant_1 = Plant.objects.get(pk=plant_1_id, owner=info.context.user)
+        plant_2 = Plant.objects.get(pk=plant_2_id, owner=info.context.user)
+        if not plant_1 or not plant_2:
+            raise GraphQLError('Unauthorized')
+        plant_1.room = room
+        plant_2.room = room
+        plant_1.save()
+        plant_2.save()
+
 class CreatePlant(graphene.Mutation):
     class Arguments:
         plant_name = graphene.String()

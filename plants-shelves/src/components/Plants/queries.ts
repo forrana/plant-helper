@@ -62,6 +62,14 @@ const UPDATE_PLANT = gql`
   }
 `;
 
+const CREATE_ROOM = gql`
+  mutation CreateRoom($plant1Id: ID!, $plant2Id: ID!) {
+    createRoom(plant1Id: $plant1Id, plant2Id: $plant2Id) {
+      ok
+    }
+  }
+`;
+
 const DELETE_PLANT = gql`
   mutation DeletePlant($plantId: ID!) {
     deletePlant(plantId: $plantId) {
@@ -86,4 +94,4 @@ const CREATE_SUBSCRIPTION = gql`
 
 
 
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION, GET_SUBSCRIPTION, POSTPONE_WATERING}
+export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION, GET_SUBSCRIPTION, POSTPONE_WATERING, CREATE_ROOM }

@@ -87,6 +87,15 @@ function Plant({ plant, index }: PlantProps) {
         }
     }
 
+    const onDragStartEvent = (event: React.DragEvent) => {
+      event.currentTarget.classList.add(styles.draggedPlant)
+    }
+
+    const onDragEndEvent = (event: React.DragEvent) => {
+      event.currentTarget.classList.remove(styles.draggedPlant)
+    }
+
+
     if (wateringStatus.loading) return  <Spinner color="primary" />
 
     if (wateringStatus.error) {
@@ -104,7 +113,7 @@ function Plant({ plant, index }: PlantProps) {
       )
 
     return (
-      <Card className={`${styles.plant} ${styles[backgroundColor()]}`} data-testid={`plant-card-${index}`}>
+      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true" className={`${styles.plant} ${styles[backgroundColor()]}`} data-testid={`plant-card-${index}`}>
         <Badge color="light" className={styles.badge}>{plant.symbol.userWideId}</Badge>
         <CardBody className={styles.narrowCard}>
           <section className={styles.imageGroup}>
