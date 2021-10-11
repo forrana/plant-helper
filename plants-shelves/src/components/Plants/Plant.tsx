@@ -59,9 +59,13 @@ function Plant({ plant, index }: PlantProps) {
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
     const toPostponeWatering = () => postponeWatering({variables: {plantId: plant.id, postponeDays: 1}})
 
-    const plantHealth = ((plant.daysUntilNextWatering + plant.daysPostpone) / plant.daysBetweenWatering)*100;
+    const daysToWatering = plant.daysUntilNextWatering + plant.daysPostpone
+    const daysBetweenWatering = plant.daysBetweenWatering + plant.daysPostpone
+
+    const getPlantHealth = (daysToWatering: number, daysBetweenWatering: number): number => (daysToWatering / daysBetweenWatering)*100;
     // TODO should be memoized perhaps?
-    const healthColor = () => {
+    const healthColor = (daysToWatering: number, daysBetweenWatering: number) => {
+      const plantHealth = getPlantHealth(daysToWatering, daysBetweenWatering)
       if( plantHealth >= 70) {
           return "success"
         } else if ( plantHealth >= 50 ) {
@@ -73,7 +77,8 @@ function Plant({ plant, index }: PlantProps) {
         }
     }
 
-    const backgroundColor = () => {
+    const backgroundColor = (daysToWatering: number, daysBetweenWatering: number) => {
+      const plantHealth = getPlantHealth(daysToWatering, daysBetweenWatering)
       if( plantHealth >= 70) {
           return "success"
         } else if ( plantHealth >= 50 ) {
@@ -88,11 +93,15 @@ function Plant({ plant, index }: PlantProps) {
     }
 
     const onDragStartEvent: React.DragEventHandler = (event) => {
+      // @ts-ignore
+      event.currentTarget.style.border = "1px dashed rgba(0,0,0,.125)";
       event.currentTarget.classList.add(styles.draggedPlant)
-      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.effectAllowed = "copyMove";
     }
 
     const onDragEndEvent: React.DragEventHandler = (event) => {
+      // @ts-ignore
+      event.currentTarget.style.border = "1px solid rgba(0,0,0,.125)";
       event.currentTarget.classList.remove(styles.draggedPlant);
     }
 
@@ -113,13 +122,13 @@ function Plant({ plant, index }: PlantProps) {
       )
 
     return (
-      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true" className={`${styles.plant} ${styles[backgroundColor()]}`} id={plant.id+""} data-testid={`plant-card-${index}`}>
-        <Badge color="light" className={styles.badge}>{plant.symbol.userWideId}</Badge>
+      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true" className={`${styles.plant} ${styles[backgroundColor(daysToWatering, daysBetweenWatering)]}`} id={plant.id+""} data-testid={`plant-card-${index}`}>
+        <Badge color="dark" className={styles.badge}>#{plant.symbol.userWideId}</Badge>
         <CardBody className={styles.narrowCard}>
           <section className={styles.imageGroup}>
             <WhenToWater daysUntilNextWatering={plant.daysUntilNextWatering}/>
             <ButtonGroup className={styles.progressGroup}>
-              <Progress value={ plantHealth } color={ healthColor() } className={styles.progressBar}>{plant.daysUntilNextWatering}</Progress>
+              <Progress value={ getPlantHealth(daysToWatering, daysBetweenWatering) } color={ healthColor(daysToWatering, daysBetweenWatering) } className={styles.progressBar}>{plant.daysUntilNextWatering}</Progress>
               <Button size="sm" color="primary" onClick={toPostponeWatering} title="Postpone Watering">+1</Button>
             </ButtonGroup>
           </section>
