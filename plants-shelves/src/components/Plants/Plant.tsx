@@ -59,7 +59,7 @@ function Plant({ plant, index }: PlantProps) {
     const toWater = () => waterPlant({variables: { plantId: plant.id } });
     const toPostponeWatering = () => postponeWatering({variables: {plantId: plant.id, postponeDays: 1}})
 
-    const daysToWatering = plant.daysUntilNextWatering + plant.daysPostpone
+    const daysToWatering = plant.daysUntilNextWatering
     const daysBetweenWatering = plant.daysBetweenWatering + plant.daysPostpone
     // TODO move functions to utils and consts to localstate values
 
