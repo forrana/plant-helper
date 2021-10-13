@@ -51,7 +51,7 @@ class Plant(models.Model):
 
     @property
     def days_until_next_watering(self):
-        return ((self.time_between_watering + self.watered + self.postpone_days) - timezone.now() + timedelta(days=1)).days
+        return ((self.time_between_watering + self.watered.replace(hour=0, minute=0, second=0, microsecond=0) + self.postpone_days) - timezone.now() + timedelta(days=1)).days
 
     @property
     def days_between_watering(self):

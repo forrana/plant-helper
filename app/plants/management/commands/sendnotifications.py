@@ -13,7 +13,7 @@ class Command(BaseCommand):
         unwatered_plants = Plant.objects \
             .annotate(when_to_water=ExpressionWrapper( \
                 (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
-            .filter(when_to_water__lte = timezone.now()).order_by("owner").values_list('owner')
+            .filter(when_to_water__lte = timezone.now().replace(hour=23, minute=59, second=59, microsecond=59)).order_by("owner").values_list('owner')
         owners_set = set()
         for owner in unwatered_plants:
             owners_set.add(owner)

@@ -64,7 +64,6 @@ function Plant({ plant, index }: PlantProps) {
     // TODO move functions to utils and consts to localstate values
 
     const getPlantHealth = (daysToWatering: number, daysBetweenWatering: number): number => {
-      debugger
       if(daysToWatering > 0) {
         return (daysToWatering / daysBetweenWatering)*100;
       }
