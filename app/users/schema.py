@@ -44,6 +44,10 @@ class CreateSubscription(graphene.Mutation):
     def mutate(root, id, info, endpoint, p256dh, auth, permission_given):
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
+
+        if permission_given and (not endpoint or not p256dh or not auth):
+            raise GraphQLError('Malformed request, all subscription fields are mandatory')
+
         try:
             subscription = PushSubscription.objects.get(user = info.context.user)
             subscription.endpoint = endpoint
@@ -67,7 +71,7 @@ class SubscriptionQuery(graphene.ObjectType):
         try:
             subscription = PushSubscription.objects.get(user = user)
             if subscription:
-                    return subscription.permission_given
+                    return subscription.permission_given and subscription.endpoint
         except PushSubscription.DoesNotExist:
             return False
         return False
