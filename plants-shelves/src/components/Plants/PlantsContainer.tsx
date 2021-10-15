@@ -9,6 +9,7 @@ import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
 import CreateModal from './CreateModal';
+import LoadingScreen from './LoadingScreen';
 import ManagePushSubscription from './ManagePushSubscription';
 
 interface PlantsContainerProps {
@@ -41,11 +42,10 @@ function PlantsContainer(props: PlantsContainerProps) {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
 
-  if (loading) return <p>Loading...</p>;
   if (error) {
     return  <ErrorHandler error={error} />
   }
-
+// TODO move LoadingScreen to container, use reducer to set it up from any place where loading is happening
   if (props.state.plants.length === 0) return (
     <WithNavBar>
       <main>
@@ -55,6 +55,7 @@ function PlantsContainer(props: PlantsContainerProps) {
         </Button>
       </main>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
+      <LoadingScreen isLoading={loading}/>
     </WithNavBar>
   )
 
