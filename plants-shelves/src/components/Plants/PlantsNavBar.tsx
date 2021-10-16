@@ -10,6 +10,7 @@ import {
   } from 'reactstrap';
 import UserContext from '../User/UserContext'
 import uiStyles from '../UI/UIElements.module.css'
+import styles from './PlantsNavBar.module.css'
 import CreateModal from './CreateModal';
 
 const PlantsNavBar = () => {
@@ -19,7 +20,7 @@ const PlantsNavBar = () => {
 
   return (
     <>
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" light expand="md" className={styles.navbarNarrow}>
         <NavbarBrand><img src="icon-192.png" alt="app logo"/></NavbarBrand>
         <Nav className="mr-auto" navbar>
             <NavItem>
