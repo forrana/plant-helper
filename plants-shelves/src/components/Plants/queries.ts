@@ -6,6 +6,10 @@ query {
     symbol {
       userWideId
     }
+    room {
+      id,
+      roomName
+    }
   }
 }
 `;

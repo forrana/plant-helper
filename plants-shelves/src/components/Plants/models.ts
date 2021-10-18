@@ -8,10 +8,16 @@ export interface PlantType {
   daysBetweenWateringDormant: number;
   symbol: SymbolType;
   daysPostpone: number;
+  room: RoomType;
 }
 
 export interface SymbolType {
   userWideId: number
+}
+
+export interface RoomType {
+  roomName: string,
+  id: number
 }
 
 export interface PlantsData {

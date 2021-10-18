@@ -19,6 +19,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const dispatch = useContext(PlantsDispatch);
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
+  const [groupName, setGroupName] = useState(plant.room.roomName);
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(plant.daysBetweenWateringDormant)
@@ -43,6 +44,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlantName(event.target.value);
+  };
+
+  const handleGroupNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGroupName(event.target.value);
   };
 
   const handleScientificNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +130,16 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           data-testid="plant-scientific-name-input"
           value={scientificName}
           onChange={handleScientificNameInputChange}
+          required
+          />
+      </FormGroup>
+      <FormGroup>
+        <Label for="scientificName">Group:</Label>
+        <Input
+          type="text" name="groupName" id="groupName" placeholder="Group name"
+          data-testid="plant-group-name-input"
+          value={groupName}
+          onChange={handleGroupNameInputChange}
           required
           />
       </FormGroup>
