@@ -642,3 +642,18 @@
     plant_entry: 34
   model: catalog.nickname
   pk: 62
+- fields:
+    days_between_watering_dormant: 15 00:00:00
+    days_between_watering_growing: 10 00:00:00
+    nick_name: Kalanchoe, Kalanchoe Chocolate Soldier
+    nick_names:
+    - Kalanchoe
+    - Kalanchoe Chocolate Soldier
+    scientific_name: Kalanchoe tomentosa
+  model: catalog.plantentry
+  pk: 35
+- fields:
+    name: Kalanchoe, Kalanchoe Chocolate Soldier
+    plant_entry: 35
+  model: catalog.nickname
+  pk: 63
