@@ -19,7 +19,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const dispatch = useContext(PlantsDispatch);
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
-  const [groupName, setGroupName] = useState(plant.room.roomName);
+  const [groupName, setGroupName] = useState(plant.room?.roomName);
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(plant.daysBetweenWateringDormant)
