@@ -19,7 +19,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const dispatch = useContext(PlantsDispatch);
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
-  const [groupName, setGroupName] = useState(plant.room?.roomName);
+  const [groupName, setGroupName] = useState(plant.room?.roomName || "");
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(plant.daysBetweenWateringDormant)
@@ -70,7 +70,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWateringDormant, daysBetweenWateringGrowing, postponeDays } })
+      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWateringDormant, daysBetweenWateringGrowing, postponeDays, groupName } })
     }
   }
 
@@ -140,7 +140,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           data-testid="plant-group-name-input"
           value={groupName}
           onChange={handleGroupNameInputChange}
-          required
           />
       </FormGroup>
       <FormGroup>

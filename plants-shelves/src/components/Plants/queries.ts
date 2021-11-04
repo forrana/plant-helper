@@ -22,6 +22,10 @@ const ADD_PLANT = gql`
         symbol {
           userWideId
         }
+        room {
+          id,
+          roomName
+        }
       }
     }
   }
@@ -34,6 +38,10 @@ const WATER_PLANT = gql`
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
+        }
+        room {
+          id,
+          roomName
         }
       }
     }
@@ -48,18 +56,26 @@ const POSTPONE_WATERING = gql`
         symbol {
           userWideId
         }
+        room {
+          id,
+          roomName
+        }
       }
     }
   }
 `;
 
 const UPDATE_PLANT = gql`
-  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!) {
-    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant, postponeDays: $postponeDays) {
+  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!, $groupName: String) {
+    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant, postponeDays: $postponeDays, groupName: $groupName) {
       plant {
         id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
         symbol {
           userWideId
+        }
+        room {
+          id,
+          roomName
         }
       }
     }

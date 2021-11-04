@@ -156,14 +156,16 @@ class UpdatePlant(graphene.Mutation):
         days_between_watering_growing = graphene.Int()
         days_between_watering_dormant = graphene.Int()
         postpone_days = graphene.Int()
+        group_name = graphene.String()
     ok = graphene.Boolean()
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant, postpone_days):
-        if not info.context.user.is_authenticated:
+    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant, postpone_days, group_name):
+        owner = info.context.user
+        if not owner.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        plant = Plant.objects.get(pk=plant_id, owner=owner)
         if not plant:
             raise GraphQLError('Unauthorized')
         plant.name = plant_name
@@ -171,7 +173,15 @@ class UpdatePlant(graphene.Mutation):
         plant.time_between_watering_growing = datetime.timedelta(days=days_between_watering_growing)
         plant.time_between_watering_dormant = datetime.timedelta(days=days_between_watering_dormant)
         plant.postpone_days = datetime.timedelta(days=postpone_days)
+        if group_name:
+            try:
+                room = Room.objects.get(room_name=group_name, owner=owner)
+            except Room.DoesNotExist:
+                room = Room.objects.create(owner=owner, room_name=group_name)
+            if plant.room != room:
+                plant.room = room
         plant.save()
+
         ok = True
         return UpdatePlant(plant=plant, ok=ok)
 
