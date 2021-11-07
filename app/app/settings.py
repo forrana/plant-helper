@@ -191,7 +191,14 @@ CORS_ORIGIN_WHITELIST = (
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+def get_email_backend(is_debug):
+    if is_debug:
+        return 'django.core.mail.backends.console.EmailBackend'
+    else:
+        return 'django.core.mail.backends.smtp.EmailBackend'
+
+
+EMAIL_BACKEND = get_email_backend(DEBUG)
 EMAIL_HOST =    'smtp.gmail.com'
 EMAIL_USE_SSL = True
 EMAIL_PORT = 465
