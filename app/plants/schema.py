@@ -45,17 +45,20 @@ class Query(graphene.ObjectType):
                 raise GraphQLError('Unauthorized')
             else:
                 return Plant.objects \
+                    .filter(owner=info.context.user) \
                     .annotate(when_to_water=ExpressionWrapper( \
                         (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
                     .order_by("when_to_water") \
-                    .select_related("room") \
-                    .filter(owner=info.context.user)
+                    .select_related("room")
         except Plant.DoesNotExist:
             return None
 
     def resolve_rooms(self, info, **kwargs):
         try:
-            return Room.objects.select_related("house").all()
+            if not info.context.user.is_authenticated:
+                raise GraphQLError('Unauthorized')
+            else:
+                return Room.objects.filter(owner=info.context.user)
         except Room.DoesNotExist:
             return None
 

@@ -1,20 +1,24 @@
 import { GlobalReducerAction, GlobalState } from './models'
 
-const initialGlobalState: GlobalState  = { plants: [] };
+const initialGlobalState: GlobalState  = { plants: [], rooms: [] };
 
 const globalReducer = (state: GlobalState, action: GlobalReducerAction) => {
   switch (action.type) {
     case 'add':
-      return { plants: [...state.plants, action.plant] };
+      return { ...state, plants: [...state.plants, action.plant] };
+    case 'addRoom':
+      return { ...state, rooms: [...state.rooms, action.room] }
     case 'load':
-      return { plants: [...action.plants] };
+      return { ...state, plants: [...action.plants] };
+    case 'loadRooms':
+      return { ...state, rooms: [...action.rooms] };
     case 'update':
       const newPlants = [...state.plants]
       newPlants[action.index] = action.plant
-      return { plants: newPlants }
+      return { ...state, plants: newPlants }
     case 'delete':
       const leftPlants = state.plants.filter( (plant, index) => index !== action.index )
-      return { plants: leftPlants }
+      return { ...state, plants: leftPlants }
   }
 }
 

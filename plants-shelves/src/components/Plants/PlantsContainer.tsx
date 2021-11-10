@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
-import { GET_ALL_PLANTS } from './queries'
+import { GET_ALL_PLANTS, GET_ALL_ROOMS } from './queries'
 import { useQuery } from '@apollo/client';
 import PlantsDispatch from './PlantsDispatch'
-import { PlantsData } from './models'
+import { PlantsData, RoomsData } from './models'
 import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
@@ -39,11 +39,25 @@ function PlantsContainer(props: PlantsContainerProps) {
     }
   );
 
+  const groupsQueryResult = useQuery<RoomsData>(
+    GET_ALL_ROOMS,
+    {
+      onCompleted: (data: RoomsData) => {
+        dispatch && dispatch({ type: 'loadRooms', rooms: data.rooms })
+      },
+      onError: (e) => console.error('Error getting rooms:', e)
+    }
+  );
+
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
 
   if (error) {
     return  <ErrorHandler error={error} />
+  }
+
+  if (groupsQueryResult.error) {
+    return  <ErrorHandler error={groupsQueryResult.error} />
   }
 // TODO move LoadingScreen to container, use reducer to set it up from any place where loading is happening
   if (props.state.plants.length === 0) return (
@@ -55,7 +69,7 @@ function PlantsContainer(props: PlantsContainerProps) {
         </Button>
       </main>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
-      <LoadingScreen isLoading={loading}/>
+      <LoadingScreen isLoading={loading || groupsQueryResult.loading}/>
     </WithNavBar>
   )
 
@@ -63,7 +77,7 @@ function PlantsContainer(props: PlantsContainerProps) {
     <>
       <WithNavBar>
         <main>
-          <PlantsList plants={props.state.plants} />
+          <PlantsList plants={props.state.plants} rooms={props.state.rooms}/>
         </main>
       </WithNavBar>
     </>

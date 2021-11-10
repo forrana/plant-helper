@@ -24,6 +24,10 @@ export interface PlantsData {
   plants: PlantType[];
 }
 
+export interface RoomsData {
+  rooms: RoomType[];
+}
+
 export interface Subscription {
   endpoint: string,
   p256dh: string,
@@ -52,15 +56,19 @@ export interface PlantNickName {
   plantEntry: PlantSuggestion
 }
 
-export interface GlobalState extends PlantsData { }
+export interface GlobalState extends PlantsData { rooms: RoomType[] }
 
-export interface loadAction { type: 'load', plants: PlantType[] }
-export interface addAction { type: 'add', plant: PlantType }
-export interface updateAction { type: 'update', plant: PlantType, index: number }
-export interface deleteAction { type: 'delete', index: number }
+export interface loadAction     { type: 'load', plants: PlantType[] }
+export interface loadRoomsAction{ type: 'loadRooms', rooms: RoomType[] }
+export interface addAction      { type: 'add', plant: PlantType }
+export interface addRoomAction  { type: 'addRoom', room: RoomType}
+export interface updateAction   { type: 'update', plant: PlantType, index: number }
+export interface deleteAction   { type: 'delete', index: number }
 
 export type GlobalReducerAction =
   | addAction
+  | addRoomAction
   | loadAction
+  | loadRoomsAction
   | updateAction
   | deleteAction;

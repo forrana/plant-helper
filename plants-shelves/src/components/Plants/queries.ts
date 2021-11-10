@@ -14,6 +14,14 @@ query {
 }
 `;
 
+const GET_ALL_ROOMS = gql`
+  query {
+    rooms {
+      id, roomName
+    }
+  }
+`;
+
 const ADD_PLANT = gql`
   mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!) {
     createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant) {
@@ -112,6 +120,15 @@ const CREATE_SUBSCRIPTION = gql`
   }
 `
 
-
-
-export { GET_ALL_PLANTS, ADD_PLANT, WATER_PLANT, UPDATE_PLANT, DELETE_PLANT, CREATE_SUBSCRIPTION, GET_SUBSCRIPTION, POSTPONE_WATERING, CREATE_ROOM }
+export {
+  GET_ALL_PLANTS,
+  GET_ALL_ROOMS,
+  ADD_PLANT,
+  WATER_PLANT,
+  UPDATE_PLANT,
+  DELETE_PLANT,
+  CREATE_SUBSCRIPTION,
+  GET_SUBSCRIPTION,
+  POSTPONE_WATERING,
+  CREATE_ROOM
+}
