@@ -16,8 +16,9 @@ export interface SymbolType {
 }
 
 export interface RoomType {
-  roomName: string,
+  roomName: string
   id: number
+  plants?: PlantType[]
 }
 
 export interface PlantsData {
