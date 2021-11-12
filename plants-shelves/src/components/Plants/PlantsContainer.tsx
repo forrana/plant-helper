@@ -69,6 +69,7 @@ function PlantsContainer(props: PlantsContainerProps) {
         </Button>
       </main>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
+      <LoadingScreen isLoading={loading}/>
     </WithNavBar>
   )
 
@@ -78,7 +79,6 @@ function PlantsContainer(props: PlantsContainerProps) {
         <main>
           <PlantsList plants={props.state.plants} rooms={props.state.rooms}/>
         </main>
-        <LoadingScreen isLoading={loading || groupsQueryResult.loading}/>
       </WithNavBar>
     </>
   )
