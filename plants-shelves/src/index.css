@@ -81,15 +81,36 @@ i.icon {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (prefers-color-scheme: dark) {
+  html {
+    filter: invert(1) hue-rotate(180deg);
+  }
 
-html[theme='dark-mode'] {
-  filter: invert(1) hue-rotate(180deg);
-}
+  html nav, .modal-header  {
+    border-bottom: 1px solid gray;
+  }
 
-html[theme='dark-mode'] img{
-  filter: invert(1) hue-rotate(180deg);
-}
+  html .card {
+    border: 1px solid gray;
+  }
 
-html {
-  transition: color 300ms, background-color 300ms;
+  html img{
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  html {
+    transition: color 300ms, background-color 300ms;
+  }
+
+  html .badge-info, .progress-bar, .card-body .btn-group .btn-primary, .text-muted, .btn.btn-success {
+    color: rgb(50, 50, 50)!important;
+  }
+
+  main {
+    background-color: #dae5da;
+  }
+
+  nav.bg-light {
+    background-color: #cbdadc!important;
+  }
 }
