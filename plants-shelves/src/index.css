@@ -102,7 +102,7 @@ i.icon {
     transition: color 300ms, background-color 300ms;
   }
 
-  html .badge-info, .progress-bar, .card-body .btn-group .btn-primary, .text-muted, .btn.btn-success {
+  html .bg-info, .progress-bar, .card-body .btn-group .btn-primary, .text-muted, .btn.btn-success {
     color: rgb(50, 50, 50)!important;
   }
 
