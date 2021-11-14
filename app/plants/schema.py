@@ -24,6 +24,11 @@ class RoomType(DjangoObjectType):
         model = Room
         fields = ("id", "room_name", "house", "plants")
 
+class RoomSuggestionType(DjangoObjectType):
+    class Meta:
+        model = Room
+        fields = ("id", "room_name")
+
 class SymbolType(DjangoObjectType):
     class Meta:
         model = Symbol
@@ -38,6 +43,7 @@ class Query(graphene.ObjectType):
     plants = graphene.List(PlantType)
     rooms  = graphene.List(RoomType)
     plants_by_room = graphene.Field(PlantType, room_id=graphene.Int(required=True))
+    rooms_by_name_fragment = graphene.List(RoomSuggestionType, name_fragment=graphene.String(required=True))
 
     def resolve_plants(self, info, **kwargs):
         try:
@@ -61,6 +67,16 @@ class Query(graphene.ObjectType):
                 return Room.objects.filter(owner=info.context.user)
         except Room.DoesNotExist:
             return None
+
+    def resolve_rooms_by_name_fragment(self, info, name_fragment):
+        try:
+            if not info.context.user.is_authenticated:
+                raise GraphQLError('Unauthorized')
+            else:
+                return Room.objects.filter(owner=info.context.user).filter(room_name__icontains=name_fragment)
+        except Room.DoesNotExist:
+            return None
+
 
     def resolve_plants_by_room(root, info, room_id):
         try:

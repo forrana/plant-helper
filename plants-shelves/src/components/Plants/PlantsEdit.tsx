@@ -6,12 +6,13 @@ import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, M
 import { DELETE_PLANT, UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData, PlantNickName } from './models'
-import AutoCompleteInput from '../UI/AutoCompleteInput';
 import styles from "./Plant.module.css"
 import editStyles from "./PlantsEdit.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
+import PlantNameInput from './PlantNameInput';
+import RoomNameInput from './RoomNameInput';
 
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
@@ -115,7 +116,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <img src={pot} alt="plant pot" className={editStyles.image}/>
       <FormGroup>
         <Label for="name">Name:</Label>
-        <AutoCompleteInput type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
+        <PlantNameInput type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
           setValue={setPlantSettings}
           onChange={handlePlantNameInputChange}
@@ -135,12 +136,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <Label for="scientificName">Group:</Label>
-        <Input
-          type="text" name="groupName" id="groupName" placeholder="Group name"
+        <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
           data-testid="plant-group-name-input"
           value={groupName}
+          setValue={setGroupName}
           onChange={handleGroupNameInputChange}
-          />
+        />
       </FormGroup>
       <FormGroup>
         <Label for="postponeDays">Postpone days:</Label>

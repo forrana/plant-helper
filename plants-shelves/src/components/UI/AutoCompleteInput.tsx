@@ -1,8 +1,6 @@
-import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { Input, InputProps, ListGroup, ListGroupItem } from 'reactstrap';
-import { PLANT_ENTRY_BY_NICK_NAME_FRAGMENT } from '../Plants/catalogQueries';
-import { PlantNickName } from '../Plants/models';
+import { PlantNickName, RoomType } from '../Plants/models';
 import styles from './AutoCompleteInput.module.css'
 
 interface PlantSuggestionsResponse {
@@ -11,14 +9,16 @@ interface PlantSuggestionsResponse {
 
 interface AutoCompleteInputProps extends InputProps {
   value: string
-  setValue: (value: PlantNickName) => any
+  setValue: (value: PlantNickName|RoomType) => any
+  useQLQuery: (isSkipFetch: boolean, setOptions: (params: any) => any) => any
+  renderOption: (option: any) => any
 }
 
 const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
   const [options, setOptions] = useState<Array<PlantNickName>>([]);
   const [skipFetch, setSkipFetch] = useState<Boolean>(true);
 
-  let {setValue, ...inputProps} = props;
+  let {setValue, useQLQuery, renderOption, ...inputProps} = props;
 
   const isSkipFecth = () => {
     if(skipFetch) {
@@ -39,17 +39,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
     setOptions([]);
   }
 
-  const SEARCH_DEBOUNCE_TIMEOUT = 500;
-
-  const debounceValue = useDebounce(props.value, SEARCH_DEBOUNCE_TIMEOUT);
-
-  useQuery(PLANT_ENTRY_BY_NICK_NAME_FRAGMENT, {
-    variables: { nameFragment: debounceValue },
-    skip: isSkipFecth(),
-    onCompleted: (data: PlantSuggestionsResponse) => {
-      setOptions(data.nickNameEntriesByNameFragment);
-    }
-  })
+  useQLQuery(isSkipFecth(), setOptions)
 
   if(props?.value.length < 3)
     return (
@@ -70,7 +60,7 @@ const AutoCompleteInput: React.FC<AutoCompleteInputProps> = (props) => {
           options.map(
             (option, index) =>
             <ListGroupItem key={index} onClick={() => handleOnClick(option)}>
-              {option.name} <small className="text-muted">({option.plantEntry.scientificName})</small>
+              {renderOption(option)}
             </ListGroupItem>
           )
         }

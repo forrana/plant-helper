@@ -18,7 +18,10 @@ class Room(models.Model):
     room_description = models.CharField(max_length=200, blank=True, default='')
     house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True)
     def __str__(self):
-        return f"{self.house.house_name}.{self.room_name}"
+        if self.house:
+            return f"{self.house.house_name}.{self.room_name}"
+        else:
+            return f"{self.room_name}"
 
 
 class Symbol(models.Model):

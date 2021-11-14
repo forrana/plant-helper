@@ -21,6 +21,13 @@ const GET_ALL_ROOMS = gql`
     }
   }
 `;
+const ROOMS_BY_NAME_FRAGMENT = gql`
+  query RoomsByNameFragment($nameFragment: String!) {
+    roomsByNameFragment(nameFragment: $nameFragment) {
+      id, roomName
+    }
+  }
+`;
 
 const ADD_PLANT = gql`
   mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!) {
@@ -130,5 +137,6 @@ export {
   CREATE_SUBSCRIPTION,
   GET_SUBSCRIPTION,
   POSTPONE_WATERING,
-  CREATE_ROOM
+  CREATE_ROOM,
+  ROOMS_BY_NAME_FRAGMENT
 }

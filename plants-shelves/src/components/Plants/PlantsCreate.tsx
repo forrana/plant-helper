@@ -6,9 +6,9 @@ import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
 import { PlantData, PlantNickName } from './models'
-import AutoCompleteInput from '../UI/AutoCompleteInput';
 import ErrorHandler from './ErrorHandler';
 import styles from "./Plant.module.css"
+import PlantNameInput from './PlantNameInput';
 
 
 interface PlantsCreateProps { action?: () => void; }
@@ -78,7 +78,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
     >
       <FormGroup>
         <Label for="name">Name:</Label>
-        <AutoCompleteInput type="text" name="name" id="name" placeholder="Plant name"
+        <PlantNameInput type="text" name="name" id="name" placeholder="Plant name"
           value={plantName}
           data-testid="name-input"
           setValue={setPlantSettings}
