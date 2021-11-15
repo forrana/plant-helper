@@ -6,3 +6,24 @@
     margin-right: auto;
     width: 50%;
   }
+
+  .autoInputWithColorPicker {
+    display: grid;
+    grid-template:
+        "a c" auto
+        "b b" auto / 1fr 0.1fr
+
+  }
+
+  .colorPickerContainer {
+    grid-area: c;
+    padding: .3rem .3rem;
+  }
+
+  .colorPickerInput {
+    width: 2.5em;
+  }
+
+  .groupInput {
+    width: auto!important;
+  }

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Spinner } from 'reactstrap';
+import { Button, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalFooter, ModalHeader, Spinner } from 'reactstrap';
 
 import { DELETE_PLANT, UPDATE_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
-import { PlantData, PlantNickName } from './models'
+import { PlantData, PlantNickName, RoomType } from './models'
 import styles from "./Plant.module.css"
 import editStyles from "./PlantsEdit.module.css"
 import uiStyles from "../UI/UIElements.module.css"
@@ -41,6 +41,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     setScientificName(plantSuggestion.plantEntry.scientificName);
     setDaysBetweenWateringGrowing(plantSuggestion.plantEntry.daysBetweenWateringGrowingInt);
     setDaysBetweenWateringDormant(plantSuggestion.plantEntry.daysBetweenWateringDormantInt);
+  }
+
+  const setRoomNameFromSuggestion = (roomSuggestion: RoomType) => {
+    setGroupName(roomSuggestion.roomName)
   }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,12 +140,21 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <Label for="scientificName">Group:</Label>
-        <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
-          data-testid="plant-group-name-input"
-          value={groupName}
-          setValue={setGroupName}
-          onChange={handleGroupNameInputChange}
-        />
+        <InputGroup className={editStyles.autoInputWithColorPicker}>
+          <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
+            className={editStyles.groupInput}
+            data-testid="plant-group-name-input"
+            value={groupName}
+            setValue={setRoomNameFromSuggestion}
+            onChange={handleGroupNameInputChange}
+          />
+          <InputGroupText className={editStyles.colorPickerContainer}>
+            <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
+              className={editStyles.colorPickerInput}
+              data-testid="plant-group-color-input"
+            />
+          </InputGroupText>
+        </InputGroup>
       </FormGroup>
       <FormGroup>
         <Label for="postponeDays">Postpone days:</Label>
