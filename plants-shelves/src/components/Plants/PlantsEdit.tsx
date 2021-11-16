@@ -21,6 +21,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
   const [groupName, setGroupName] = useState(plant.room?.roomName || "");
+  const [groupColor, setGroupColor] = useState("#FFFFFF")
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(plant.daysBetweenWateringDormant)
@@ -36,6 +37,13 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     onError: (e) => console.error('Error creating plant:', e)
   });
 
+  const generateColorForGroup = (groupName: string) => {
+    // @ts-ignore: iterate through string is needed
+    let groupNumber = [...groupName].reduce((prev, current) => prev + current.charCodeAt(), 0)
+    let randomColor = "#" + Math.floor(Math.random()*(16777215 - groupNumber)).toString(16);
+    return randomColor;
+  }
+
   const setPlantSettings = (plantSuggestion: PlantNickName) => {
     setPlantName(plantSuggestion.name);
     setScientificName(plantSuggestion.plantEntry.scientificName);
@@ -44,7 +52,9 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   }
 
   const setRoomNameFromSuggestion = (roomSuggestion: RoomType) => {
-    setGroupName(roomSuggestion.roomName)
+    const newValue = roomSuggestion.roomName;
+    setGroupColor(generateColorForGroup(newValue))
+    setGroupName(newValue)
   }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +62,9 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   };
 
   const handleGroupNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupName(event.target.value);
+    const newValue = event.target.value;
+    setGroupColor(generateColorForGroup(newValue))
+    setGroupName(newValue);
   };
 
   const handleScientificNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,6 +164,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
             <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
               className={editStyles.colorPickerInput}
               data-testid="plant-group-color-input"
+              setValue={setGroupColor}
+              value={groupColor}
             />
           </InputGroupText>
         </InputGroup>
