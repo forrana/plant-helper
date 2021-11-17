@@ -18,6 +18,7 @@ export interface SymbolType {
 export interface RoomType {
   roomName: string
   id: number
+  colorBackground: string
   plants?: PlantType[]
 }
 

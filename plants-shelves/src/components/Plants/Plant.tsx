@@ -154,7 +154,9 @@ function Plant({ plant, index }: PlantProps) {
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>
         </CardBody>
-        <Badge color="info">{plant.room?.roomName}</Badge>
+        <div style={{backgroundColor: plant.room?.colorBackground}} className={styles.customBadge}>
+          <b>{plant.room?.roomName}</b>
+        </div>
         <EditModal isOpen={isEditModal} toggleAction={toggleEditModal} index={index} plant={plant}/>
 
       </Card>

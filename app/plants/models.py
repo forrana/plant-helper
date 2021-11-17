@@ -17,6 +17,8 @@ class Room(models.Model):
     room_name = models.CharField(max_length=200)
     room_description = models.CharField(max_length=200, blank=True, default='')
     house = models.ForeignKey(House, on_delete=models.SET_NULL, blank=True, null=True)
+    color_background = models.CharField(max_length=9, default="#000000")
+    color_text = models.CharField(max_length=9, default="#FFFFFF")
     def __str__(self):
         if self.house:
             return f"{self.house.house_name}.{self.room_name}"

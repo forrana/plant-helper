@@ -22,12 +22,12 @@ class PlantType(DjangoObjectType):
 class RoomType(DjangoObjectType):
     class Meta:
         model = Room
-        fields = ("id", "room_name", "house", "plants")
+        fields = "__all__"
 
 class RoomSuggestionType(DjangoObjectType):
     class Meta:
         model = Room
-        fields = ("id", "room_name")
+        fields = "__all__"
 
 class SymbolType(DjangoObjectType):
     class Meta:
@@ -176,11 +176,15 @@ class UpdatePlant(graphene.Mutation):
         days_between_watering_dormant = graphene.Int()
         postpone_days = graphene.Int()
         group_name = graphene.String()
+        color_background = graphene.String()
     ok = graphene.Boolean()
     plant = graphene.Field(PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_id, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant, postpone_days, group_name):
+    def mutate(root, id, info, plant_id, plant_name, scientific_name,\
+                days_between_watering_growing, days_between_watering_dormant, postpone_days, group_name,\
+                color_background
+            ):
         owner = info.context.user
         if not owner.is_authenticated:
             raise GraphQLError('Unauthorized')
@@ -195,8 +199,11 @@ class UpdatePlant(graphene.Mutation):
         if group_name:
             try:
                 room = Room.objects.get(room_name=group_name, owner=owner)
+                if room.color_background != color_background:
+                    room.color_background = color_background
+                    room.save()
             except Room.DoesNotExist:
-                room = Room.objects.create(owner=owner, room_name=group_name)
+                room = Room.objects.create(owner=owner, room_name=group_name, color_background=color_background)
             if plant.room != room:
                 plant.room = room
         plant.save()

@@ -3,7 +3,7 @@ import React from 'react';
 import { Plant } from './Plant'
 import { PlantsData, RoomType } from './models'
 import styles from './PlantsList.module.css';
-import { Room } from './Room';
+// import { Room } from './Room';
 
 interface PlantsListProps extends PlantsData { rooms: RoomType[] }
 // {

@@ -21,7 +21,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
   const [groupName, setGroupName] = useState(plant.room?.roomName || "");
-  const [groupColor, setGroupColor] = useState("#FFFFFF")
+  const [groupColor, setGroupColor] = useState(plant.room?.colorBackground || "#FFFFFF");
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(plant.daysBetweenWateringDormant)
@@ -71,6 +71,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     setScientificName(event.target.value);
   };
 
+  const handleSetGroupColorInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGroupColor(event.target.value);
+  };
+
   const handleDaysBetweenWateringGrowingInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDaysBetweenWateringGrowing(parseInt(event.target.value))
   }
@@ -87,7 +91,16 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      updatePlant({ variables: { plantId: plant.id, plantName, scientificName, daysBetweenWateringDormant, daysBetweenWateringGrowing, postponeDays, groupName } })
+      updatePlant({ variables: {
+        plantId: plant.id,
+        plantName,
+        scientificName,
+        daysBetweenWateringDormant,
+        daysBetweenWateringGrowing,
+        postponeDays,
+        groupName,
+        colorBackground: groupColor,
+      } })
     }
   }
 
@@ -165,6 +178,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
               className={editStyles.colorPickerInput}
               data-testid="plant-group-color-input"
               setValue={setGroupColor}
+              onChange={handleSetGroupColorInputChange}
               value={groupColor}
             />
           </InputGroupText>

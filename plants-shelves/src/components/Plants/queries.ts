@@ -8,7 +8,8 @@ query {
     }
     room {
       id,
-      roomName
+      roomName,
+      colorBackground
     }
   }
 }
@@ -17,14 +18,14 @@ query {
 const GET_ALL_ROOMS = gql`
   query {
     rooms {
-      id, roomName
+      id, roomName, colorBackground
     }
   }
 `;
 const ROOMS_BY_NAME_FRAGMENT = gql`
   query RoomsByNameFragment($nameFragment: String!) {
     roomsByNameFragment(nameFragment: $nameFragment) {
-      id, roomName
+      id, roomName, colorBackground
     }
   }
 `;
@@ -39,7 +40,8 @@ const ADD_PLANT = gql`
         }
         room {
           id,
-          roomName
+          roomName,
+          colorBackground
         }
       }
     }
@@ -56,7 +58,8 @@ const WATER_PLANT = gql`
         }
         room {
           id,
-          roomName
+          roomName,
+          colorBackground
         }
       }
     }
@@ -73,7 +76,8 @@ const POSTPONE_WATERING = gql`
         }
         room {
           id,
-          roomName
+          roomName,
+          colorBackground
         }
       }
     }
@@ -81,16 +85,24 @@ const POSTPONE_WATERING = gql`
 `;
 
 const UPDATE_PLANT = gql`
-  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!, $groupName: String) {
-    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant, postponeDays: $postponeDays, groupName: $groupName) {
+  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!, $groupName: String, $colorBackground: String) {
+    updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName,
+      daysBetweenWateringGrowing: $daysBetweenWateringGrowing,
+      daysBetweenWateringDormant: $daysBetweenWateringDormant,
+      postponeDays: $postponeDays,
+      groupName: $groupName,
+      colorBackground: $colorBackground) {
       plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
+        id, name, scientificName, daysUntilNextWatering,
+        daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant,
+        daysPostpone,
         symbol {
           userWideId
         }
         room {
           id,
-          roomName
+          roomName,
+          colorBackground
         }
       }
     }
