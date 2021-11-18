@@ -12,7 +12,7 @@ import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
 import EditModal from './EditModal';
 
-interface PlantProps extends PlantData { index: number }
+interface PlantProps extends PlantData { index: number, color?: string }
 interface WhenToWaterProps { daysUntilNextWatering: number }
 
 
@@ -32,7 +32,7 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
   )
 }
 
-function Plant({ plant, index }: PlantProps) {
+function Plant({ plant, index, color }: PlantProps) {
     const dispatch = useContext(PlantsDispatch);
 
     const [isEditMode, setIsEditMode] = useState(false);
@@ -154,7 +154,7 @@ function Plant({ plant, index }: PlantProps) {
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>
         </CardBody>
-        <div style={{backgroundColor: plant.room?.colorBackground}} className={styles.customBadge}>
+        <div style={{backgroundColor: color}} className={styles.customBadge}>
           <b>{plant.room?.roomName}</b>
         </div>
         <EditModal isOpen={isEditModal} toggleAction={toggleEditModal} index={index} plant={plant}/>

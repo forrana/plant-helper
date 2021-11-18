@@ -13,9 +13,18 @@ const globalReducer = (state: GlobalState, action: GlobalReducerAction) => {
     case 'loadRooms':
       return { ...state, rooms: [...action.rooms] };
     case 'update':
-      const newPlants = [...state.plants]
-      newPlants[action.index] = action.plant
-      return { ...state, plants: newPlants }
+      const newPlants = [...state.plants];
+      const newRooms = [...state.rooms];
+      const newPlant = action.plant;
+      if(newPlant.room) {
+        const newRoom = newPlant.room;
+        const newRoomInd = newRooms.findIndex(room => room.id === newRoom.id);
+        if(newRoomInd >= 0) newRooms[newRoomInd] = newRoom;
+        else newRooms.push(newRoom);
+      }
+
+      newPlants[action.index] = newPlant;
+      return { ...state, plants: newPlants, rooms: newRooms }
     case 'delete':
       const leftPlants = state.plants.filter( (plant, index) => index !== action.index )
       return { ...state, plants: leftPlants }

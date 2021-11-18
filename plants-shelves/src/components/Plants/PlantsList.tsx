@@ -20,11 +20,21 @@ const PlantsList: React.FC<PlantsListProps> = (props) => {
     //   const plants = props.plants.filter(plant => plant.room?.id === room.id);
     //   return { ...room, plants };
     // })
+
+    const roomsColors = props.rooms.reduce((map, obj) => {
+      map.set(obj.id, obj.colorBackground);
+      return map;
+    }, new Map())
+
+    const getRoomColor = (room?: number) => {
+      if(room) return roomsColors.get(room);
+      return "#000000";
+    }
     return (
       <section className={styles.plants}>
           <section className={styles.plantsList} data-testid="plant-list-container">
             {
-              props.plants.map((item, index) => <Plant plant={item} index={index} key={index} />)
+              props.plants.map((item, index) => <Plant plant={item} color={getRoomColor(item.room?.id)} index={index} key={index} />)
             }
           </section>
       </section>
