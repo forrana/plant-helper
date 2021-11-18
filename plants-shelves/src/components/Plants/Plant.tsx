@@ -134,7 +134,10 @@ function Plant({ plant, index, color }: PlantProps) {
       )
 
     return (
-      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true" className={`${styles.plant} ${styles[bgColor]}`} id={plant.id+""} data-testid={`plant-card-${index}`}>
+      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true"
+            className={`${styles.plant} ${styles[bgColor]}`} id={plant.id+""} data-testid={`plant-card-${index}`}
+            style={{borderColor: color}}
+            >
         <Badge color="dark" className={styles.badge}>#{plant.symbol.userWideId}</Badge>
         <CardBody className={styles.narrowCard}>
           <section className={styles.imageGroup}>
