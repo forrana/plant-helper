@@ -53,8 +53,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   const setRoomNameFromSuggestion = (roomSuggestion: RoomType) => {
     const newValue = roomSuggestion.roomName;
-    setGroupColor(generateColorForGroup(newValue))
-    setGroupName(newValue)
+    setGroupColor(roomSuggestion.colorBackground);
+    setGroupName(newValue);
   }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

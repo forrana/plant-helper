@@ -21,20 +21,19 @@ const PlantsList: React.FC<PlantsListProps> = (props) => {
     //   return { ...room, plants };
     // })
 
-    const roomsColors = props.rooms.reduce((map, obj) => {
-      map.set(obj.id, obj.colorBackground);
+    const roomsHashMape = props.rooms.reduce((map, obj) => {
+      map.set(obj.id, obj);
       return map;
     }, new Map())
 
-    const getRoomColor = (room?: number) => {
-      if(room) return roomsColors.get(room);
-      return "#000000";
+    const getRoom = (room?: number) => {
+      if(room) return roomsHashMape.get(room);
     }
     return (
       <section className={styles.plants}>
           <section className={styles.plantsList} data-testid="plant-list-container">
             {
-              props.plants.map((item, index) => <Plant plant={item} color={getRoomColor(item.room?.id)} index={index} key={index} />)
+              props.plants.map((item, index) => <Plant plant={item} room={getRoom(item.room?.id)} index={index} key={index} />)
             }
           </section>
       </section>

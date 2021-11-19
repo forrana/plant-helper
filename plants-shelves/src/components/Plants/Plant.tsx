@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { PlantData } from './models'
+import { PlantData, RoomType } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner, Badge, ButtonGroup,
        } from 'reactstrap';
 import { POSTPONE_WATERING, WATER_PLANT } from './queries'
@@ -11,8 +11,9 @@ import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
 import EditModal from './EditModal';
+import RoomBadge from './RoomBadge';
 
-interface PlantProps extends PlantData { index: number, color?: string }
+interface PlantProps extends PlantData { index: number, room?: RoomType }
 interface WhenToWaterProps { daysUntilNextWatering: number }
 
 
@@ -32,7 +33,7 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
   )
 }
 
-function Plant({ plant, index, color }: PlantProps) {
+function Plant({ plant, index, room }: PlantProps) {
     const dispatch = useContext(PlantsDispatch);
 
     const [isEditMode, setIsEditMode] = useState(false);
@@ -133,6 +134,8 @@ function Plant({ plant, index, color }: PlantProps) {
         </Card>
       )
 
+    const color = room?.colorBackground;
+
     return (
       <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true"
             className={`${styles.plant} ${styles[bgColor]}`} id={plant.id+""} data-testid={`plant-card-${index}`}
@@ -157,9 +160,7 @@ function Plant({ plant, index, color }: PlantProps) {
           <CardTitle tag="h5">{plant.name}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">{plant.scientificName}</CardSubtitle>
         </CardBody>
-        <div style={{backgroundColor: color}} className={styles.customBadge}>
-          <b>{plant.room?.roomName}</b>
-        </div>
+        <RoomBadge room={room}></RoomBadge>
         <EditModal isOpen={isEditModal} toggleAction={toggleEditModal} index={index} plant={plant}/>
 
       </Card>

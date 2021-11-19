@@ -1,0 +1,4 @@
+.customBadge > b {
+  mix-blend-mode: difference;
+  color:white;
+}
