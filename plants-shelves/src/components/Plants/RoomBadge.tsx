@@ -73,7 +73,9 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
         />
       )
     } else return (
-      <div style={{ backgroundColor: room.colorBackground }} className={styles.customBadge} onDoubleClick={toggleEditMode}>
+      <div style={{ backgroundColor: room.colorBackground }} className={styles.customBadge} onDoubleClick={toggleEditMode}
+        onTouchEnd={toggleEditMode}
+      >
         <b>{room.roomName}</b>
       </div>
     )}
