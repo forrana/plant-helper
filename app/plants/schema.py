@@ -167,6 +167,29 @@ class PostponeWatering(graphene.Mutation):
         ok = True
         return WaterPlant(plant=plant, ok=ok)
 
+class UpdateRoom(graphene.Mutation):
+    class Arguments:
+        room_id   = graphene.ID()
+        room_name = graphene.String()
+
+    ok = graphene.Boolean()
+    room = graphene.Field(RoomType)
+
+    @classmethod
+    def mutate(root, id, info, room_id, room_name):
+        owner = info.context.user
+        if not owner.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        room = Room.objects.get(pk=room_id, owner=owner)
+        if not room:
+            raise GraphQLError('Room not found')
+        room.room_name = room_name
+        room.save()
+
+        ok = True
+        return UpdateRoom(room=room, ok=ok)
+
+
 class UpdatePlant(graphene.Mutation):
     class Arguments:
         plant_id = graphene.ID()
@@ -190,7 +213,7 @@ class UpdatePlant(graphene.Mutation):
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.get(pk=plant_id, owner=owner)
         if not plant:
-            raise GraphQLError('Unauthorized')
+            raise GraphQLError('Plant not found')
         plant.name = plant_name
         plant.scientific_name = scientific_name
         plant.time_between_watering_growing = datetime.timedelta(days=days_between_watering_growing)
@@ -234,6 +257,7 @@ class Mutation(graphene.AbstractType, graphene.ObjectType):
     water_plant  = WaterPlant.Field()
     update_plant = UpdatePlant.Field()
     delete_plant = DeletePlant.Field()
+    update_room  = UpdateRoom.Field()
     postpone_watering = PostponeWatering.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

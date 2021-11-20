@@ -109,6 +109,19 @@ const UPDATE_PLANT = gql`
   }
 `;
 
+const UPDATE_ROOM = gql`
+  mutation UpdateRoom($roomId: ID!, $roomName: String!) {
+    updateRoom(roomId: $roomId, roomName: $roomName) {
+      ok
+      room {
+        id,
+        roomName,
+        colorBackground
+      }
+    }
+  }
+`
+
 const CREATE_ROOM = gql`
   mutation CreateRoom($plant1Id: ID!, $plant2Id: ID!) {
     createRoom(plant1Id: $plant1Id, plant2Id: $plant2Id) {
@@ -150,5 +163,6 @@ export {
   GET_SUBSCRIPTION,
   POSTPONE_WATERING,
   CREATE_ROOM,
-  ROOMS_BY_NAME_FRAGMENT
+  ROOMS_BY_NAME_FRAGMENT,
+  UPDATE_ROOM
 }

@@ -8,6 +8,11 @@ const globalReducer = (state: GlobalState, action: GlobalReducerAction) => {
       return { ...state, plants: [...state.plants, action.plant] };
     case 'addRoom':
       return { ...state, rooms: [...state.rooms, action.room] }
+    case 'updateRoom':
+      const updatedRooms = [...state.rooms]
+      const updatedRoomIndex = updatedRooms.findIndex(room => room.id === action.room.id)
+      updatedRooms[updatedRoomIndex] = action.room
+      return { ...state, rooms: updatedRooms }
     case 'load':
       return { ...state, plants: [...action.plants] };
     case 'loadRooms':

@@ -45,6 +45,10 @@ export interface PlantData {
   plant: PlantType;
 }
 
+export interface RoomData {
+  room: RoomType;
+}
+
 export interface PlantSuggestion {
   nickName: string,
   nickNames: Array<string>,
@@ -64,12 +68,14 @@ export interface loadAction     { type: 'load', plants: PlantType[] }
 export interface loadRoomsAction{ type: 'loadRooms', rooms: RoomType[] }
 export interface addAction      { type: 'add', plant: PlantType }
 export interface addRoomAction  { type: 'addRoom', room: RoomType}
+export interface updateRoomAction { type: 'updateRoom', room: RoomType}
 export interface updateAction   { type: 'update', plant: PlantType, index: number }
 export interface deleteAction   { type: 'delete', index: number }
 
 export type GlobalReducerAction =
   | addAction
   | addRoomAction
+  | updateRoomAction
   | loadAction
   | loadRoomsAction
   | updateAction

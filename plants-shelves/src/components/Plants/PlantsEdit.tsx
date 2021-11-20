@@ -34,7 +34,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       action && action();
       setSubmitted(true);
     },
-    onError: (e) => console.error('Error creating plant:', e)
+    onError: (e) => console.error('Error updating plant:', e)
   });
 
   const generateColorForGroup = (groupName: string) => {
