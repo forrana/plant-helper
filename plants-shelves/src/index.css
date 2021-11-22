@@ -35,6 +35,11 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 4.2em;
+}
+
+.navbar-collapse {
+  flex-grow: unset;
 }
 
 i.icon {

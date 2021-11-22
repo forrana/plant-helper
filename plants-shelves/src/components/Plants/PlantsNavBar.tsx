@@ -23,7 +23,7 @@ const PlantsNavBar = () => {
 
   return (
     <>
-      <Navbar color="light" light expand="md" container="sm" fixed="top">
+      <Navbar color="light" light expand="md" fixed="top">
         <NavbarBrand><img src="icon-192.png" alt="app logo"/></NavbarBrand>
         <Nav navbar>
             <NavItem>
