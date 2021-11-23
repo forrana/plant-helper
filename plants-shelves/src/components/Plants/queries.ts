@@ -85,7 +85,9 @@ const POSTPONE_WATERING = gql`
 `;
 
 const UPDATE_PLANT = gql`
-  mutation UpdatePlant($plantId: ID!, $plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!, $postponeDays: Int!, $groupName: String, $colorBackground: String) {
+  mutation UpdatePlant($plantId: ID!, $plantName: String!,
+    $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!,
+    $postponeDays: Int!, $groupName: String, $colorBackground: String) {
     updatePlant(plantId: $plantId, plantName: $plantName, scientificName: $scientificName,
       daysBetweenWateringGrowing: $daysBetweenWateringGrowing,
       daysBetweenWateringDormant: $daysBetweenWateringDormant,

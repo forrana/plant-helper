@@ -21,6 +21,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
   const [groupName, setGroupName] = useState(plant.room?.roomName || "");
+  const [groupId, setGroupId] = useState(plant.room?.id || 0)
   const [groupColor, setGroupColor] = useState(plant.room?.colorBackground || "#FFFFFF");
   const [scientificName, setScientificName] = useState(plant.scientificName);
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(plant.daysBetweenWateringGrowing)
@@ -55,6 +56,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     const newValue = roomSuggestion.roomName;
     setGroupColor(roomSuggestion.colorBackground);
     setGroupName(newValue);
+    setGroupId(roomSuggestion.id);
+  }
+
+  const cleanRoomName = () => {
+    setGroupName("");
+    setGroupId(0);
   }
 
   const handlePlantNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +89,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
   const handleDaysBetweenWateringDormantInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setDaysBetweenWateringDormant(parseInt(event.target.value))
   }
-
 
   const handleDaysPostponeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPostponeDays(parseInt(event.target.value))
@@ -131,6 +137,24 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     return  <ErrorHandler error={deletingStatus.error} />
   }
 
+  const groupNameInput = (groupId: number) => {
+    if(!groupId) {
+      return (
+      <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
+        className={editStyles.groupInput}
+        data-testid="plant-group-name-input"
+        value={groupName}
+        setValue={setRoomNameFromSuggestion}
+        onChange={handleGroupNameInputChange}
+      />)
+    } else return (
+      <div className={editStyles.groupBadge}>
+        <span>{groupName}</span>
+        <Button className="btn-close" onClick={cleanRoomName} outline></Button>
+      </div>
+    )
+  }
+
   return (
     <>
     <Form
@@ -166,13 +190,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       <FormGroup>
         <Label for="scientificName">Group:</Label>
         <InputGroup className={editStyles.autoInputWithColorPicker}>
-          <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
-            className={editStyles.groupInput}
-            data-testid="plant-group-name-input"
-            value={groupName}
-            setValue={setRoomNameFromSuggestion}
-            onChange={handleGroupNameInputChange}
-          />
+          {groupNameInput(groupId)}
           <InputGroupText className={editStyles.colorPickerContainer}>
             <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
               className={editStyles.colorPickerInput}

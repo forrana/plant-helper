@@ -229,6 +229,8 @@ class UpdatePlant(graphene.Mutation):
                 room = Room.objects.create(owner=owner, room_name=group_name, color_background=color_background)
             if plant.room != room:
                 plant.room = room
+        else:
+            plant.room = None
         plant.save()
 
         ok = True
