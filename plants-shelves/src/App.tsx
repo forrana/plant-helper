@@ -26,6 +26,11 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import ServiceWorkerWrapper from './ServiceWorkerWrapper';
 import { REFRESH_TOKEN } from './components/User/queries';
+import AlertDispatch from './components/UI/AlertDispatch';
+import { AlertReducerAction, AlertState } from './components/UI/models';
+import { alertReducer, initialAlertState } from './components/UI/AlertReducer';
+import AlertContext from './components/UI/AlertContext';
+import AlertManager from './components/UI/AlertManager';
 
 
 const host = window.location.hostname
@@ -131,6 +136,7 @@ const client = new ApolloClient({
 function App() {
   const [state, dispatch]:[GlobalState, Dispatch<GlobalReducerAction>] = useReducer(globalReducer, initialGlobalState);
   const [userState, userDispatch]:[UserState, Dispatch<UserReducerAction>] = useReducer(userReducer, getInitialState());
+  const [alertState, alertDispatch]:[AlertState, Dispatch<AlertReducerAction>] = useReducer(alertReducer, initialAlertState);
 
   useEffect(() => {
     localStorage.setItem(USER_STATE_STORAGE_KEY, JSON.stringify(userState));
@@ -141,21 +147,26 @@ function App() {
       <UserDispatch.Provider value={userDispatch}>
         <UserContext.Provider value={userState}>
           <PlantsDispatch.Provider value={dispatch}>
-            <ServiceWorkerWrapper />
-            <Switch>
-              <PublicRoute path="/login">
-                <Login/>
-              </PublicRoute>
-              <PrivateRoute path="/logout">
-                <Logout/>
-              </PrivateRoute>
-              <PublicRoute path="/signup">
-                <Signup/>
-              </PublicRoute>
-              <PrivateRoute path="/">
-                <PlantsContainer state={state}/>
-              </PrivateRoute>
-            </Switch>
+            <AlertDispatch.Provider value={alertDispatch}>
+              <AlertContext.Provider value={alertState}>
+                <ServiceWorkerWrapper />
+                <AlertManager />
+                <Switch>
+                  <PublicRoute path="/login">
+                    <Login/>
+                  </PublicRoute>
+                  <PrivateRoute path="/logout">
+                    <Logout/>
+                  </PrivateRoute>
+                  <PublicRoute path="/signup">
+                    <Signup/>
+                  </PublicRoute>
+                  <PrivateRoute path="/">
+                    <PlantsContainer state={state}/>
+                  </PrivateRoute>
+                </Switch>
+              </AlertContext.Provider>
+            </AlertDispatch.Provider>
           </PlantsDispatch.Provider>
         </UserContext.Provider>
       </UserDispatch.Provider>
