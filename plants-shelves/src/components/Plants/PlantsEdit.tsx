@@ -140,9 +140,12 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
         onChange={handleGroupNameInputChange}
       />)
     } else return (
-      <div className={editStyles.groupBadge}>
-        <span>{groupName}</span>
-        <Button className="btn-close" onClick={cleanRoomName} outline></Button>
+      <div
+        className={editStyles.groupBadge}
+        style={{ backgroundColor: groupColor }}
+      >
+        <b>{groupName}</b>
+        <Button onClick={cleanRoomName} outline><i className="icon icon-cross"></i></Button>
       </div>
     )
   }

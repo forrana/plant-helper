@@ -59,6 +59,10 @@ i.icon {
   content: "\1F4BE";
 }
 
+.icon-cross:after {
+  content: "\2716";
+}
+
 .alert {
   position: fixed;
   top: 0;

@@ -29,10 +29,14 @@
   }
 
   .groupBadge {
-    background-color: gainsboro;
     border-radius: 0.25rem 0 0 0.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 0.5em;
+    padding-left: 1em;
+  }
+
+  .groupBadge > b, .groupBadge > button {
+    mix-blend-mode: difference;
+    color:white;
   }
