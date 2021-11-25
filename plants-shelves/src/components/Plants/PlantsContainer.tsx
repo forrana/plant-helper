@@ -52,13 +52,6 @@ function PlantsContainer(props: PlantsContainerProps) {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
 
-  if (error) {
-    return  <ErrorHandler error={error} />
-  }
-
-  if (groupsQueryResult.error) {
-    return  <ErrorHandler error={groupsQueryResult.error} />
-  }
 // TODO move LoadingScreen to container, use reducer to set it up from any place where loading is happening
   if (props.state.plants.length === 0) return (
     <WithNavBar>
@@ -70,6 +63,8 @@ function PlantsContainer(props: PlantsContainerProps) {
       </main>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
       <LoadingScreen isLoading={loading}/>
+      <ErrorHandler error={error} />
+      <ErrorHandler error={groupsQueryResult.error} />
     </WithNavBar>
   )
 
@@ -80,6 +75,8 @@ function PlantsContainer(props: PlantsContainerProps) {
           <PlantsList plants={props.state.plants} rooms={props.state.rooms}/>
         </main>
       </WithNavBar>
+      <ErrorHandler error={error} />
+      <ErrorHandler error={groupsQueryResult.error} />
     </>
   )
 

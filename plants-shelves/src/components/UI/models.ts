@@ -1,10 +1,10 @@
-export interface ErrorType { description: string }
+export interface MessageType { description: string, color: "danger" | "info" }
 
-export interface AddError  { type: 'addError', error: ErrorType }
-export interface RemoveError  { type: 'removeError' }
+export interface AddMessage  { type: 'addMessage', message: MessageType }
+export interface RemoveMessage  { type: 'removeMessage' }
 
-export interface AlertState { messages: ErrorType[] }
+export interface AlertState { messages: MessageType[] }
 
 export type AlertReducerAction =
-  | AddError
-  | RemoveError
+  | AddMessage
+  | RemoveMessage

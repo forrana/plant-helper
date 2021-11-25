@@ -54,13 +54,10 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
 
   if (loading) return  <Spinner color="primary" />
 
-  if (error) {
-    return  <ErrorHandler error={error} />
-  }
-
   if(room) {
     if(isEditMode) {
       return (
+        <>
         <Input
           type="text" name="groupName" id="groupName" placeholder="Group name"
           data-testid="plant-group-name-input"
@@ -71,16 +68,21 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
           required
           onKeyUp={onKeyUp}
         />
+        <ErrorHandler error={error} />
+        </>
       )
     } else return (
+      <>
       <div style={{ backgroundColor: room.colorBackground }} className={styles.customBadge} onDoubleClick={toggleEditMode}
         onTouchEnd={toggleEditMode}
       >
         <b>{room.roomName}</b>
       </div>
+      <ErrorHandler error={error} />
+      </>
     )}
 
-  return (<></>)
+  return <></>
 }
 
 export default RoomBadge

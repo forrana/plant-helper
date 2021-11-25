@@ -129,14 +129,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   if (loading || deletingStatus.loading) return  <Spinner color="primary" />
 
-  if (error) {
-    return  <ErrorHandler error={error} />
-  }
-
-  if (deletingStatus.error) {
-    return  <ErrorHandler error={deletingStatus.error} />
-  }
-
   const groupNameInput = (groupId: number) => {
     if(!groupId) {
       return (
@@ -261,7 +253,8 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           <Button color="secondary" onClick={toggleModal}>Cancel!</Button>
         </ModalFooter>
     </Modal>
-
+    <ErrorHandler error={error} />
+    <ErrorHandler error={deletingStatus.error} />
     </>
   )
 }

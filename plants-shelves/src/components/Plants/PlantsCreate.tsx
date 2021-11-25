@@ -66,10 +66,6 @@ function PlantsCreate({ action }: PlantsCreateProps) {
 
   if (loading) return  <Spinner color="primary" />
 
-  if (error) {
-    return  <ErrorHandler error={error} />
-  }
-
   return (
     <Form
       onSubmit={handleFormSubmit}
@@ -130,6 +126,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
         <div className="text-center"><small><b>Dormant season</b> {daysBetweenWateringDormant} day(s) between waterings</small></div>
       </FormGroup>
       <Button type="submit" className={styles.button}>Add plant</Button>
+      <ErrorHandler error={error} />
     </Form>
   )
 }

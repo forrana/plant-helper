@@ -120,10 +120,6 @@ function Plant({ plant, index, room }: PlantProps) {
 
     if (wateringStatus.loading) return  <Spinner color="primary" />
 
-    if (wateringStatus.error) {
-      return  <ErrorHandler error={wateringStatus.error} />
-    }
-
     if (isEditMode)
       return (
         <Card className={styles.plant}>
@@ -162,7 +158,7 @@ function Plant({ plant, index, room }: PlantProps) {
         </CardBody>
         <RoomBadge room={room}></RoomBadge>
         <EditModal isOpen={isEditModal} toggleAction={toggleEditModal} index={index} plant={plant}/>
-
+        <ErrorHandler error={wateringStatus.error} />
       </Card>
     )
 }

@@ -4,9 +4,9 @@ const initialAlertState: AlertState  = { messages: [] };
 
 const alertReducer = (state: AlertState, action: AlertReducerAction) => {
     switch (action.type) {
-      case "addError":
-        return { ...state, messages: [...state.messages, action.error] };
-      case "removeError":
+      case "addMessage":
+        return { ...state, messages: [...state.messages, action.message] };
+      case "removeMessage":
         const newMessages = state.messages;
         newMessages.pop();
         return { ...state, messages: newMessages }
