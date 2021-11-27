@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { MutationResult, useMutation } from '@apollo/client';
 import { PlantData, RoomType } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner, Badge, ButtonGroup,
        } from 'reactstrap';
@@ -12,6 +12,7 @@ import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
 import EditModal from './EditModal';
 import RoomBadge from './RoomBadge';
+import LoadingScreen from './LoadingScreen';
 
 interface PlantProps extends PlantData { index: number, room?: RoomType }
 interface WhenToWaterProps { daysUntilNextWatering: number }
@@ -49,7 +50,7 @@ function Plant({ plant, index, room }: PlantProps) {
       onError: (e) => console.error('Error creating plant:', e)
     });
 
-    const [postponeWatering] = useMutation(POSTPONE_WATERING, {
+    const [postponeWatering, postponeWateringStatus] = useMutation(POSTPONE_WATERING, {
       onCompleted: (data: { postponeWatering: PlantData }) => {
         dispatch && dispatch({ type: 'update', plant: data.postponeWatering.plant, index: index })
       },
@@ -118,7 +119,8 @@ function Plant({ plant, index, room }: PlantProps) {
       event.currentTarget.classList.remove(styles.draggedPlant);
     }
 
-    if (wateringStatus.loading) return  <Spinner color="primary" />
+    const isSomethingLoading = (actions: MutationResult<any>[]) =>
+      actions.some(action => action.loading)
 
     if (isEditMode)
       return (
@@ -159,6 +161,7 @@ function Plant({ plant, index, room }: PlantProps) {
         <RoomBadge room={room}></RoomBadge>
         <EditModal isOpen={isEditModal} toggleAction={toggleEditModal} index={index} plant={plant}/>
         <ErrorHandler error={wateringStatus.error} />
+        <LoadingScreen isLoading={isSomethingLoading([wateringStatus, postponeWateringStatus])} isFullScreen={false}/>
       </Card>
     )
 }

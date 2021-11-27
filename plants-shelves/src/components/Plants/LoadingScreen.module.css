@@ -1,4 +1,4 @@
-.container {
+.containerFullScreen {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -7,6 +7,17 @@
     left: 0;
     z-index: 10;
     background-color: #f8f9fa;
+}
+
+.containerLocal {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 10;
+    background-color: #f8f9facc;
 }
 
 .spinner{

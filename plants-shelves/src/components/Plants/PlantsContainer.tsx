@@ -62,7 +62,7 @@ function PlantsContainer(props: PlantsContainerProps) {
         </Button>
       </main>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
-      <LoadingScreen isLoading={loading}/>
+      <LoadingScreen isLoading={loading} isFullScreen={true}/>
       <ErrorHandler error={error} />
       <ErrorHandler error={groupsQueryResult.error} />
     </WithNavBar>
