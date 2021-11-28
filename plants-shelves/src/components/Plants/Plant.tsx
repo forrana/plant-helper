@@ -135,7 +135,7 @@ function Plant({ plant, index, room }: PlantProps) {
     const color = room?.colorBackground;
 
     return (
-      <Card onDragStart={onDragStartEvent} onDragEnd={onDragEndEvent} draggable="true"
+      <Card
             className={`${styles.plant} ${styles[bgColor]}`} id={plant.id+""} data-testid={`plant-card-${index}`}
             style={{borderColor: color}}
             >
