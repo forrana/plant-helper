@@ -29,6 +29,17 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
     setGroupName(newValue);
   };
 
+  const touchduration = 500;
+  let timer: ReturnType<typeof setTimeout>;
+
+  const onLongTouch = () => toggleEditMode()
+
+  const touchStart = () => {
+    timer = setTimeout(onLongTouch, touchduration);
+  }
+
+  const touchEnd = () => timer && clearTimeout(timer)
+
   const applyChanges = () => {
     if(room?.roomName !== groupName) {
       updateRoom({variables: {
@@ -74,7 +85,8 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
     } else return (
       <>
       <div style={{ backgroundColor: room.colorBackground }} className={styles.customBadge} onDoubleClick={toggleEditMode}
-        onTouchEnd={toggleEditMode}
+        onTouchStart={touchStart}
+        onTouchEnd={touchEnd}
       >
         <b>{room.roomName}</b>
       </div>
