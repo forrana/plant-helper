@@ -162,8 +162,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
         <Button outline color="danger" onClick={toggleModal} title="Remove" data-testid="remove-btn">Delete!</Button>
       </section>
       <img src={pot} alt="plant pot" className={editStyles.image}/>
-      <FormGroup>
-        <Label for="name">Name:</Label>
+      <FormGroup floating>
         <PlantNameInput type="text" title="Plant name" name="name" id="name" data-testid="plant-name-input" placeholder="Plant name"
           value={plantName}
           setValue={setPlantSettings}
@@ -171,9 +170,9 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           autoFocus={true}
           required
         />
+        <Label for="name">Name:</Label>
       </FormGroup>
-      <FormGroup>
-        <Label for="scientificName">Scientific name:</Label>
+      <FormGroup floating>
         <Input
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           data-testid="plant-scientific-name-input"
@@ -181,10 +180,10 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           onChange={handleScientificNameInputChange}
           required
           />
+        <Label for="scientificName">Scientific name:</Label>
       </FormGroup>
       <FormGroup>
-        <Label for="scientificName">Group:</Label>
-        <InputGroup className={editStyles.autoInputWithColorPicker}>
+        <InputGroup className={editStyles.autoInputWithColorPicker} id="groupNameInput">
           {groupNameInput(groupId)}
           <InputGroupText className={editStyles.colorPickerContainer}>
             <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
@@ -197,8 +196,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           </InputGroupText>
         </InputGroup>
       </FormGroup>
-      <FormGroup>
-        <Label for="postponeDays">Postpone days:</Label>
+      <FormGroup floating>
         <Input
           min={0} max={100} type="number" step="1"
           name="postponeDays" id="postponeDays" placeholder="Postpone days"
@@ -208,6 +206,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           onChange={handleDaysPostponeInputChange}
           required
           />
+        <Label for="postponeDays" sm={2}>Postpone days:</Label>
       </FormGroup>
       <FormGroup>
         <section className={styles.label}>
