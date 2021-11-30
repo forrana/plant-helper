@@ -1,14 +1,17 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
-import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner, InputGroup, InputGroupText } from 'reactstrap';
 
 import { ADD_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch';
-import { PlantData, PlantNickName } from './models'
+import { PlantData, PlantNickName, RoomType } from './models'
 import ErrorHandler from './ErrorHandler';
 import styles from "./Plant.module.css"
 import PlantNameInput from './PlantNameInput';
+import editStyles from "./PlantsEdit.module.css"
+import RoomNameInput from './RoomNameInput';
+import { generateColorForGroup } from './utils';
 
 
 interface PlantsCreateProps { action?: () => void; }
@@ -18,6 +21,9 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
+  const [groupName, setGroupName] = useState("");
+  const [groupId, setGroupId] = useState(0)
+  const [groupColor, setGroupColor] = useState("#FFFFFF");
   const [daysBetweenWateringGrowing, setDaysBetweenWateringGrowing] = useState(7)
   const [daysBetweenWateringDormant, setDaysBetweenWateringDormant] = useState(10)
 
@@ -58,8 +64,34 @@ function PlantsCreate({ action }: PlantsCreateProps) {
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if(plantName && scientificName) {
-      addPlant({ variables: { plantName, scientificName, daysBetweenWateringGrowing, daysBetweenWateringDormant } })
+      addPlant({ variables: {
+        plantName, scientificName, daysBetweenWateringGrowing, daysBetweenWateringDormant,
+        groupName,
+        colorBackground: groupColor,
+      } })
     }
+  }
+
+  const handleGroupNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    setGroupColor(generateColorForGroup(newValue))
+    setGroupName(newValue);
+  };
+
+  const handleSetGroupColorInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setGroupColor(event.target.value);
+  };
+
+  const cleanRoomName = () => {
+    setGroupName("");
+    setGroupId(0);
+  }
+
+  const setRoomNameFromSuggestion = (roomSuggestion: RoomType) => {
+    const newValue = roomSuggestion.roomName;
+    setGroupColor(roomSuggestion.colorBackground);
+    setGroupName(newValue);
+    setGroupId(roomSuggestion.id);
   }
 
   if (submitted) return <Redirect push to="/"/>
@@ -72,8 +104,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
       autoComplete="off"
       data-testid="plant-create-form"
     >
-      <FormGroup>
-        <Label for="name">Name:</Label>
+      <FormGroup floating>
         <PlantNameInput type="text" name="name" id="name" placeholder="Plant name"
           value={plantName}
           data-testid="name-input"
@@ -82,9 +113,9 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           autoFocus={true}
           required
         />
+        <Label for="name">Name</Label>
       </FormGroup>
-      <FormGroup>
-        <Label for="scientificName">Scientific name:</Label>
+      <FormGroup floating>
         <Input
           type="text" name="scientificName" id="scientificName" placeholder="Scientific name"
           value={scientificName}
@@ -92,6 +123,32 @@ function PlantsCreate({ action }: PlantsCreateProps) {
           onChange={handleScientificNameInputChange}
           required
           />
+        <Label for="scientificName">Scientific name</Label>
+      </FormGroup>
+      <FormGroup>
+        <InputGroup className={editStyles.autoInputWithColorPicker} id="groupNameInput">
+          <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
+            className={editStyles.groupInput}
+            data-testid="plant-group-name-input"
+            value={groupName}
+            setValue={setRoomNameFromSuggestion}
+            onChange={handleGroupNameInputChange}
+            roomId={groupId}
+            roomColor={groupColor}
+            roomName={groupName}
+            badgeClassName={editStyles.groupBadge}
+            removeAction={cleanRoomName}
+          />
+          <InputGroupText className={editStyles.colorPickerContainer}>
+            <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
+              className={editStyles.colorPickerInput}
+              data-testid="plant-group-color-input"
+              setValue={setGroupColor}
+              onChange={handleSetGroupColorInputChange}
+              value={groupColor}
+            />
+          </InputGroupText>
+        </InputGroup>
       </FormGroup>
       <FormGroup>
         <section className={styles.label}>

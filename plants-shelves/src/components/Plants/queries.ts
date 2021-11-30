@@ -31,20 +31,22 @@ const ROOMS_BY_NAME_FRAGMENT = gql`
 `;
 
 const ADD_PLANT = gql`
-  mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!) {
-    createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing, daysBetweenWateringDormant: $daysBetweenWateringDormant) {
-      plant {
-        id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
-        symbol {
-          userWideId
-        }
-        room {
-          id,
-          roomName,
-          colorBackground
+  mutation CreatePlant($plantName: String!, $scientificName: String!, $daysBetweenWateringGrowing: Int!, $daysBetweenWateringDormant: Int!,
+    $groupName: String, $colorBackground: String) {
+      createPlant(plantName: $plantName, scientificName: $scientificName, daysBetweenWateringGrowing: $daysBetweenWateringGrowing,
+        daysBetweenWateringDormant: $daysBetweenWateringDormant, groupName: $groupName, colorBackground: $colorBackground) {
+        plant {
+          id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
+          symbol {
+            userWideId
+          }
+          room {
+            id,
+            roomName,
+            colorBackground
+          }
         }
       }
-    }
   }
 `;
 

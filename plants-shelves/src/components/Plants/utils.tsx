@@ -23,4 +23,11 @@ function useDebounce(value: string, delay: number) {
     return debouncedValue;
   }
 
-export { getRandomString, useDebounce }
+const generateColorForGroup = (groupName: string) => {
+  // @ts-ignore: iterate through string is needed
+  let groupNumber = [...groupName].reduce((prev, current) => prev + current.charCodeAt(), 0)
+  let randomColor = "#" + Math.floor(Math.random()*(16777215 - groupNumber)).toString(16);
+  return randomColor;
+}
+
+export { getRandomString, useDebounce, generateColorForGroup }

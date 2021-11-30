@@ -112,18 +112,33 @@ class CreatePlant(graphene.Mutation):
         scientific_name = graphene.String()
         days_between_watering_growing = graphene.Int()
         days_between_watering_dormant = graphene.Int()
+        group_name = graphene.String()
+        color_background = graphene.String()
 
     ok = graphene.Boolean()
     plant = graphene.Field(lambda: PlantType)
 
     @classmethod
-    def mutate(root, id, info, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant):
+    def mutate(root, id, info, plant_name, scientific_name, days_between_watering_growing, days_between_watering_dormant, group_name, color_background):
+        owner = info.context.user
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
         plant = Plant.objects.create(name=plant_name, scientific_name=scientific_name, owner=info.context.user,
                                      time_between_watering_growing = datetime.timedelta(days=days_between_watering_growing),
                                      time_between_watering_dormant = datetime.timedelta(days=days_between_watering_dormant)
                                      )
+        if group_name:
+            try:
+                room = Room.objects.get(room_name=group_name, owner=owner)
+                if room.color_background != color_background:
+                    room.color_background = color_background
+                    room.save()
+            except Room.DoesNotExist:
+                room = Room.objects.create(owner=owner, room_name=group_name, color_background=color_background)
+            if plant.room != room:
+                plant.room = room
+                plant.save()
+
         ok = True
         return CreatePlant(plant=plant, ok=ok)
 

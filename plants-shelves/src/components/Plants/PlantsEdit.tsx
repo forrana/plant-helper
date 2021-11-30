@@ -13,6 +13,7 @@ import ErrorHandler from './ErrorHandler';
 import pot from './images/pot.png'
 import PlantNameInput from './PlantNameInput';
 import RoomNameInput from './RoomNameInput';
+import { generateColorForGroup } from './utils';
 
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
@@ -37,13 +38,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
     },
     onError: (e) => console.error('Error updating plant:', e)
   });
-
-  const generateColorForGroup = (groupName: string) => {
-    // @ts-ignore: iterate through string is needed
-    let groupNumber = [...groupName].reduce((prev, current) => prev + current.charCodeAt(), 0)
-    let randomColor = "#" + Math.floor(Math.random()*(16777215 - groupNumber)).toString(16);
-    return randomColor;
-  }
 
   const setPlantSettings = (plantSuggestion: PlantNickName) => {
     setPlantName(plantSuggestion.name);
@@ -129,27 +123,6 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   if (loading || deletingStatus.loading) return  <Spinner color="primary" />
 
-  const groupNameInput = (groupId: number) => {
-    if(!groupId) {
-      return (
-      <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
-        className={editStyles.groupInput}
-        data-testid="plant-group-name-input"
-        value={groupName}
-        setValue={setRoomNameFromSuggestion}
-        onChange={handleGroupNameInputChange}
-      />)
-    } else return (
-      <div
-        className={editStyles.groupBadge}
-        style={{ backgroundColor: groupColor }}
-      >
-        <b>{groupName}</b>
-        <Button onClick={cleanRoomName} outline><i className="icon icon-cross"></i></Button>
-      </div>
-    )
-  }
-
   return (
     <>
     <Form
@@ -184,7 +157,18 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
       </FormGroup>
       <FormGroup>
         <InputGroup className={editStyles.autoInputWithColorPicker} id="groupNameInput">
-          {groupNameInput(groupId)}
+          <RoomNameInput type="text" name="groupName" id="groupName" placeholder="Group name"
+            className={editStyles.groupInput}
+            data-testid="plant-group-name-input"
+            value={groupName}
+            setValue={setRoomNameFromSuggestion}
+            onChange={handleGroupNameInputChange}
+            roomId={groupId}
+            roomColor={groupColor}
+            roomName={groupName}
+            badgeClassName={editStyles.groupBadge}
+            removeAction={cleanRoomName}
+          />
           <InputGroupText className={editStyles.colorPickerContainer}>
             <Input type="color" name="groupColor" placeholder="Group color" alt="Group color"
               className={editStyles.colorPickerInput}

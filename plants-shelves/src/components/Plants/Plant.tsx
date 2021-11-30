@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { MutationResult, useMutation } from '@apollo/client';
 import { PlantData, RoomType } from './models'
-import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Spinner, Badge, ButtonGroup,
+import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Badge, ButtonGroup,
        } from 'reactstrap';
 import { POSTPONE_WATERING, WATER_PLANT } from './queries'
 import PlantsDispatch from './PlantsDispatch'
