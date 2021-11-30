@@ -206,7 +206,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
           onChange={handleDaysPostponeInputChange}
           required
           />
-        <Label for="postponeDays" sm={2}>Postpone days:</Label>
+        <Label for="postponeDays">Postpone days:</Label>
       </FormGroup>
       <FormGroup>
         <section className={styles.label}>
