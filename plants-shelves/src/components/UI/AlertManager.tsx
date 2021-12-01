@@ -13,7 +13,6 @@ const AlertManager = () => {
 
   useEffect(() => {
     if(alertContext.messages.length) {
-      console.log(alertContext.messages.length);
       const lastMessage = [...alertContext.messages].pop();
       if(lastMessage) setMessage(lastMessage)
     } else setMessage(null);
@@ -27,7 +26,7 @@ const AlertManager = () => {
   if(message !== null) {
       return (
         <Alert
-            color="danger"
+            color={message.color}
             toggle={hideError}
         >
             {message.description}

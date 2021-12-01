@@ -32,6 +32,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
       dispatch && dispatch({ type: 'add', plant: data.createPlant.plant })
       setPlantName("");
       setScientificName("");
+      setGroupColor("#FFFFFF");
       setSubmitted(true);
       action && action();
     },

@@ -1,4 +1,4 @@
-export interface MessageType { description: string, color: "danger" | "info" }
+export interface MessageType { description: string, color: "danger" | "info" | "warning" }
 
 export interface AddMessage  { type: 'addMessage', message: MessageType }
 export interface RemoveMessage  { type: 'removeMessage' }

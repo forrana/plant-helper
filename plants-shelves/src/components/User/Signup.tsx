@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 import { useHistory } from "react-router-dom";
@@ -7,14 +7,17 @@ import { CREATE_USER } from './queries'
 import styles from "./Login.module.css"
 import { SignupErrors, Error } from './models';
 import { Link } from 'react-router-dom';
+import AlertDispatch from '../UI/AlertDispatch';
 
 function Signup() {
+  const history = useHistory()
+  const dispatch = useContext(AlertDispatch);
+
   const [username, setLogin] = useState("");
   const [password1, setPassword] = useState("");
   const [password2, setPasswordConfirmation] = useState("");
   const [email, setEmail] = useState("");
   const [signupErrors, setSignupErrors] = useState<SignupErrors>({});
-  const history = useHistory()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.target.name;
@@ -39,6 +42,10 @@ function Signup() {
         setPasswordConfirmation("");
         setEmail("");
         history.push("/");
+        dispatch && dispatch({
+          type: "addMessage",
+          message: { description: "User is successfully created! \nBut you need to verify your email first!", color: "warning" }
+        })
       }
     },
     onError: (e) => console.error('Signup error:', e)
