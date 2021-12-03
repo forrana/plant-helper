@@ -1,4 +1,6 @@
-from .models import PushSubscription
+from django.db.models import fields
+from graphene.types import field
+from .models import PushSubscription, UserSettings
 from graphene_django import DjangoObjectType
 from graphql import GraphQLError
 import graphene
@@ -29,6 +31,43 @@ class SubscriptionType(DjangoObjectType):
     class Meta:
         model = PushSubscription
         fields = "__all__"
+
+class UserSettingsType(DjangoObjectType):
+    class Meta:
+        model = UserSettings
+        fields = "__all__"
+
+class UpsertUserSettings(graphene.Mutation):
+    class Arguments:
+        start_time = graphene.String()
+        end_time = graphene.String()
+        timezone = graphene.String()
+
+    ok = graphene.Boolean()
+    userSettings = graphene.Field(lambda: UserSettingsType)
+
+    @classmethod
+    def mutate(root, id, info, start_time, end_time, timezone):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+
+        if not start_time or not end_time or not timezone:
+            raise GraphQLError('Malformed request, all subscription fields are mandatory')
+
+        try:
+            settings = UserSettings.objects.get(user = user)
+            settings.notifications_start_time = start_time
+            settings.notifications_end_time = end_time
+            settings.timezone = timezone
+        except UserSettings.DoesNotExist:
+            settings = UserSettings.objects.create( notifications_start_time = start_time, \
+                notifications_end_time = end_time, \
+                timezone = timezone, \
+                user = user)
+        ok = True
+        return UpsertUserSettings(settings=settings, ok=ok)
+
 
 class CreateSubscription(graphene.Mutation):
     class Arguments:
