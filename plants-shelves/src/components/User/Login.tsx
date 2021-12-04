@@ -43,6 +43,7 @@ function Login() {
         setLoginErrors([]);
         const token: string = data?.tokenAuth?.token;
         const username: string = data?.tokenAuth?.user?.username;
+        const userId: number = data?.tokenAuth?.user?.id
         const refreshToken: string = data?.tokenAuth?.refreshToken;
         if(token?.length && username?.length) {
           // unlickly to happen but let's consider token already expired if we wasn't able to parse it
@@ -52,7 +53,8 @@ function Login() {
                 token,
                 refreshToken,
                 username,
-                exp
+                exp,
+                userId
             })
           client.resetStore();
           goToHomePage();

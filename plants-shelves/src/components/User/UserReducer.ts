@@ -2,7 +2,7 @@ import { UserReducerAction, UserState } from './models'
 
 const USER_STATE_STORAGE_KEY = "UserState"
 
-const emptyState: UserState = { token: "", username: "", refreshToken: "", expAt: Date.now() };
+const emptyState: UserState = { token: "", username: "", refreshToken: "", expAt: Date.now(), userId: -1 };
 
 const getInitialState: () => UserState = () => {
   const initalStateFromLocalStorage: string | null = localStorage.getItem(USER_STATE_STORAGE_KEY);
@@ -15,7 +15,7 @@ const getInitialState: () => UserState = () => {
 const userReducer = (state: UserState, action: UserReducerAction) => {
   switch (action.type) {
     case 'login':
-      return { token: action.token, refreshToken: action.refreshToken, username: action.username, expAt: action.exp };
+      return { token: action.token, refreshToken: action.refreshToken, username: action.username, expAt: action.exp, userId: action.userId };
     case 'logout':
       return { ...emptyState };
   }

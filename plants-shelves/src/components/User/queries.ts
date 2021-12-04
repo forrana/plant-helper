@@ -41,4 +41,12 @@ const REFRESH_TOKEN = gql`
   }
 `
 
-export { CREATE_USER, LOG_IN, REFRESH_TOKEN }
+const UPSERT_USER_SETTINGS = gql`
+  mutation UpsertUserSettings($startTime: String!, $endTime: String!, $timezone: String) {
+    upsertUserSettings(startTime: $startTime, endTime: $endTime, timezone: $timezone) {
+      ok
+    }
+  }
+`
+
+export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS }

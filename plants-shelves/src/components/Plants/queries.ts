@@ -155,15 +155,6 @@ const CREATE_SUBSCRIPTION = gql`
     }
   }
 `
-
-const UPSERT_USER_SETTINGS = gql`
-  mutation UpsertUserSettings($startTime: String!, $endTime: String!, $timezone: String) {
-    upsertUserSettings(startTime: $startTime, endTime: $endTime, timezone: $timezone) {
-      ok
-    }
-  }
-`
-
 export {
   GET_ALL_PLANTS,
   GET_ALL_ROOMS,
@@ -177,5 +168,4 @@ export {
   CREATE_ROOM,
   ROOMS_BY_NAME_FRAGMENT,
   UPDATE_ROOM,
-  UPSERT_USER_SETTINGS
 }
