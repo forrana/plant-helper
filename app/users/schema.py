@@ -98,6 +98,21 @@ class CreateSubscription(graphene.Mutation):
         ok = True
         return CreateSubscription(subscription=subscription, ok=ok)
 
+class UserSettingQuery(graphene.ObjectType):
+    user_settings = graphene.Field(lambda: UserSettingsType)
+
+    def resolve_user_settings(self, info):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+
+        try:
+            settings = UserSettings.objects.get(user = user)
+
+        except UserSettings.DoesNotExist:
+            settings = UserSettings(user = user)
+            settings.save()
+        return settings
 
 class SubscriptionQuery(graphene.ObjectType):
     subscription = graphene.Boolean()
@@ -116,7 +131,7 @@ class SubscriptionQuery(graphene.ObjectType):
         return False
 
 
-class Query(UserQuery, MeQuery, SubscriptionQuery, graphene.ObjectType):
+class Query(UserQuery, MeQuery, SubscriptionQuery, UserSettingQuery, graphene.ObjectType):
     pass
 
 class Mutation(AuthMutation, graphene.ObjectType):

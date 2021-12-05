@@ -3,6 +3,16 @@ export interface Error {
   code: string;
 }
 
+export interface UserSettingsType {
+  notificationsStartTime: string
+  notificationsEndTime: string
+  timezone: string
+}
+
+export interface UserSettingsData {
+  userSettings: UserSettingsType
+}
+
 export interface LoginError extends Error {}
 
 export interface SignupErrors {

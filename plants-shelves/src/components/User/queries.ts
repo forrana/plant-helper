@@ -49,4 +49,12 @@ const UPSERT_USER_SETTINGS = gql`
   }
 `
 
-export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS }
+const GET_USER_SETTINGS = gql`
+  query {
+    userSettings {
+      notificationsStartTime, notificationsEndTime, timezone
+    }
+  }
+`;
+
+export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS, GET_USER_SETTINGS }
