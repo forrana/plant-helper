@@ -52,34 +52,41 @@ function PlantsContainer(props: PlantsContainerProps) {
   const [modal, setModal] = useState(false);
   const toggleModal = () => setModal(!modal);
 
-// TODO move LoadingScreen to container, use reducer to set it up from any place where loading is happening
-  if (props.state.plants.length === 0) return (
-    <WithNavBar>
-      <main>
-        <p data-testid="message-no-plants"> No plants yet, create the first one! </p>
-        <Button onClick={toggleModal} outline color="primary" title="Add new plant" data-testid="empty-view-create-button">
-          Create!
-        </Button>
-      </main>
-      <CreateModal isOpen={modal} toggleAction={toggleModal} />
-      <LoadingScreen isLoading={loading} isFullScreen={true}/>
-      <ErrorHandler error={error} />
-      <ErrorHandler error={groupsQueryResult.error} />
-    </WithNavBar>
-  )
+  const renderEmptyStateOrData = (isEmptyState: boolean) => {
+    if(isEmptyState) {
+      return (
+        <>
+          <main>
+            <p data-testid="message-no-plants"> No plants yet, create the first one! </p>
+            <Button onClick={toggleModal} outline color="primary" title="Add new plant" data-testid="empty-view-create-button">
+              Create!
+            </Button>
+          </main>
+          <CreateModal isOpen={modal} toggleAction={toggleModal} />
+          <LoadingScreen isLoading={loading} isFullScreen={true}/>
+          <ErrorHandler error={error} />
+          <ErrorHandler error={groupsQueryResult.error} />
+        </>
+      )
+    }
 
-  return (
-    <>
-      <WithNavBar>
+    return (
+      <>
         <main>
           <PlantsList plants={props.state.plants} rooms={props.state.rooms}/>
         </main>
-      </WithNavBar>
-      <ErrorHandler error={error} />
-      <ErrorHandler error={groupsQueryResult.error} />
-    </>
-  )
+        <ErrorHandler error={error} />
+        <ErrorHandler error={groupsQueryResult.error} />
+      </>
+    )
+  }
 
+// TODO move LoadingScreen to container, use reducer to set it up from any place where loading is happening
+  return (
+    <WithNavBar>
+      {renderEmptyStateOrData(props.state.plants.length === 0)}
+    </WithNavBar>
+  )
 
 }
 
