@@ -8,7 +8,6 @@ import { PlantsData, RoomsData } from './models'
 import { GlobalState } from './models'
 import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
-import CreateModal from './CreateModal';
 import LoadingScreen from './LoadingScreen';
 import ManagePushSubscription from './ManagePushSubscription';
 
@@ -62,10 +61,7 @@ function PlantsContainer(props: PlantsContainerProps) {
               Create!
             </Button>
           </main>
-          <CreateModal isOpen={modal} toggleAction={toggleModal} />
           <LoadingScreen isLoading={loading} isFullScreen={true}/>
-          <ErrorHandler error={error} />
-          <ErrorHandler error={groupsQueryResult.error} />
         </>
       )
     }

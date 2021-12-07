@@ -14,7 +14,7 @@ interface PlantsNavBarProps {
     plant: PlantType,
 }
 
-const CreateModal = ({isOpen, toggleAction, index, plant}: PlantsNavBarProps) => {
+const EditModal = ({isOpen, toggleAction, index, plant}: PlantsNavBarProps) => {
   if(!plant) isOpen = false;
   return (
     <>
@@ -31,6 +31,6 @@ const CreateModal = ({isOpen, toggleAction, index, plant}: PlantsNavBarProps) =>
   );
 }
 
-export default CreateModal;
+export default EditModal;
 
 

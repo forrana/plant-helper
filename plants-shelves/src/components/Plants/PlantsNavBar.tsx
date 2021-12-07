@@ -13,12 +13,15 @@ import {
 import UserContext from '../User/UserContext'
 import uiStyles from '../UI/UIElements.module.css'
 import CreateModal from './CreateModal';
+import UserSettingsModal from './UserSettingsModal';
 
 const PlantsNavBar = () => {
   const userContext = useContext(UserContext);
   const [modal, setModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
   const [menu, setMenu] = useState(false);
   const toggleModal = () => setModal(!modal);
+  const toggleSettingsModal = () => setSettingsModal(!settingsModal);
   const toggleMenu = () => setMenu(!menu)
 
   return (
@@ -41,10 +44,12 @@ const PlantsNavBar = () => {
           isOpen={menu}
           navbar
         >
+          <Button onClick={toggleSettingsModal} color="link">Settings</Button>
           <NavLink active href="/logout">Logout</NavLink>
         </Collapse>
       </Navbar>
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
+      <UserSettingsModal isOpen={settingsModal} toggleAction={toggleSettingsModal} />
     </>
   );
 }

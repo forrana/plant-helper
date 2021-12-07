@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { Button, Form, FormGroup, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import { UserSettingsData, UserSettingsType } from './models';
 import { GET_USER_SETTINGS } from './queries';
 
@@ -47,19 +47,25 @@ function Settings() {
         <Input
           value={settings.notificationsStartTime}
           onChange={handleStartTimeInputChange}
+          id="notificationsStartTime"
         />
+        <Label for="notificationsStartTime">Notifications Start Time</Label>
       </FormGroup>
       <FormGroup floating>
         <Input
           value={settings.notificationsEndTime}
           onChange={handleEndTimeInputChange}
+          id="notificationsEndTime"
         />
+        <Label for="notificationsEndTime">Notifications End Time</Label>
       </FormGroup>
       <FormGroup floating>
         <Input
           value={settings.timezone}
           onChange={handleTimezoneInputChange}
+          id="userTimezone"
         />
+        <Label for="userTimezone">Timezone</Label>
       </FormGroup>
       <section>
         <Button color="success" title="Save!" type="submit">Save changes!</Button>
