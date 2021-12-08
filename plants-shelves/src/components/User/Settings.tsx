@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import ErrorHandler from '../Plants/ErrorHandler';
+import LoadingScreen from '../Plants/LoadingScreen';
 import { UserSettingsData, UserSettingsType } from './models';
 import { GET_USER_SETTINGS } from './queries';
 
@@ -27,7 +29,7 @@ function Settings() {
       event.target.value && setSettings({...settings, timezone: event.target.value});
     };
 
-    const { loading, data, error } = useQuery<UserSettingsData>(
+    const { loading, error } = useQuery<UserSettingsData>(
         GET_USER_SETTINGS,
         {
           onCompleted: (data: UserSettingsData) => {
@@ -38,6 +40,7 @@ function Settings() {
       );
 
     return (
+    <>
     <Form
       onSubmit={handleFormSubmit}
       autoComplete="off"
@@ -71,7 +74,11 @@ function Settings() {
         <Button color="success" title="Save!" type="submit">Save changes!</Button>
         <Button outline color="danger" title="Cancel!">Cancel</Button>
       </section>
-    </Form>)
+    </Form>
+    <LoadingScreen isLoading={loading} isFullScreen={true}/>
+    <ErrorHandler error={error} />
+    </>
+    )
 }
 
 export default Settings
