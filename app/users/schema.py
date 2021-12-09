@@ -66,7 +66,7 @@ class UpsertUserSettings(graphene.Mutation):
                 timezone = timezone, \
                 user = user)
         ok = True
-        return UpsertUserSettings(settings=settings, ok=ok)
+        return UpsertUserSettings(userSettings=settings, ok=ok)
 
 
 class CreateSubscription(graphene.Mutation):
@@ -135,7 +135,7 @@ class Query(UserQuery, MeQuery, SubscriptionQuery, UserSettingQuery, graphene.Ob
     pass
 
 class Mutation(AuthMutation, graphene.ObjectType):
-   create_subscription = CreateSubscription.Field()
-
+    create_subscription = CreateSubscription.Field()
+    upsert_user_settings = UpsertUserSettings.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

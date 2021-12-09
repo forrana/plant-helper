@@ -89,6 +89,12 @@ i.icon {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.btn-link {
+  text-decoration: none;
+  padding-left: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     filter: invert(1) hue-rotate(180deg);
