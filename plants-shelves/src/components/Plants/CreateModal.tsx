@@ -6,12 +6,12 @@ import {
   } from 'reactstrap';
 import { PlantsCreate } from './PlantsCreate';
 
-interface PlantsNavBarProps {
+interface CreateModalProps {
     isOpen: boolean,
     toggleAction: () => any
 }
 
-const CreateModal = ({isOpen, toggleAction}: PlantsNavBarProps) => {
+const CreateModal = ({isOpen, toggleAction}: CreateModalProps) => {
   return (
     <>
       <Modal isOpen={isOpen} toggle={toggleAction} autoFocus={false}>

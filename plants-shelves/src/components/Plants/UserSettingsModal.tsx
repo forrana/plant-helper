@@ -6,18 +6,18 @@ import {
   } from 'reactstrap';
 import Settings from '../User/Settings';
 
-interface PlantsNavBarProps {
-    isOpen: boolean,
-    toggleAction: () => any
+interface UserSettingsModalProps {
+  isOpen: boolean,
+  toggleAction: () => any
 }
 
-const UserSettingsModal = ({isOpen, toggleAction}: PlantsNavBarProps) => {
+const UserSettingsModal = ({isOpen, toggleAction}: UserSettingsModalProps) => {
   return (
     <>
       <Modal isOpen={isOpen} toggle={toggleAction} autoFocus={false}>
             <ModalHeader toggle={toggleAction}>User Settings </ModalHeader>
             <ModalBody>
-              <Settings />
+              <Settings action={toggleAction} />
             </ModalBody>
       </Modal>
     </>
