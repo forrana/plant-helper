@@ -15,7 +15,7 @@ export interface UserSettingsData {
 
 export interface LoginError extends Error {}
 
-export interface SignupErrors {
+export interface FormErrors {
   [key: string]: Array<Error>
 }
 

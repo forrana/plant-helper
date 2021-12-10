@@ -5,9 +5,10 @@ import { useHistory } from "react-router-dom";
 
 import { CREATE_USER } from './queries'
 import styles from "./Login.module.css"
-import { SignupErrors, Error } from './models';
+import { FormErrors } from './models';
 import { Link } from 'react-router-dom';
 import AlertDispatch from '../UI/AlertDispatch';
+import { getFormFieldErrors, isFieldHasErrors } from './formUtils';
 
 function Signup() {
   const history = useHistory()
@@ -17,7 +18,7 @@ function Signup() {
   const [password1, setPassword] = useState("");
   const [password2, setPasswordConfirmation] = useState("");
   const [email, setEmail] = useState("");
-  const [signupErrors, setSignupErrors] = useState<SignupErrors>({});
+  const [signupErrors, setSignupErrors] = useState<FormErrors>({});
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const name = event.target.name;
@@ -32,7 +33,7 @@ function Signup() {
 
   const [createUser, { loading, error }] = useMutation(CREATE_USER, {
     onCompleted: (data: any) => {
-      const errors: SignupErrors = data?.register?.errors;
+      const errors: FormErrors = data?.register?.errors;
       if(errors) {
         setSignupErrors(errors);
       } else {
@@ -51,22 +52,10 @@ function Signup() {
     onError: (e) => console.error('Signup error:', e)
   });
 
-  const getFieldErrors = (field: string): Array<Error> => {
-    let result: Array<Error> = [];
-    if(signupErrors[field]) {
-      result = [...result, ...signupErrors[field]];
-    }
-    if(signupErrors['nonFieldErrors']) {
-      result = [...result, ...signupErrors['nonFieldErrors']];
-    }
-    return result;
-  }
-
   const resetFieldErrors = (field: string) => {
     setSignupErrors({...signupErrors, [field]: []})
   }
 
-  const isFieldHasErrors = (field: string): boolean => getFieldErrors(field).length > 0;
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -90,11 +79,11 @@ function Signup() {
             autoComplete="off"
             value={username}
             onChange={handleInputChange}
-            invalid={isFieldHasErrors("username")}
+            invalid={isFieldHasErrors("username", signupErrors)}
             required
           />
           {
-            getFieldErrors("username").map((error, index) =>
+            getFormFieldErrors("username", signupErrors).map((error, index) =>
               <FormFeedback key={index} data-testid="signup-username-error">{ error.message }</FormFeedback>
             )
           }
@@ -105,11 +94,11 @@ function Signup() {
             autoComplete="off"
             value={email}
             onChange={handleInputChange}
-            invalid={isFieldHasErrors("email")}
+            invalid={isFieldHasErrors("email", signupErrors)}
             required
           />
           {
-            getFieldErrors("email").map((error, index) =>
+            getFormFieldErrors("email", signupErrors).map((error, index) =>
               <FormFeedback key={index} data-testid="signup-email-error">{ error.message }</FormFeedback>
             )
           }
@@ -120,11 +109,11 @@ function Signup() {
             autoComplete="off"
             value={password1}
             onChange={handleInputChange}
-            invalid={isFieldHasErrors("password1")}
+            invalid={isFieldHasErrors("password1", signupErrors)}
             required
           />
           {
-            getFieldErrors("password1").map((error, index) =>
+            getFormFieldErrors("password1", signupErrors).map((error, index) =>
               <FormFeedback key={index} data-testid="signup-password-1-error">{ error.message }</FormFeedback>
             )
           }
@@ -135,11 +124,11 @@ function Signup() {
             autoComplete="off"
             value={password2}
             onChange={handleInputChange}
-            invalid={isFieldHasErrors("password2")}
+            invalid={isFieldHasErrors("password2", signupErrors)}
             required
           />
           {
-            getFieldErrors("password2").map((error, index) =>
+            getFormFieldErrors("password2", signupErrors).map((error, index) =>
               <FormFeedback key={index} data-testid="signup-password-2-error">{ error.message }</FormFeedback>
             )
           }
