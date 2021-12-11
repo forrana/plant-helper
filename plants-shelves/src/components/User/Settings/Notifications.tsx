@@ -1,22 +1,20 @@
 import { useMutation, useQuery } from '@apollo/client';
-import React, { useContext, useState } from 'react';
-import { Button, Form, FormFeedback, FormGroup, Input, Label } from 'reactstrap';
-import ErrorHandler from '../Plants/ErrorHandler';
-import LoadingScreen from '../Plants/LoadingScreen';
-import { FormErrors, UserSettingsData, UserSettingsType } from './models';
-import { GET_USER_SETTINGS, UPSERT_USER_SETTINGS } from './queries';
-import uiStyles from "../UI/UIElements.module.css"
-import { useAlertDispatch } from '../UI/AlertDispatch';
-import { getFormFieldErrors, isFieldHasErrors } from './formUtils';
+import React, { useState } from 'react';
+import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import ErrorHandler from '../../Plants/ErrorHandler';
+import LoadingScreen from '../../Plants/LoadingScreen';
+import { FormErrors, UserSettingsData, UserSettingsType } from '../models';
+import { GET_USER_SETTINGS, UPSERT_USER_SETTINGS } from '../queries';
+import uiStyles from "../../UI/UIElements.module.css"
+import { useAlertDispatch } from '../../UI/AlertDispatch';
 
-interface SettingsProps {
+interface NotificationsProps {
   action: () => any
 }
 
-function Settings({ action }: SettingsProps) {
+function Notifications({ action }: NotificationsProps) {
     const alertDispatch = useAlertDispatch()
     const [formErrors, setFormErrors] = useState<FormErrors>({});
-    const [email, setEmail] = useState("");
 
     const defaultUserSettings: UserSettingsType = {
       notificationsStartTime: "",
@@ -46,7 +44,6 @@ function Settings({ action }: SettingsProps) {
       setFormErrors({...formErrors, [field]: []})
     }
 
-
     const { loading, error } = useQuery<UserSettingsData>(
         GET_USER_SETTINGS,
         {
@@ -72,24 +69,19 @@ function Settings({ action }: SettingsProps) {
     }
 
     const handleStartTimeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      resetFieldErrors(event.target.name);
       event.target.value && setSettings({...settings, notificationsStartTime: event.target.value});
     };
 
     const handleEndTimeInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      resetFieldErrors(event.target.name);
       event.target.value && setSettings({...settings, notificationsEndTime: event.target.value});
     };
 
     const handleTimezoneInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      resetFieldErrors(event.target.name);
       event.target.value && setSettings({...settings, timezone: event.target.value});
     };
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.name;
-      resetFieldErrors(name);
-      switch(name) {
-        case "email": setEmail(event.target.value); break;
-      }
-    }
 
     return (
     <>
@@ -122,21 +114,6 @@ function Settings({ action }: SettingsProps) {
         />
         <Label for="userTimezone">Timezone</Label>
       </FormGroup>
-      <FormGroup floating>
-          <Input type="email" name="email" id="email" placeholder="Enter email"
-            autoComplete="off"
-            value={email}
-            onChange={handleInputChange}
-            invalid={isFieldHasErrors("email", formErrors)}
-            required
-          />
-          {
-            getFormFieldErrors("email", formErrors).map((error, index) =>
-              <FormFeedback key={index} data-testid="settings-email-error">{ error.message }</FormFeedback>
-            )
-          }
-          <Label for="email">Email:</Label>
-        </FormGroup>
       <section className={uiStyles.footer}>
         <Button color="success" title="Save!" type="submit">Save changes!</Button>
         <Button outline color="danger" title="Cancel!" onClick={action}>Cancel</Button>
@@ -149,4 +126,4 @@ function Settings({ action }: SettingsProps) {
     )
 }
 
-export default Settings
+export default Notifications
