@@ -63,6 +63,14 @@ i.icon {
   content: "\2716";
 }
 
+.icon-location {
+  font-size: 1.5em;
+}
+
+.icon-location:after {
+  content: "\2316";
+}
+
 .alert {
   position: fixed;
   top: 0;

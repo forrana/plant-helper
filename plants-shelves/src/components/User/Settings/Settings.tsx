@@ -20,7 +20,7 @@ function Settings({ action }: SettingsProps) {
         className={isActive("1") ? "active" : ""}
         onClick={() => setActiveTab("1")}
       >
-        Security
+        Notifications
       </NavLink>
     </NavItem>
     <NavItem>
@@ -28,19 +28,19 @@ function Settings({ action }: SettingsProps) {
         className={isActive("2") ? "active" : ""}
         onClick={() => setActiveTab("2")}
       >
-        Notifications
+        Security
       </NavLink>
     </NavItem>
   </Nav>
   <TabContent activeTab={activeTab}>
-    <TabPane tabId="1">
+    <TabPane tabId="2">
       <Row>
         <Col sm="12">
           <Security action={action}/>
         </Col>
       </Row>
     </TabPane>
-    <TabPane tabId="2">
+    <TabPane tabId="1">
       <Row>
         <Col sm="12">
           <Notifications action={action}/>

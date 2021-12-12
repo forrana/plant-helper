@@ -70,6 +70,7 @@ function Security({ action }: SecurityProps) {
               value={email}
               onChange={handleInputChange}
               invalid={isFieldHasErrors("email", formErrors)}
+              readOnly={true}
               required
             />
             {
