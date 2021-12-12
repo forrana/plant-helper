@@ -1,3 +1,4 @@
+import datetime
 from django.db.models import fields
 from graphene.types import field
 from .models import PushSubscription, UserSettings
@@ -57,9 +58,12 @@ class UpsertUserSettings(graphene.Mutation):
 
         try:
             settings = UserSettings.objects.get(user = user)
-            settings.notifications_start_time = start_time
-            settings.notifications_end_time = end_time
+            start_time_arr = list(map(lambda str: int(str), start_time.split(":")))
+            settings.notifications_start_time = datetime.time(start_time_arr[0], start_time_arr[1])
+            end_time_arr = list(map(lambda str: int(str), end_time.split(":")))
+            settings.notifications_end_time = datetime.time(end_time_arr[0], end_time_arr[1])
             settings.timezone = timezone
+            settings.save()
         except UserSettings.DoesNotExist:
             settings = UserSettings.objects.create( notifications_start_time = start_time, \
                 notifications_end_time = end_time, \
