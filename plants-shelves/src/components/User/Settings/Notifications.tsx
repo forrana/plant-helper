@@ -13,19 +13,20 @@ interface NotificationsProps {
   action: () => any
 }
 
+const defaultUserSettings: UserSettingsType = {
+    notificationsStartTime: "",
+    notificationsEndTime: "",
+    timezone: ""
+  }
+
+
 function Notifications({ action }: NotificationsProps) {
     const alertDispatch = useAlertDispatch()
     const [formErrors, setFormErrors] = useState<FormErrors>({});
+    const [settings, setSettings] = useState<UserSettingsType>(defaultUserSettings);
 
     const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-    const defaultUserSettings: UserSettingsType = {
-      notificationsStartTime: "08:00",
-      notificationsEndTime: "18:00",
-      timezone: currentTimeZone
-    }
-
-    const [settings, setSettings] = useState<UserSettingsType>(defaultUserSettings);
 
     const [ updateSettings, updateSettingsState ] = useMutation(UPSERT_USER_SETTINGS, {
       onCompleted: (data: any) => {
@@ -40,6 +41,7 @@ function Notifications({ action }: NotificationsProps) {
             type: "addMessage",
             message: { description: "Settings successfully updated", color: "success" }
           })
+          action();
         }
       },
       onError: (e) => console.error('Error updateing settings:', e)
@@ -55,7 +57,8 @@ function Notifications({ action }: NotificationsProps) {
           onCompleted: (data: UserSettingsData) => {
             setSettings({...data.userSettings})
           },
-          onError: (e) => console.error('Error getting user settings:', e)
+          onError: (e) => console.error('Error getting user settings:', e),
+          fetchPolicy: 'network-only'
         }
       );
 
