@@ -45,6 +45,7 @@ const PlantsNavBar = () => {
           navbar
         >
           <Button onClick={toggleSettingsModal} color="link">Settings</Button>
+          <hr />
           <NavLink active href="/logout">Logout</NavLink>
         </Collapse>
       </Navbar>
