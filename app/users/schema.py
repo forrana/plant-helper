@@ -34,9 +34,14 @@ class SubscriptionType(DjangoObjectType):
         fields = "__all__"
 
 class UserSettingsType(DjangoObjectType):
+    timezone = graphene.String()
     class Meta:
         model = UserSettings
         fields = "__all__"
+
+
+    def resolve_timezone(settings, info):
+        return settings.timezone
 
 class UpsertUserSettings(graphene.Mutation):
     class Arguments:
@@ -64,6 +69,7 @@ class UpsertUserSettings(graphene.Mutation):
             settings.notifications_end_time = datetime.time(end_time_arr[0], end_time_arr[1])
             settings.timezone = timezone
             settings.save()
+
         except UserSettings.DoesNotExist:
             settings = UserSettings.objects.create( notifications_start_time = start_time, \
                 notifications_end_time = end_time, \
@@ -116,6 +122,7 @@ class UserSettingQuery(graphene.ObjectType):
         except UserSettings.DoesNotExist:
             settings = UserSettings(user = user)
             settings.save()
+
         return settings
 
 class SubscriptionQuery(graphene.ObjectType):
