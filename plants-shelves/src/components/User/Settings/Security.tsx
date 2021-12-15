@@ -1,10 +1,10 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Button, Form, FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 import ErrorHandler from '../../Plants/ErrorHandler';
 import LoadingScreen from '../../Plants/LoadingScreen';
-import { FormErrors } from '../models';
-import { UPSERT_USER_SETTINGS } from '../queries';
+import { FormErrors, UserProfileData } from '../models';
+import { GET_USER_DATA, UPSERT_USER_SETTINGS } from '../queries';
 import uiStyles from "../../UI/UIElements.module.css"
 import { useAlertDispatch } from '../../UI/AlertDispatch';
 import { getFormFieldErrors, isFieldHasErrors } from '../formUtils';
@@ -16,7 +16,18 @@ interface SecurityProps {
 function Security({ action }: SecurityProps) {
     const alertDispatch = useAlertDispatch()
     const [formErrors, setFormErrors] = useState<FormErrors>({});
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState<string>("");
+
+    const { loading, error } = useQuery<UserProfileData>(
+      GET_USER_DATA,
+      {
+        onCompleted: (data: UserProfileData) => {
+          setEmail(data.me.email)
+        },
+        onError: (e) => console.error('Error getting user settings:', e),
+        fetchPolicy: 'network-only'
+      }
+    );
 
     const [ updateSettings, updateSettingsState ] = useMutation(UPSERT_USER_SETTINGS, {
       onCompleted: (data: any) => {
@@ -85,8 +96,9 @@ function Security({ action }: SecurityProps) {
           <Button outline color="danger" title="Cancel!" onClick={action}>Cancel</Button>
         </section>
       </Form>
-      <LoadingScreen isLoading={updateSettingsState.loading} isFullScreen={true}/>
+      <LoadingScreen isLoading={updateSettingsState.loading || loading} isFullScreen={true}/>
       <ErrorHandler error={updateSettingsState.error} />
+      <ErrorHandler error={error} />
     </>
     )
 }

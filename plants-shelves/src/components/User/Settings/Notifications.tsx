@@ -50,7 +50,7 @@ function Notifications({ action }: NotificationsProps) {
     const resetFieldErrors = (field: string) => {
       setFormErrors({...formErrors, [field]: []})
     }
-    // TODO try move to the container
+
     const { loading, error } = useQuery<UserSettingsData>(
         GET_USER_SETTINGS,
         {

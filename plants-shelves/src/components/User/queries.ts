@@ -59,4 +59,12 @@ const GET_USER_SETTINGS = gql`
   }
 `;
 
-export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS, GET_USER_SETTINGS }
+const GET_USER_DATA = gql`
+  query {
+    me {
+      email
+    }
+  }
+`;
+
+export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS, GET_USER_SETTINGS, GET_USER_DATA }

@@ -9,6 +9,14 @@ export interface UserSettingsType {
   timezone: string
 }
 
+export interface UserProfileType {
+  email: string
+}
+
+export interface UserProfileData {
+  me: UserProfileType
+}
+
 export interface UserSettingsData {
   userSettings: UserSettingsType
 }
