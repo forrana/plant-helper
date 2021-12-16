@@ -6,6 +6,7 @@ export interface Error {
 export interface UserSettingsType {
   notificationsStartTime: string
   notificationsEndTime: string
+  notificationsInterval: number
   timezone: string
 }
 

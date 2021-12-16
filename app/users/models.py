@@ -16,6 +16,7 @@ class CustomUser(AbstractUser):
 class UserSettings(models.Model):
     notifications_start_time = models.TimeField(auto_now=False, auto_now_add=False, default=datetime.time(8, 0))
     notifications_end_time   = models.TimeField(auto_now=False, auto_now_add=False, default=datetime.time(20, 0))
+    notifications_interval   = models.IntegerField(default=60)
     timezone = models.CharField(max_length=32, choices=TIMEZONES, default='UTC')
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=False)
 

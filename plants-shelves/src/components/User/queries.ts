@@ -42,10 +42,10 @@ const REFRESH_TOKEN = gql`
 `
 
 const UPSERT_USER_SETTINGS = gql`
-  mutation UpsertUserSettings($startTime: String!, $endTime: String!, $timezone: String) {
-    upsertUserSettings(startTime: $startTime, endTime: $endTime, timezone: $timezone) {
+  mutation UpsertUserSettings($startTime: String!, $endTime: String!, $interval: Int!, $timezone: String) {
+    upsertUserSettings(startTime: $startTime, endTime: $endTime, interval: $interval, timezone: $timezone) {
       userSettings {
-        notificationsStartTime, notificationsEndTime, timezone
+        notificationsStartTime, notificationsEndTime, notificationsInterval, timezone
       }
     }
   }
@@ -54,7 +54,7 @@ const UPSERT_USER_SETTINGS = gql`
 const GET_USER_SETTINGS = gql`
   query {
     userSettings {
-      notificationsStartTime, notificationsEndTime, timezone
+      notificationsStartTime, notificationsEndTime, notificationsInterval, timezone
     }
   }
 `;

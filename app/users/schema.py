@@ -48,17 +48,18 @@ class UpsertUserSettings(graphene.Mutation):
         start_time = graphene.String()
         end_time = graphene.String()
         timezone = graphene.String()
+        interval = graphene.Int()
 
     ok = graphene.Boolean()
     userSettings = graphene.Field(lambda: UserSettingsType)
 
     @classmethod
-    def mutate(root, id, info, start_time, end_time, timezone):
+    def mutate(root, id, info, start_time, end_time, interval, timezone):
         user = info.context.user
         if not user.is_authenticated:
             raise GraphQLError('Unauthorized')
 
-        if not start_time or not end_time or not timezone:
+        if not start_time or not end_time or not timezone or not interval:
             raise GraphQLError('Malformed request, all subscription fields are mandatory')
 
         try:
@@ -67,12 +68,14 @@ class UpsertUserSettings(graphene.Mutation):
             settings.notifications_start_time = datetime.time(start_time_arr[0], start_time_arr[1])
             end_time_arr = list(map(lambda str: int(str), end_time.split(":")))
             settings.notifications_end_time = datetime.time(end_time_arr[0], end_time_arr[1])
+            settings.notifications_interval = interval
             settings.timezone = timezone
             settings.save()
 
         except UserSettings.DoesNotExist:
             settings = UserSettings.objects.create( notifications_start_time = start_time, \
                 notifications_end_time = end_time, \
+                notifications_interval = interval, \
                 timezone = timezone, \
                 user = user)
         ok = True

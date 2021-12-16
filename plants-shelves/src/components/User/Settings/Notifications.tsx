@@ -16,6 +16,7 @@ interface NotificationsProps {
 const defaultUserSettings: UserSettingsType = {
     notificationsStartTime: "",
     notificationsEndTime: "",
+    notificationsInterval: 60,
     timezone: ""
   }
 
@@ -64,11 +65,12 @@ function Notifications({ action }: NotificationsProps) {
 
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const { notificationsStartTime, notificationsEndTime, timezone } = settings;
+      const { notificationsStartTime, notificationsEndTime, notificationsInterval, timezone } = settings;
       if(notificationsStartTime && notificationsEndTime && timezone) {
         updateSettings({ variables: {
           startTime: notificationsStartTime.slice(0, 5),
           endTime: notificationsEndTime.slice(0, 5),
+          interval: notificationsInterval,
           timezone: timezone
         }});
       }
@@ -88,6 +90,14 @@ function Notifications({ action }: NotificationsProps) {
       resetFieldErrors(event.target.name);
       event.target.value && setSettings({...settings, timezone: event.target.value});
     };
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const name = event.target.name;
+      resetFieldErrors(name);
+      switch(name) {
+        case "notificationsInterval": setSettings({...settings, [name]: Number(event.target.value)}); break;
+      }
+    }
 
     const applyCurrentTimeZone = () => setSettings({...settings, timezone: currentTimeZone })
 
@@ -120,6 +130,20 @@ function Notifications({ action }: NotificationsProps) {
           required
         />
         <Label for="notificationsEndTime">End Time</Label>
+      </FormGroup>
+      <FormGroup>
+        <Input
+          type="range"
+          min={15}
+          max={60}
+          step={15}
+          value={settings.notificationsInterval}
+          onChange={handleInputChange}
+          id="notificationsInterval"
+          name="notificationsInterval"
+          required
+        />
+        <Label for="notificationsEndTime">Interval, {settings.notificationsInterval} min</Label>
       </FormGroup>
       <FormGroup floating>
         <InputGroup>
