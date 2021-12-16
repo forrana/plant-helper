@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { MutationResult, useMutation } from '@apollo/client';
 import { PlantData, RoomType } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Badge, ButtonGroup,
        } from 'reactstrap';
 import { POSTPONE_WATERING, WATER_PLANT } from './queries'
-import PlantsDispatch from './PlantsDispatch'
+import { usePlantsDispatch } from './PlantsDispatch'
 import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
@@ -35,7 +35,7 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
 }
 
 function Plant({ plant, index, room }: PlantProps) {
-    const dispatch = useContext(PlantsDispatch);
+    const dispatch = usePlantsDispatch()
 
     const [isEditMode, setIsEditMode] = useState(false);
     const toggleEditMode = () => setIsEditMode(!isEditMode);
@@ -45,14 +45,14 @@ function Plant({ plant, index, room }: PlantProps) {
 
     const [waterPlant, wateringStatus] = useMutation(WATER_PLANT, {
       onCompleted: (data: { waterPlant: PlantData }) => {
-        dispatch && dispatch({ type: 'update', plant: data.waterPlant.plant, index: index })
+        dispatch({ type: 'update', plant: data.waterPlant.plant, index: index })
       },
       onError: (e) => console.error('Error creating plant:', e)
     });
 
     const [postponeWatering, postponeWateringStatus] = useMutation(POSTPONE_WATERING, {
       onCompleted: (data: { postponeWatering: PlantData }) => {
-        dispatch && dispatch({ type: 'update', plant: data.postponeWatering.plant, index: index })
+        dispatch({ type: 'update', plant: data.postponeWatering.plant, index: index })
       },
       onError: (e) => console.error('Error postponing watering plant:', e)
     });

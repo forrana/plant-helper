@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Alert } from 'reactstrap';
 import AlertContext from './AlertContext';
-import AlertDispatch from './AlertDispatch';
+import { useAlertDispatch } from './AlertDispatch';
 import { MessageType } from './models';
 
 const AlertManager = () => {
-  const dispatch = useContext(AlertDispatch);
+  const dispatch = useAlertDispatch();
 
   const alertContext = useContext(AlertContext);
 
@@ -19,7 +19,7 @@ const AlertManager = () => {
   },[alertContext])
 
   const hideError = () => {
-      dispatch && dispatch({ type: "removeMessage" })
+      dispatch({ type: "removeMessage" })
       setMessage(null)
   }
 

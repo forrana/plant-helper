@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Label, Input, Spinner, InputGroup, InputGroupText } from 'reactstrap';
 
 import { ADD_PLANT } from './queries'
-import PlantsDispatch from './PlantsDispatch';
+import { usePlantsDispatch } from './PlantsDispatch';
 import { PlantData, PlantNickName, RoomType } from './models'
 import ErrorHandler from './ErrorHandler';
 import styles from "./Plant.module.css"
@@ -17,7 +17,7 @@ import { generateColorForGroup } from './utils';
 interface PlantsCreateProps { action?: () => void; }
 
 function PlantsCreate({ action }: PlantsCreateProps) {
-  const dispatch = useContext(PlantsDispatch);
+  const dispatch = usePlantsDispatch()
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState("");
   const [scientificName, setScientificName] = useState("");
@@ -29,7 +29,7 @@ function PlantsCreate({ action }: PlantsCreateProps) {
 
   const [addPlant, { loading, error }] = useMutation(ADD_PLANT, {
     onCompleted: (data: { createPlant: PlantData }) => {
-      dispatch && dispatch({ type: 'add', plant: data.createPlant.plant })
+      dispatch({ type: 'add', plant: data.createPlant.plant })
       setPlantName("");
       setScientificName("");
       setGroupColor("#FFFFFF");

@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from "react-router-dom";
 import { useMutation } from '@apollo/client';
 import { Button, Form, FormGroup, Input, InputGroup, InputGroupText, Label, Modal, ModalBody, ModalFooter, ModalHeader, Spinner } from 'reactstrap';
 
 import { DELETE_PLANT, UPDATE_PLANT } from './queries'
-import PlantsDispatch from './PlantsDispatch';
+import { usePlantsDispatch } from './PlantsDispatch';
 import { PlantData, PlantNickName, RoomType } from './models'
 import styles from "./Plant.module.css"
 import editStyles from "./PlantsEdit.module.css"
@@ -18,7 +18,7 @@ import { generateColorForGroup } from './utils';
 interface PlantsEditProps extends PlantData { index: number, action?: () => any }
 
 function PlantsEdit({ plant, index, action }: PlantsEditProps) {
-  const dispatch = useContext(PlantsDispatch);
+  const dispatch = usePlantsDispatch()
   const [submitted, setSubmitted] = useState(false);
   const [plantName, setPlantName] = useState(plant.name);
   const [groupName, setGroupName] = useState(plant.room?.roomName || "");
@@ -32,7 +32,7 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   const [updatePlant, { loading, error }] = useMutation(UPDATE_PLANT, {
     onCompleted: (data: { updatePlant: PlantData }) => {
-      dispatch && dispatch({ type: 'update', plant: data.updatePlant.plant, index: index});
+      dispatch({ type: 'update', plant: data.updatePlant.plant, index: index});
       action && action();
       setSubmitted(true);
     },
@@ -109,14 +109,15 @@ function PlantsEdit({ plant, index, action }: PlantsEditProps) {
 
   const [deletePlant, deletingStatus] = useMutation(DELETE_PLANT, {
     onCompleted: () => {
-      dispatch && dispatch({ type: 'delete', index: index })
+      dispatch({ type: 'delete', index: index });
+      toggleModal();
+      action && action();
     },
     onError: (e) => console.error('Error deleting plant:', e)
   });
 
   const confirmDeletion = () => {
     deletePlant({variables: { plantId: plant.id } });
-    toggleModal()
   }
 
   if (submitted) return <Redirect push to="/"/>

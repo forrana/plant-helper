@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Input, Spinner } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 
 import { RoomData, RoomType } from './models';
 import { UPDATE_ROOM } from './queries';
 import styles from "./RoomBadge.module.css"
-import PlantsDispatch from './PlantsDispatch';
+import { usePlantsDispatch } from './PlantsDispatch';
 import ErrorHandler from './ErrorHandler';
 
 interface RoomBadgeProps {
@@ -13,7 +13,7 @@ interface RoomBadgeProps {
 }
 
 const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
-  const dispatch = useContext(PlantsDispatch);
+  const dispatch = usePlantsDispatch()
 
   const [isEditMode, setIsEditMode] = useState(false);
   const toggleEditMode = () => setIsEditMode(!isEditMode);
@@ -57,7 +57,7 @@ const RoomBadge: React.FC<RoomBadgeProps> = ({ room }) => {
 
   const [updateRoom, { loading, error }] = useMutation(UPDATE_ROOM, {
     onCompleted: (data: { updateRoom: RoomData }) => {
-      dispatch && dispatch({ type: 'updateRoom', room: data.updateRoom.room});
+      dispatch({ type: 'updateRoom', room: data.updateRoom.room});
       toggleEditMode()
     },
     onError: (e) => console.error('Error updating plant:', e)
