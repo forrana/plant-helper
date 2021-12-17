@@ -3,7 +3,7 @@ from django.db.models import DateTimeField, ExpressionWrapper, F
 from django.utils import timezone
 from plants.utils import get_time_between_watering_field_for_current_season
 from plants.models import Plant
-from users.models import PushSubscription
+from users.models import PushSubscription, UserSettings
 from ._pushutils import send_to_subscription
 
 
@@ -21,6 +21,7 @@ class Command(BaseCommand):
         for owner in owners_set:
             try:
                 subscription = PushSubscription.objects.get(user = owner)
+                settings = UserSettings.objects.get(user = owner)
                 payload = {"title": "Water me!", "message": "Some of your plants need to be watered!"}
                 send_to_subscription(subscription, payload)
             except PushSubscription.DoesNotExist:
