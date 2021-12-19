@@ -10,7 +10,12 @@ import pytz
 
 class Command(BaseCommand):
     help = 'Send notifications to users with plants which need to be watered today'
+    def add_arguments(self, parser):
+        parser.add_argument('interval', type=int)
+
     def handle(self, *args, **options):
+        interval = options['interval']
+
         unwatered_plants = Plant.objects \
             .annotate(when_to_water=ExpressionWrapper( \
                 (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
@@ -30,7 +35,7 @@ class Command(BaseCommand):
                 user_end_time = settings.notifications_end_time
                 user_start_notifications_date = datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
                 user_end_notifications_date = datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
-                if now >= user_start_notifications_date and now <= user_end_notifications_date:
+                if now >= user_start_notifications_date and now <= user_end_notifications_date and interval == settings.notifications_interval:
                     self.stdout.write(self.style.SUCCESS('send notifications for user  "%s"' % owner))
                     payload = {"title": "Water me!", "message": "Some of your plants need to be watered!"}
                     send_to_subscription(subscription, payload)
