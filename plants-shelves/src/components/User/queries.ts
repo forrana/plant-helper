@@ -41,6 +41,17 @@ const REFRESH_TOKEN = gql`
   }
 `
 
+const PASSWORD_RESET = gql`
+  mutation SendPasswordResetEmail($email: String!) {
+    sendPasswordResetEmail(
+      email: $email
+    ) {
+      success,
+      errors
+    }
+  }
+`
+
 const UPSERT_USER_SETTINGS = gql`
   mutation UpsertUserSettings($startTime: String!, $endTime: String!, $interval: Int!, $timezone: String) {
     upsertUserSettings(startTime: $startTime, endTime: $endTime, interval: $interval, timezone: $timezone) {
