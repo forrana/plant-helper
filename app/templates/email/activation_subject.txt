@@ -1,1 +1,1 @@
-Plant assistant account activation
+plants.ml account activation
