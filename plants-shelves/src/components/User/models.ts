@@ -23,6 +23,8 @@ export interface UserSettingsData {
 }
 
 export interface LoginError extends Error {}
+export interface ResetError extends Error {}
+
 
 export interface FormErrors {
   [key: string]: Array<Error>

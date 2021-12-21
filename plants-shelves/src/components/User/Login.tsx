@@ -128,6 +128,7 @@ function Login() {
           <Button type="submit" data-testid="login-submit-button">Login</Button>
           <Link to="/signup" className={styles.link}>Signup</Link>
         </section>
+        <Link to="/password-reset-email" className={styles.link}>Reset Password</Link>
       </Form>
     </main>
   )

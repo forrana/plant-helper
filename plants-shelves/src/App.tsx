@@ -31,6 +31,8 @@ import { AlertReducerAction, AlertState } from './components/UI/models';
 import { alertReducer, initialAlertState } from './components/UI/AlertReducer';
 import AlertContext from './components/UI/AlertContext';
 import AlertManager from './components/UI/AlertManager';
+import UserPasswordResetEmail from './components/User/UserPasswordResetEmail';
+import UserPasswordReset from './components/User/UserPasswordReset';
 
 
 const host = window.location.hostname
@@ -160,6 +162,12 @@ function App() {
                   </PrivateRoute>
                   <PublicRoute path="/signup">
                     <Signup/>
+                  </PublicRoute>
+                  <PublicRoute path="/password-reset-email">
+                    <UserPasswordResetEmail />
+                  </PublicRoute>
+                  <PublicRoute path="/password-reset">
+                    <UserPasswordReset />
                   </PublicRoute>
                   <PrivateRoute path="/">
                     <PlantsContainer state={state}/>

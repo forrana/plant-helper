@@ -41,10 +41,23 @@ const REFRESH_TOKEN = gql`
   }
 `
 
-const PASSWORD_RESET = gql`
+const PASSWORD_RESET_EMAIL = gql`
   mutation SendPasswordResetEmail($email: String!) {
     sendPasswordResetEmail(
       email: $email
+    ) {
+      success,
+      errors
+    }
+  }
+`
+
+const PASSWORD_RESET = gql`
+  mutation PasswordReset($token: String!, $newPassword1: String!, $newPassword2: String!){
+    passwordReset(
+      token: $token,
+      newPassword1: $newPassword1,
+      newPassword2: $newPassword2
     ) {
       success,
       errors
@@ -78,4 +91,4 @@ const GET_USER_DATA = gql`
   }
 `;
 
-export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS, GET_USER_SETTINGS, GET_USER_DATA }
+export { CREATE_USER, LOG_IN, REFRESH_TOKEN, UPSERT_USER_SETTINGS, GET_USER_SETTINGS, GET_USER_DATA, PASSWORD_RESET_EMAIL, PASSWORD_RESET }
