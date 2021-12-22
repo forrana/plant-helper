@@ -53,11 +53,11 @@ const PASSWORD_RESET_EMAIL = gql`
 `
 
 const PASSWORD_RESET = gql`
-  mutation PasswordReset($token: String!, $newPassword1: String!, $newPassword2: String!){
+  mutation PasswordReset($token: String!, $password1: String!, $password2: String!){
     passwordReset(
       token: $token,
-      newPassword1: $newPassword1,
-      newPassword2: $newPassword2
+      newPassword1: $password1,
+      newPassword2: $password2
     ) {
       success,
       errors

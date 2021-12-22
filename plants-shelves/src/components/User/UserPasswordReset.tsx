@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 import { Link } from "react-router-dom";
 import { PASSWORD_RESET } from './queries'
 import styles from "./Login.module.css"
-import { ResetError } from "./models"
+import { FormErrors } from "./models"
 import ErrorHandler from '../Plants/ErrorHandler';
 import LoadingScreen from '../Plants/LoadingScreen';
 import { useAlertDispatch } from '../UI/AlertDispatch';
+import { getFormFieldErrors, isFieldHasErrors } from './formUtils';
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 function UserPasswordReset() {
+  let query = useQuery();
+  let token = query.get("token") || ""
   const dispatch = useAlertDispatch();
 
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
-  const [resetErrors, setResetErrors] = useState<Array<ResetError>>([]);
+  const [resetErrors, setResetErrors] = useState<FormErrors>({});
 
   const history = useHistory();
   const goToHomePage = () => history.push("/");
@@ -25,15 +34,15 @@ function UserPasswordReset() {
     onCompleted: (data: any) => {
       setPassword1("");
       setPassword2("");
-      const errors: Array<ResetError> = data?.passwordReset?.errors?.nonFieldErrors;
+      const errors: FormErrors = data?.passwordReset?.errors;
       if(errors) {
         setResetErrors(errors);
       } else {
         dispatch({
           type: "addMessage",
-          message: { description: "We've sent you an email with a password reset link!", color: "success" }
+          message: { description: "Password was reset successfully!", color: "success" }
         })
-        setResetErrors([]);
+        setResetErrors({});
         goToHomePage();
       }
     },
@@ -42,11 +51,13 @@ function UserPasswordReset() {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    resetPassword({ variables: { password1, password2 }})
+    console.log(password1)
+    resetPassword({ variables: { password1, password2, token }})
   }
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
     const name = event.target.name;
     resetFieldErrors(name);
     switch(name) {
@@ -63,33 +74,32 @@ function UserPasswordReset() {
     <main>
       <Form
         onSubmit={handleFormSubmit}
-        autoComplete="off"
         className={styles.container}
       >
         <FormGroup floating>
           <Input type="password" name="password1" id="password1" placeholder="Enter password"
             value={password1}
             onChange={handleInputChange}
-            invalid={resetErrors.length > 0}
+            invalid={isFieldHasErrors("newPassword1", resetErrors)}
             required
           />
           <Label for="password1">Password:</Label>
           {
-            resetErrors.map((error, index) =>
+            getFormFieldErrors("newPassword1", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
             )
           }
         </FormGroup>
         <FormGroup floating>
           <Input type="password" name="password2" id="password2" placeholder="Confirm password"
-            value={password1}
+            value={password2}
             onChange={handleInputChange}
-            invalid={resetErrors.length > 0}
+            invalid={isFieldHasErrors("newPassword2", resetErrors)}
             required
           />
           <Label for="password2">Confirmation:</Label>
           {
-            resetErrors.map((error, index) =>
+            getFormFieldErrors("newPassword2", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
             )
           }
