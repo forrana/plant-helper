@@ -71,6 +71,12 @@ function Login() {
     setPassword(event.target.value);
   };
 
+  const showPasswordReset = (errors: Array<LoginError>) => {
+    if( errors.some( error => error.code === "invalid_credentials") ){
+      return(<Link to="/password-reset-email" className={styles.link}>Reset Password</Link>)
+    } else return(<></>)
+  }
+
   if (loading) return  <Spinner color="primary" />
 
   if (error)  return  <p>Error :( {error.message}</p>;
@@ -110,11 +116,13 @@ function Login() {
             )
           }
         </FormGroup>
+        <FormGroup>
+          {showPasswordReset(loginErrors)}
+        </FormGroup>
         <section className={styles.controls}>
           <Button type="submit" data-testid="login-submit-button">Login</Button>
           <Link to="/signup" className={styles.link}>Signup</Link>
         </section>
-        <Link to="/password-reset-email" className={styles.link}>Reset Password</Link>
       </Form>
     </main>
   )
