@@ -8,6 +8,7 @@ import { LOG_IN } from './queries'
 import styles from "./Login.module.css"
 import { LoginError } from "./models"
 import { useUserDispatch } from './UserDispatch'
+import { parseJwt } from '../Plants/utils';
 
 function Login() {
   const dispatch = useUserDispatch();
@@ -17,20 +18,6 @@ function Login() {
 
   const history = useHistory();
   const goToHomePage = () => history.push("/");
-
-  interface JWTToken {
-    username: string,
-    exp: number,
-    origIat: number
-  }
-
-  const parseJwt = (token: string): JWTToken | null => {
-    try {
-      return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-      return null;
-    }
-  };
 
   const [loginUser, { client, loading, error }] = useMutation(LOG_IN, {
     onCompleted: (data: any) => {
@@ -46,8 +33,7 @@ function Login() {
         const userId: number = data?.tokenAuth?.user?.id
         const refreshToken: string = data?.tokenAuth?.refreshToken;
         if(token?.length && username?.length) {
-          // unlickly to happen but let's consider token already expired if we wasn't able to parse it
-          const exp = parseJwt(token)?.exp || Date.now();
+          const exp = parseJwt(token).exp;
           dispatch({
                 type: 'login',
                 token,

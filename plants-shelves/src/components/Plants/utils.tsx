@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { JWTToken } from "../User/models";
 
 const getRandomString = (string_length: number): string => [...Array(string_length)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
 
@@ -30,4 +31,12 @@ const generateColorForGroup = (groupName: string) => {
   return randomColor;
 }
 
-export { getRandomString, useDebounce, generateColorForGroup }
+const parseJwt = (token: string, separator: string = ".", position: number = 1): JWTToken => {
+  try {
+    return JSON.parse(atob(token.split(separator)[position]));
+  } catch (e) {
+    throw new Error("JWTToken parsing error");
+  }
+};
+
+export { getRandomString, useDebounce, generateColorForGroup, parseJwt }

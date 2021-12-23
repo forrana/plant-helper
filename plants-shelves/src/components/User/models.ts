@@ -38,3 +38,10 @@ export interface logOutAction { type: 'logout' }
 export type UserReducerAction =
   | loginAction
   | logOutAction
+
+
+export interface JWTToken {
+  username: string,
+  exp: number,
+  origIat: number
+}

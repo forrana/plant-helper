@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 
-import { Button, Form, FormGroup, Label, Input, Spinner, FormFeedback } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 import { Link } from "react-router-dom";
 import { PASSWORD_RESET } from './queries'
@@ -11,6 +11,7 @@ import ErrorHandler from '../Plants/ErrorHandler';
 import LoadingScreen from '../Plants/LoadingScreen';
 import { useAlertDispatch } from '../UI/AlertDispatch';
 import { getFormFieldErrors, isFieldHasErrors } from './formUtils';
+import { parseJwt } from '../Plants/utils';
 
 function useQuery() {
   const { search } = useLocation();
@@ -20,7 +21,8 @@ function useQuery() {
 
 function UserPasswordReset() {
   let query = useQuery();
-  let token = query.get("token") || ""
+  const token = query.get("token") || ""
+  const username = parseJwt(token, ":", 0).username
   const dispatch = useAlertDispatch();
 
   const [password1, setPassword1] = useState("");
@@ -77,11 +79,20 @@ function UserPasswordReset() {
         className={styles.container}
       >
         <FormGroup floating>
+          <Input type="text" name="username" id="username" placeholder="User login"
+            value={username}
+            autoComplete={"username"}
+            required
+          />
+          <Label for="password2">Username:</Label>
+        </FormGroup>
+        <FormGroup floating>
           <Input type="password" name="password1" id="password1" placeholder="Enter password"
             value={password1}
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword1", resetErrors)}
             required
+            autoComplete={"new-password"}
           />
           <Label for="password1">Password:</Label>
           {
@@ -96,6 +107,7 @@ function UserPasswordReset() {
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword2", resetErrors)}
             required
+            autoComplete={"new-password"}
           />
           <Label for="password2">Confirmation:</Label>
           {
