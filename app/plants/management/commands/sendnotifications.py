@@ -8,6 +8,16 @@ from ._pushutils import send_to_subscription
 from datetime import date, datetime
 import pytz
 
+def is_time_to_send_notification(now, current_interval, settings):
+    user_timezone = pytz.timezone(settings.timezone)
+    user_start_time = settings.notifications_start_time
+    user_end_time = settings.notifications_end_time
+    user_interval = settings.notifications_interval
+    user_start_notifications_date = datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
+    user_end_notifications_date = datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
+    return (now >= user_start_notifications_date and now <= user_end_notifications_date and current_interval == user_interval)
+
+
 class Command(BaseCommand):
     help = 'Send notifications to users with plants which need to be watered today'
     def add_arguments(self, parser):
@@ -30,12 +40,7 @@ class Command(BaseCommand):
                 subscription = PushSubscription.objects.get(user = owner)
                 settings = UserSettings.objects.get(user = owner)
                 now = timezone.now()
-                user_timezone = pytz.timezone(settings.timezone)
-                user_start_time = settings.notifications_start_time
-                user_end_time = settings.notifications_end_time
-                user_start_notifications_date = datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
-                user_end_notifications_date = datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
-                if now >= user_start_notifications_date and now <= user_end_notifications_date and interval == settings.notifications_interval:
+                if is_time_to_send_notification(now, interval, settings):
                     self.stdout.write(self.style.SUCCESS('send notifications for user  "%s"' % owner))
                     payload = {"title": "Water me!", "message": "Some of your plants need to be watered!"}
                     send_to_subscription(subscription, payload)
