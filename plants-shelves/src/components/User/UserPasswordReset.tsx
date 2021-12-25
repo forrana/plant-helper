@@ -79,22 +79,23 @@ function UserPasswordReset() {
         className={styles.container}
       >
         <FormGroup floating>
-          <Input type="text" name="username" id="username" placeholder="User login"
+          <Input type="text" name="username" id="username" placeholder="Login"
             value={username}
             autoComplete={"username"}
+            readOnly={true}
             required
           />
-          <Label for="password2">Username:</Label>
+          <Label for="username">Username:</Label>
         </FormGroup>
         <FormGroup floating>
-          <Input type="password" name="password1" id="password1" placeholder="Enter password"
+          <Input type="password" name="password1" id="new-password" placeholder="Enter password"
             value={password1}
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword1", resetErrors)}
             required
             autoComplete={"new-password"}
           />
-          <Label for="password1">Password:</Label>
+          <Label for="new-password">Password:</Label>
           {
             getFormFieldErrors("newPassword1", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
@@ -102,14 +103,14 @@ function UserPasswordReset() {
           }
         </FormGroup>
         <FormGroup floating>
-          <Input type="password" name="password2" id="password2" placeholder="Confirm password"
+          <Input type="password" name="password2" id="new-password-1" placeholder="Confirm password"
             value={password2}
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword2", resetErrors)}
             required
             autoComplete={"new-password"}
           />
-          <Label for="password2">Confirmation:</Label>
+          <Label for="new-password-1">Confirmation:</Label>
           {
             getFormFieldErrors("newPassword2", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
