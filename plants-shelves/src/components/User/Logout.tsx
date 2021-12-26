@@ -12,7 +12,7 @@ function Logout() {
     let refreshToken = userState.refreshToken;
 
     const [revokeToken, { loading, error }] = useMutation(REVOKE_TOKEN, {
-        onError: (e) => console.error('Error updating plant:', e)
+        onError: (e) => console.error('Error revoking token:', e)
       });
 
 
