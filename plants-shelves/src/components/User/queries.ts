@@ -77,7 +77,7 @@ const PASSWORD_RESET = gql`
 `
 
 const PASSWORD_CHANGE = gql`
-  mutation PasswordChange($oldPassword: String!, newPassword1: String!, newPassword2: String!){
+  mutation PasswordChange($oldPassword: String!, $newPassword1: String!, $newPassword2: String!){
     passwordChange(
       oldPassword: $oldPassword,
       newPassword1: $newPassword1,
@@ -126,5 +126,6 @@ export {
   GET_USER_DATA,
   PASSWORD_RESET_EMAIL,
   PASSWORD_RESET,
+  PASSWORD_CHANGE,
   REVOKE_TOKEN
 }

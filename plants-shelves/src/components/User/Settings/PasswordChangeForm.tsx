@@ -1,45 +1,41 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 import { Link } from "react-router-dom";
-import { PASSWORD_RESET } from './queries'
 import styles from "./Login.module.css"
-import { FormErrors } from "./models"
-import ErrorHandler from '../Plants/ErrorHandler';
-import LoadingScreen from '../Plants/LoadingScreen';
-import { useAlertDispatch } from '../UI/AlertDispatch';
-import { getFormFieldErrors, isFieldHasErrors } from './formUtils';
-import { parseJwt } from '../Plants/utils';
+import { FormErrors } from '../models';
+import { PASSWORD_CHANGE } from '../queries';
+import { useAlertDispatch } from '../../UI/AlertDispatch';
+import { getFormFieldErrors, isFieldHasErrors } from '../formUtils';
+import LoadingScreen from '../../Plants/LoadingScreen';
+import ErrorHandler from '../../Plants/ErrorHandler';
 
-function useQuery() {
-  const { search } = useLocation();
 
-  return React.useMemo(() => new URLSearchParams(search), [search]);
-}
-
-function UserPasswordReset() {
-  let query = useQuery();
-  const token = query.get("token") || ""
-  const username = parseJwt(token, ":", 0).username
+function PasswordChangeForm() {
   const dispatch = useAlertDispatch();
-
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [resetErrors, setResetErrors] = useState<FormErrors>({});
+  const [newPassword1, setNewPassword1] = useState("");
+  const [newPassword2, setNewPassword2] = useState("");
+  const [oldPassword, setOldPassword]   = useState("");
+  const [resetErrors, setResetErrors]   = useState<FormErrors>({});
 
   const history = useHistory();
   const goToHomePage = () => history.push("/");
 
-  const [resetPassword, { client, loading, error }] = useMutation(PASSWORD_RESET, {
+  const resetForm = () => {
+      setNewPassword1("");
+      setNewPassword2("");
+      setOldPassword("");
+  }
+
+  const [resetPassword, { client, loading, error }] = useMutation(PASSWORD_CHANGE, {
     onCompleted: (data: any) => {
-      setPassword1("");
-      setPassword2("");
       const errors: FormErrors = data?.passwordReset?.errors;
       if(errors) {
         setResetErrors(errors);
       } else {
+        resetForm();
         dispatch({
           type: "addMessage",
           message: { description: "Password was reset successfully!", color: "success" }
@@ -53,7 +49,7 @@ function UserPasswordReset() {
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    resetPassword({ variables: { password1, password2, token }})
+    resetPassword({ variables: { oldPassword, newPassword1, newPassword2 }})
   }
 
 
@@ -62,8 +58,9 @@ function UserPasswordReset() {
     const name = event.target.name;
     resetFieldErrors(name);
     switch(name) {
-      case "password1": setPassword1(event.target.value); break;
-      case "password2": setPassword2(event.target.value); break;
+      case "newPassword1": setNewPassword1(event.target.value); break;
+      case "newPassword2": setNewPassword2(event.target.value); break;
+      case "oldPassword": setOldPassword(event.target.value); break;
     }
 }
 
@@ -78,23 +75,22 @@ function UserPasswordReset() {
         className={styles.container}
       >
         <FormGroup floating>
-          <Input type="text" name="username" id="username" placeholder="Login"
-            value={username}
-            autoComplete={"username"}
-            readOnly={true}
+          <Input type="password" name="oldPassword" id="oldPassword" placeholder="Current Password"
+            value={oldPassword}
+            autoComplete={"password"}
             required
           />
           <Label for="username">Username:</Label>
         </FormGroup>
         <FormGroup floating>
-          <Input type="password" name="password1" id="new-password" placeholder="Enter password"
-            value={password1}
+          <Input type="password" name="newPassword1" id="newPassword1" placeholder="Enter password"
+            value={newPassword1}
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword1", resetErrors)}
             required
             autoComplete={"new-password"}
           />
-          <Label for="new-password">Password:</Label>
+          <Label for="newPassword1">Password:</Label>
           {
             getFormFieldErrors("newPassword1", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
@@ -102,14 +98,14 @@ function UserPasswordReset() {
           }
         </FormGroup>
         <FormGroup floating>
-          <Input type="password" name="password2" id="new-password-1" placeholder="Confirm password"
-            value={password2}
+          <Input type="password" name="newPassword2" id="newPassword2" placeholder="Confirm password"
+            value={newPassword2}
             onChange={handleInputChange}
             invalid={isFieldHasErrors("newPassword2", resetErrors)}
             required
             autoComplete={"new-password"}
           />
-          <Label for="new-password-1">Confirmation:</Label>
+          <Label for="newPassword2">Confirmation:</Label>
           {
             getFormFieldErrors("newPassword2", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
@@ -127,4 +123,4 @@ function UserPasswordReset() {
   )
 }
 
-export default UserPasswordReset
+export default PasswordChangeForm
