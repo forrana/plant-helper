@@ -8,6 +8,7 @@ import { GET_USER_DATA, UPSERT_USER_SETTINGS } from '../queries';
 import uiStyles from "../../UI/UIElements.module.css"
 import { useAlertDispatch } from '../../UI/AlertDispatch';
 import { getFormFieldErrors, isFieldHasErrors } from '../formUtils';
+import PasswordChangeForm from './PasswordChangeForm';
 
 interface SecurityProps {
   action: () => any
@@ -96,6 +97,7 @@ function Security({ action }: SecurityProps) {
           <Button outline color="danger" title="Cancel!" onClick={action}>Cancel</Button>
         </section>
       </Form>
+      <PasswordChangeForm />
       <LoadingScreen isLoading={updateSettingsState.loading || loading} isFullScreen={true}/>
       <ErrorHandler error={updateSettingsState.error} />
       <ErrorHandler error={error} />

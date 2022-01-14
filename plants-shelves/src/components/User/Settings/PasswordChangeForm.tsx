@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
 import { Link } from "react-router-dom";
-import styles from "./Login.module.css"
+import styles from "../Login.module.css"
 import { FormErrors } from '../models';
 import { PASSWORD_CHANGE } from '../queries';
 import { useAlertDispatch } from '../../UI/AlertDispatch';
@@ -69,18 +69,18 @@ function PasswordChangeForm() {
   }
 
   return (
-    <main>
+    <>
       <Form
         onSubmit={handleFormSubmit}
-        className={styles.container}
       >
         <FormGroup floating>
           <Input type="password" name="oldPassword" id="oldPassword" placeholder="Current Password"
             value={oldPassword}
+            onChange={handleInputChange}
             autoComplete={"password"}
             required
           />
-          <Label for="username">Username:</Label>
+          <Label for="oldPassword">Password:</Label>
         </FormGroup>
         <FormGroup floating>
           <Input type="password" name="newPassword1" id="newPassword1" placeholder="Enter password"
@@ -90,7 +90,7 @@ function PasswordChangeForm() {
             required
             autoComplete={"new-password"}
           />
-          <Label for="newPassword1">Password:</Label>
+          <Label for="newPassword1">New Password:</Label>
           {
             getFormFieldErrors("newPassword1", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
@@ -105,7 +105,7 @@ function PasswordChangeForm() {
             required
             autoComplete={"new-password"}
           />
-          <Label for="newPassword2">Confirmation:</Label>
+          <Label for="newPassword2">New password again:</Label>
           {
             getFormFieldErrors("newPassword2", resetErrors).map((error, index) =>
               <FormFeedback key={index}>{ error.message }</FormFeedback>
@@ -114,12 +114,11 @@ function PasswordChangeForm() {
         </FormGroup>
         <section className={styles.controls}>
           <Button type="submit" data-testid="login-submit-button">Reset</Button>
-          <Link to="/signup" className={styles.link}>Signup instead</Link>
         </section>
       </Form>
       <LoadingScreen isLoading={loading} isFullScreen={false}/>
       <ErrorHandler error={error} />
-    </main>
+    </>
   )
 }
 
