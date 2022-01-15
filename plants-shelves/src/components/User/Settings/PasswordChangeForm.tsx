@@ -13,7 +13,11 @@ import LoadingScreen from '../../Plants/LoadingScreen';
 import ErrorHandler from '../../Plants/ErrorHandler';
 
 
-function PasswordChangeForm() {
+interface PasswordChangeFormProps {
+  action: () => any
+}
+
+function PasswordChangeForm({ action }: PasswordChangeFormProps) {
   const dispatch = useAlertDispatch();
   const [newPassword1, setNewPassword1] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -31,11 +35,12 @@ function PasswordChangeForm() {
 
   const [resetPassword, { client, loading, error }] = useMutation(PASSWORD_CHANGE, {
     onCompleted: (data: any) => {
-      const errors: FormErrors = data?.passwordReset?.errors;
+      const errors: FormErrors = data?.passwordChange?.errors;
       if(errors) {
         setResetErrors(errors);
       } else {
         resetForm();
+        action();
         dispatch({
           type: "addMessage",
           message: { description: "Password was reset successfully!", color: "success" }
