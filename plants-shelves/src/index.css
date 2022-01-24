@@ -71,6 +71,14 @@ i.icon {
   content: "\2316";
 }
 
+.icon-arrow-right:after {
+  content: "\27A4"
+}
+
+.icon-arrow-left:after {
+  content: "\2B9C"
+}
+
 .alert {
   position: fixed;
   top: 0;

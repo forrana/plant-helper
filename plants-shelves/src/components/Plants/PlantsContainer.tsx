@@ -10,6 +10,7 @@ import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
 import LoadingScreen from './LoadingScreen';
 import ManagePushSubscription from './ManagePushSubscription';
+import FiltersMenu from './FiltersMenu';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -20,6 +21,7 @@ const WithNavBar = ({ children }: any) => {
     <>
       <ManagePushSubscription />
       <PlantsNavBar />
+      <FiltersMenu />
       {children}
     </>
   )
