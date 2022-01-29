@@ -72,11 +72,11 @@ i.icon {
 }
 
 .icon-arrow-right:after {
-  content: "\27A4"
+  content: "\25B6"
 }
 
 .icon-arrow-left:after {
-  content: "\2B9C"
+  content: "\25C0"
 }
 
 .alert {

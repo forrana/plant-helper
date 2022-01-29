@@ -23,14 +23,11 @@ function FiltersMenu() {
     const toggleMenu = () => setIsOpen(!isOpen)
 
     return(
-        <div style={{marginTop: "4.5em", display: "flex"}}>
+        <div style={{display: "flex"}}>
             <Button
                 color="primary"
                 size="sm"
                 onClick={toggleMenu}
-                style={{
-                marginBottom: '1rem'
-                }}
             >
                 <MenuArrow isOpen={isOpen} />
             </Button>
@@ -38,10 +35,10 @@ function FiltersMenu() {
                 horizontal
                 isOpen={isOpen}
             >
-                <section style={{ 
+                <section style={{
                     display: "flex",
                     justifyContent: "space-evenly",
-                    width: "90vw",
+                    width: "100vw",
                     backgroundColor: "rgb(10 10 10 / 11%)"
                     }}>
                     <Button

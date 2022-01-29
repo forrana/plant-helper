@@ -14,6 +14,7 @@ import UserContext from '../User/UserContext'
 import uiStyles from '../UI/UIElements.module.css'
 import CreateModal from './CreateModal';
 import UserSettingsModal from './UserSettingsModal';
+import FiltersMenu from './FiltersMenu';
 
 const PlantsNavBar = () => {
   const userContext = useContext(UserContext);
@@ -25,16 +26,16 @@ const PlantsNavBar = () => {
   const toggleMenu = () => setMenu(!menu)
 
   return (
-    <>
-      <Navbar color="light" light expand="md" fixed="top">
+    <section className='fixed-top'>
+      <Navbar color="light" light expand="md">
         <NavbarBrand><img src="icon-192.png" alt="app logo"/></NavbarBrand>
         <Nav navbar>
-            <NavItem>
-              <Button onClick={toggleModal} data-testid="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
-                &#10133;
-              </Button>
-            </NavItem>
-          </Nav>
+          <NavItem>
+            <Button onClick={toggleModal} data-testid="create-btn" outline className={uiStyles.roundButton} color="primary" title="Add new plant">
+              &#10133;
+            </Button>
+          </NavItem>
+        </Nav>
         <NavbarText>Hi, <b>{ userContext.username }</b></NavbarText>
         <NavbarToggler
           className="me-2"
@@ -49,9 +50,10 @@ const PlantsNavBar = () => {
           <NavLink active href="/logout">Logout</NavLink>
         </Collapse>
       </Navbar>
+      <FiltersMenu />
       <CreateModal isOpen={modal} toggleAction={toggleModal} />
       <UserSettingsModal isOpen={settingsModal} toggleAction={toggleSettingsModal} />
-    </>
+    </section>
   );
 }
 
