@@ -5,7 +5,6 @@ from plants.utils import get_time_between_watering_field_for_current_season
 from plants.models import Plant
 from users.models import PushSubscription, UserSettings
 from ._pushutils import send_to_subscription
-from datetime import date, datetime
 import pytz
 
 def is_time_to_send_notification(now, current_interval, settings):
@@ -13,9 +12,10 @@ def is_time_to_send_notification(now, current_interval, settings):
     user_start_time = settings.notifications_start_time
     user_end_time = settings.notifications_end_time
     user_interval = settings.notifications_interval
-    user_start_notifications_date = datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
-    user_end_notifications_date = datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
-    return (now >= user_start_notifications_date and now <= user_end_notifications_date and current_interval == user_interval)
+    user_start_notifications_date = timezone.datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
+    user_end_notifications_date = timezone.datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
+    now_in_user_time = timezone.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second, now.microsecond, user_timezone)
+    return (now_in_user_time >= user_start_notifications_date and now_in_user_time <= user_end_notifications_date and current_interval == user_interval)
 
 
 class Command(BaseCommand):
