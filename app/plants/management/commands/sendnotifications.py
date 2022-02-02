@@ -12,10 +12,10 @@ def is_time_to_send_notification(now, current_interval, settings):
     user_start_time = settings.notifications_start_time
     user_end_time = settings.notifications_end_time
     user_interval = settings.notifications_interval
-    user_start_notifications_date = timezone.datetime(now.year, now.month, now.day, user_start_time.hour, user_start_time.minute, now.second, now.microsecond, user_timezone)
-    user_end_notifications_date = timezone.datetime(now.year, now.month, now.day, user_end_time.hour, user_end_time.minute, now.second, now.microsecond, user_timezone)
-    now_in_user_time = timezone.datetime(now.year, now.month, now.day, now.hour, now.minute, now.second, now.microsecond, user_timezone)
-    return (now_in_user_time >= user_start_notifications_date and now_in_user_time <= user_end_notifications_date and current_interval == user_interval)
+    user_start_notifications_time = user_timezone.localize(timezone.datetime(year=now.year, month=now.month, day=now.day, hour=user_start_time.hour, minute=user_start_time.minute, second=0, microsecond=0))
+    user_end_notifications_time = user_timezone.localize(timezone.datetime(year=now.year, month=now.month, day=now.day, hour=user_end_time.hour, minute=user_end_time.minute, second=0, microsecond=0))
+    localized_server_time = now
+    return (localized_server_time >= user_start_notifications_time and localized_server_time <= user_end_notifications_time and current_interval == user_interval)
 
 
 class Command(BaseCommand):
