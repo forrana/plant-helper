@@ -2,10 +2,12 @@ from .utils import get_time_between_watering_field_for_current_season
 from django.db.models.expressions import ExpressionWrapper, F
 from django.db.models.fields import DateTimeField
 from graphene_django import DjangoObjectType
+from graphene import relay, ObjectType
 import graphene
 import datetime
 from graphql import GraphQLError
 from django.utils import timezone
+from graphene_django.filter import DjangoFilterConnectionField
 
 from .models import Plant, Room, House, Symbol, WateredAtEntry
 
@@ -17,7 +19,9 @@ class PlantType(DjangoObjectType):
     days_postpone = graphene.Int()
     class Meta:
         model = Plant
+        filter_fields = ['scientific_name', 'name']
         fields = "__all__"
+        interfaces = (relay.Node, )
 
 class RoomType(DjangoObjectType):
     class Meta:
@@ -41,9 +45,11 @@ class HouseType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     plants = graphene.List(PlantType)
+    filtered_plants = relay.Node.Field(PlantType)
     rooms  = graphene.List(RoomType)
     plants_by_room = graphene.Field(PlantType, room_id=graphene.Int(required=True))
     rooms_by_name_fragment = graphene.List(RoomSuggestionType, name_fragment=graphene.String(required=True))
+    all_filtered_plants = DjangoFilterConnectionField(PlantType)
 
     def resolve_plants(self, info, **kwargs):
         try:
