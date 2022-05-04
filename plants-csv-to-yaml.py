@@ -1,5 +1,4 @@
 import csv
-from django.contrib.postgres import fields
 import yaml
 
 with open('plants.csv') as csvfile:

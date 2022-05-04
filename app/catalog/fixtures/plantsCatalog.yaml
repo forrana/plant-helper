@@ -657,3 +657,23 @@
     plant_entry: 35
   model: catalog.nickname
   pk: 63
+- fields:
+    days_between_watering_dormant: 5 00:00:00
+    days_between_watering_growing: 3 00:00:00
+    nick_name: Garden strawberry, strawberry
+    nick_names:
+    - Garden Strawberry
+    - Strawberry
+    scientific_name: Fragaria ananassa
+  model: catalog.plantentry
+  pk: 36
+- fields:
+    name: Garden Strawberry
+    plant_entry: 36
+  model: catalog.nickname
+  pk: 64
+- fields:
+    name: Strawberry
+    plant_entry: 36
+  model: catalog.nickname
+  pk: 65
