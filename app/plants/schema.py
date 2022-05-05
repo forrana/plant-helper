@@ -21,7 +21,7 @@ class PlantType(DjangoObjectType):
         model = Plant
         filter_fields = ['scientific_name', 'name']
         fields = "__all__"
-        interfaces = (relay.Node, )
+#        interfaces = (relay.Node, )
 
 class RoomType(DjangoObjectType):
     class Meta:
@@ -45,11 +45,11 @@ class HouseType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     plants = graphene.List(PlantType)
-    filtered_plants = relay.Node.Field(PlantType)
+#    filtered_plants = relay.Node.Field(PlantType)
     rooms  = graphene.List(RoomType)
     plants_by_room = graphene.Field(PlantType, room_id=graphene.Int(required=True))
     rooms_by_name_fragment = graphene.List(RoomSuggestionType, name_fragment=graphene.String(required=True))
-    all_filtered_plants = DjangoFilterConnectionField(PlantType)
+#    all_filtered_plants = DjangoFilterConnectionField(PlantType)
 
     def resolve_plants(self, info, **kwargs):
         try:
