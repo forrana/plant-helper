@@ -3,6 +3,7 @@ from django.db.models.expressions import ExpressionWrapper, F
 from django.db.models.fields import DateTimeField
 from graphene_django import DjangoObjectType
 from graphene import relay, ObjectType
+from graphql_relay.node.node import from_global_id
 import graphene
 import datetime
 from graphql import GraphQLError
@@ -21,7 +22,7 @@ class PlantType(DjangoObjectType):
         model = Plant
         filter_fields = ['scientific_name', 'name']
         fields = "__all__"
-#        interfaces = (relay.Node, )
+        interfaces = (relay.Node, )
 
 class RoomType(DjangoObjectType):
     class Meta:
@@ -45,11 +46,11 @@ class HouseType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     plants = graphene.List(PlantType)
-#    filtered_plants = relay.Node.Field(PlantType)
+    filtered_plants = relay.Node.Field(PlantType)
     rooms  = graphene.List(RoomType)
     plants_by_room = graphene.Field(PlantType, room_id=graphene.Int(required=True))
     rooms_by_name_fragment = graphene.List(RoomSuggestionType, name_fragment=graphene.String(required=True))
-#    all_filtered_plants = DjangoFilterConnectionField(PlantType)
+    all_filtered_plants = DjangoFilterConnectionField(PlantType)
 
     def resolve_plants(self, info, **kwargs):
         try:
@@ -156,9 +157,10 @@ class WaterPlant(graphene.Mutation):
 
     @classmethod
     def mutate(root, id, info, plant_id):
+        pk = from_global_id(plant_id)[1]
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        plant = Plant.objects.get(pk=pk, owner=info.context.user)
         if not plant:
             raise GraphQLError('Unauthorized')
         plant.watered = timezone.now()
@@ -178,9 +180,10 @@ class PostponeWatering(graphene.Mutation):
 
     @classmethod
     def mutate(root, id, info, plant_id, days):
+        pk = from_global_id(plant_id)[1]
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        plant = Plant.objects.get(pk=pk, owner=info.context.user)
         if not plant:
             raise GraphQLError('Unauthorized')
         plant.postpone_days = (plant.postpone_days + datetime.timedelta(days=days))
@@ -229,10 +232,11 @@ class UpdatePlant(graphene.Mutation):
                 days_between_watering_growing, days_between_watering_dormant, postpone_days, group_name,\
                 color_background
             ):
+        pk = from_global_id(plant_id)[1]
         owner = info.context.user
         if not owner.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=plant_id, owner=owner)
+        plant = Plant.objects.get(pk=pk, owner=owner)
         if not plant:
             raise GraphQLError('Plant not found')
         plant.name = plant_name
@@ -265,9 +269,10 @@ class DeletePlant(graphene.Mutation):
 
     @classmethod
     def mutate(root, id, info, plant_id):
+        pk = from_global_id(plant_id)[1]
         if not info.context.user.is_authenticated:
             raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=plant_id, owner=info.context.user)
+        plant = Plant.objects.get(pk=pk, owner=info.context.user)
         if not plant:
             raise GraphQLError('Unauthorized')
         plant.symbol.delete()
