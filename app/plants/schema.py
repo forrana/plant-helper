@@ -61,6 +61,16 @@ class Query(graphene.ObjectType):
                 raise GraphQLError('Unauthorized')
             else:
                 return Plant.objects \
+                    .filter(owner=info.context.user)
+        except Plant.DoesNotExist:
+            return None
+
+    def resolve_all_filtered_plants(self, info, **kwargs):
+        try:
+            if not info.context.user.is_authenticated:
+                raise GraphQLError('Unauthorized')
+            else:
+                return Plant.objects \
                     .filter(owner=info.context.user) \
                     .annotate(when_to_water=ExpressionWrapper( \
                         (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
