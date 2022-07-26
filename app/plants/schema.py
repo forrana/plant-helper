@@ -20,7 +20,10 @@ class PlantType(DjangoObjectType):
     days_postpone = graphene.Int()
     class Meta:
         model = Plant
-        filter_fields = ['scientific_name', 'name']
+        filter_fields = {
+            'scientific_name': ['exact', 'icontains', 'istartswith'],
+            'name': ['exact', 'icontains', 'istartswith']
+        }
         fields = "__all__"
         interfaces = (relay.Node, )
 

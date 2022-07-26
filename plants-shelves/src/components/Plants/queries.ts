@@ -15,6 +15,30 @@ query {
 }
 `;
 
+const GET_FILTERED_PLANTS = gql`
+  query AllFilteredPlants($name_Icontains: String!) {
+    allFilteredPlants(name_Icontains: $name_Icontains) {
+      edges {
+        cursor
+        node {
+          id, name, scientificName, daysUntilNextWatering, daysBetweenWatering, daysBetweenWateringGrowing, daysBetweenWateringDormant, daysPostpone
+          symbol {
+            userWideId
+          }
+          room {
+            id,
+            roomName,
+            colorBackground
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+`
+
 const GET_ALL_ROOMS = gql`
   query {
     rooms {
@@ -157,6 +181,7 @@ const CREATE_SUBSCRIPTION = gql`
 `
 export {
   GET_ALL_PLANTS,
+  GET_FILTERED_PLANTS,
   GET_ALL_ROOMS,
   ADD_PLANT,
   WATER_PLANT,

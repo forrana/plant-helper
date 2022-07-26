@@ -21,6 +21,7 @@ const PlantNameInput: React.FC<AutoCompleteInputProps> = (props) => {
 
   const debounceValue = useDebounce(props.value, SEARCH_DEBOUNCE_TIMEOUT);
 
+  // TODO rewrite to lazy query
   const useQLQuery = (isSkipFetch: boolean, setOptions: (params: any) => any) => useQuery(PLANT_ENTRY_BY_NICK_NAME_FRAGMENT, {
     variables: { nameFragment: debounceValue },
     skip: isSkipFetch,

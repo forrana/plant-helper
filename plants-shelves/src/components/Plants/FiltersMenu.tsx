@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Alert, Button, Collapse } from "reactstrap";
+import { Button, Collapse } from "reactstrap";
+import FilterInput from "./FilterInput";
 
 
 interface menuArrowProps {
@@ -20,7 +21,7 @@ function MenuArrow({ isOpen }: menuArrowProps) {
 
 function FiltersMenu() {
     const [isOpen, setIsOpen] = useState(false);
-    const toggleMenu = () => setIsOpen(!isOpen)
+    const toggleMenu = () => setIsOpen(!isOpen);
 
     return(
         <div style={{display: "flex"}}>
@@ -41,16 +42,7 @@ function FiltersMenu() {
                     width: "100vw",
                     backgroundColor: "rgb(10 10 10 / 11%)"
                     }}>
-                    <Button
-                        size="sm"
-                    >
-                        Hello.
-                    </Button>
-                    <Button
-                        size="sm"
-                    >
-                        World.
-                    </Button>
+                    <FilterInput />
                 </section>
             </Collapse>
         </div>
