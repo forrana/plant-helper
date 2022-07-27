@@ -8,6 +8,8 @@ import { GET_USER_SETTINGS, UPSERT_USER_SETTINGS } from '../queries';
 import uiStyles from "../../UI/UIElements.module.css"
 import { useAlertDispatch } from '../../UI/AlertDispatch';
 import { isFieldHasErrors } from '../formUtils';
+import { CREATE_SUBSCRIPTION } from '../../Plants/queries';
+import { askPermission } from '../../Plants/notifications-utils';
 
 interface NotificationsProps {
   action: () => any
@@ -48,6 +50,14 @@ function Notifications({ action }: NotificationsProps) {
       onError: (e) => console.error('Error updateing settings:', e)
     });
 
+    const [subscribeToNotifications] = useMutation(CREATE_SUBSCRIPTION, {
+      onCompleted: (data: { createSubscription: any }) => {
+          console.log("subscription", data)
+      },
+      onError: (e) => console.error('Error creating subscription:', e)
+    });
+
+
     const resetFieldErrors = (field: string) => {
       setFormErrors({...formErrors, [field]: []})
     }
@@ -62,6 +72,21 @@ function Notifications({ action }: NotificationsProps) {
           fetchPolicy: 'network-only'
         }
       );
+
+
+    const handleRefreshNotificationSubscription = () => {
+      askPermission(() => null, (subscriptin: PushSubscription) => {
+        const parsedSubscriptoin = JSON.parse(JSON.stringify(subscriptin))
+        subscribeToNotifications({ variables:
+            {
+              endpoint: parsedSubscriptoin.endpoint,
+              p256dh: parsedSubscriptoin.keys.p256dh,
+              auth: parsedSubscriptoin.keys.auth,
+              permissionGiven: true
+            }
+        })
+    })
+    }
 
     const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
@@ -159,6 +184,11 @@ function Notifications({ action }: NotificationsProps) {
                 <i className={"icon icon-location"}></i>
             </Button>
         </InputGroup>
+      </FormGroup>
+      <FormGroup>
+          <Button title="Resubscribe to notifications" onClick={handleRefreshNotificationSubscription}>
+            Resubscribe to notifications
+          </Button>
       </FormGroup>
       <section className={uiStyles.footer}>
         <Button color="success" title="Save!" type="submit">Save changes!</Button>
