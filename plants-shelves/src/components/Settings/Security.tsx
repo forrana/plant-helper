@@ -1,14 +1,14 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useContext, useState } from 'react';
 import { Form, FormFeedback, FormGroup, Input, Label } from 'reactstrap';
-import ErrorHandler from '../../Plants/ErrorHandler';
-import LoadingScreen from '../../Plants/LoadingScreen';
-import { FormErrors, UserProfileData } from '../models';
-import { GET_USER_DATA, UPSERT_USER_SETTINGS } from '../queries';
-import { useAlertDispatch } from '../../UI/AlertDispatch';
-import { getFormFieldErrors, isFieldHasErrors } from '../formUtils';
+import ErrorHandler from '../Plants/ErrorHandler';
+import LoadingScreen from '../Plants/LoadingScreen';
+import { FormErrors, UserProfileData } from '../User/models';
+import { GET_USER_DATA, UPSERT_USER_SETTINGS } from '../User/queries';
+import { useAlertDispatch } from '../UI/AlertDispatch';
+import { getFormFieldErrors, isFieldHasErrors } from '../User/formUtils';
 import PasswordChangeForm from './PasswordChangeForm';
-import UserContext from '../UserContext';
+import UserContext from '../User/UserContext';
 
 interface SecurityProps {
   action: () => any

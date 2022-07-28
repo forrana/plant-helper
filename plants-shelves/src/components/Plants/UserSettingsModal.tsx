@@ -4,7 +4,7 @@ import {
     ModalHeader,
     ModalBody
   } from 'reactstrap';
-import Settings from '../User/Settings/Settings';
+import Settings from '../Settings/Settings';
 
 interface UserSettingsModalProps {
   isOpen: boolean,

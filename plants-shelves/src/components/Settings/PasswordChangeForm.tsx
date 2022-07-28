@@ -3,14 +3,13 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Form, FormGroup, Label, Input, FormFeedback } from 'reactstrap';
 import { useMutation } from '@apollo/client';
-import { Link } from "react-router-dom";
-import styles from "../Login.module.css"
-import { FormErrors } from '../models';
-import { PASSWORD_CHANGE } from '../queries';
-import { useAlertDispatch } from '../../UI/AlertDispatch';
-import { getFormFieldErrors, isFieldHasErrors } from '../formUtils';
-import LoadingScreen from '../../Plants/LoadingScreen';
-import ErrorHandler from '../../Plants/ErrorHandler';
+import styles from "../User/Login.module.css"
+import { FormErrors } from '../User/models';
+import { PASSWORD_CHANGE } from '../User/queries';
+import { useAlertDispatch } from '../UI/AlertDispatch';
+import { getFormFieldErrors, isFieldHasErrors } from '../User/formUtils';
+import LoadingScreen from '../Plants/LoadingScreen';
+import ErrorHandler from '../Plants/ErrorHandler';
 
 
 interface PasswordChangeFormProps {

@@ -1,15 +1,16 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Input, InputGroup, Label } from 'reactstrap';
-import ErrorHandler from '../../Plants/ErrorHandler';
-import LoadingScreen from '../../Plants/LoadingScreen';
-import { FormErrors, UserSettingsData, UserSettingsType } from '../models';
-import { GET_USER_SETTINGS, UPSERT_USER_SETTINGS } from '../queries';
-import uiStyles from "../../UI/UIElements.module.css"
-import { useAlertDispatch } from '../../UI/AlertDispatch';
-import { isFieldHasErrors } from '../formUtils';
-import { CREATE_SUBSCRIPTION } from '../../Plants/queries';
-import { askPermission } from '../../Plants/notifications-utils';
+import ErrorHandler from '../Plants/ErrorHandler';
+import LoadingScreen from '../Plants/LoadingScreen';
+// TODO move to this folder
+import { FormErrors, UserSettingsData, UserSettingsType } from '../User/models';
+import { GET_USER_SETTINGS, UPSERT_USER_SETTINGS } from '../User/queries';
+import uiStyles from "../UI/UIElements.module.css"
+import { useAlertDispatch } from '../UI/AlertDispatch';
+import { isFieldHasErrors } from '../User/formUtils';
+import { CREATE_SUBSCRIPTION } from '../Plants/queries';
+import { askPermission } from '../Plants/notifications-utils';
 
 interface NotificationsProps {
   action: () => any
