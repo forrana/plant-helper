@@ -10,6 +10,7 @@ import PlantsNavBar from './PlantsNavBar';
 import ErrorHandler from './ErrorHandler';
 import LoadingScreen from './LoadingScreen';
 import ManagePushSubscription from './ManagePushSubscription';
+import CreateModal from './CreateModal';
 
 interface PlantsContainerProps {
   state: GlobalState
@@ -61,6 +62,7 @@ function PlantsContainer(props: PlantsContainerProps) {
               Create!
             </Button>
           </main>
+          <CreateModal isOpen={modal} toggleAction={toggleModal} />
           <LoadingScreen isLoading={loading} isFullScreen={true}/>
         </>
       )
