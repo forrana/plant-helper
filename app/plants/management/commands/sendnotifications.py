@@ -42,7 +42,7 @@ class Command(BaseCommand):
                 now = timezone.now()
                 if is_time_to_send_notification(now, interval, settings):
                     self.stdout.write(self.style.SUCCESS('send notifications for user  "%s"' % owner))
-                    payload = {"title": "Water me!", "message": "Some of your plants need to be watered!"}
+                    payload = {"title": "Water me!", "message": "Some of your plants need to be watered!", "tag": "water_plants"}
                     send_to_subscription(subscription, payload)
             except PushSubscription.DoesNotExist:
                 self.stdout.write(self.style.SUCCESS('subscriptoin for user does not exist  "%s"' % owner))
