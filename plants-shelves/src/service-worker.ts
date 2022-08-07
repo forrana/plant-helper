@@ -82,15 +82,16 @@ self.addEventListener('message', (event) => {
 self.addEventListener('push', function(event) {
   if (event.data) {
     const data = event.data.json();
-    showLocalNotification(data.title || "title", data.message || "message", self.registration);
+    showLocalNotification(data.title || "title", data.message || "message", data.tag || "tag", self.registration);
     console.log('Push event', data);
   } else {
     console.log('Push event but no data');
   }
 })
-const showLocalNotification = (title: string, body: string, swRegistration: any) => {
+const showLocalNotification = (title: string, body: string, tag: string, swRegistration: any) => {
   const options = {
     body,
+    tag,
     icon: "icon-192.png",
     requireInteraction: true,
     vibrate: [200, 100, 200]
