@@ -3,6 +3,7 @@ from django.conf import settings
 from django.forms.models import model_to_dict
 
 from pywebpush import WebPushException, webpush
+import backoff
 
 
 def send_to_subscription(subscription, payload, ttl=0):
@@ -24,15 +25,26 @@ def _send_notification(subscription, payload, ttl):
             'vapid_claims': {"sub": "mailto:{}".format(vapid_admin_email)}
         }
 
+    def _fatal_code(e):
+        return (400 <= e.response.status_code < 500) and e.response.status_code != 410
+
+    @backoff.on_exception(backoff.expo,
+                      WebPushException,
+                      max_tries=10,
+                      giveup=_fatal_code)
+    def _do_push_notification_request():
+        webpush(subscription_info=subscription_data, data=json.dumps(payload), ttl=ttl, **vapid_data)
+
+
     try:
-        req = webpush(subscription_info=subscription_data, data=json.dumps(payload), ttl=ttl, **vapid_data)
+        req = _do_push_notification_request()
         return req
     except WebPushException as e:
         # If the subscription is expired, delete it.
         if e.response.status_code == 410:
             subscription.delete()
         else:
-            # Its other type of exception!
+         # Its other type of exception!
             raise e
 
 
