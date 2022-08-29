@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useState } from 'react';
-import { Button, Form, FormGroup, Input, InputGroup, Label } from 'reactstrap';
+import { Button, ButtonGroup, ButtonToggle, Form, FormGroup, Input, InputGroup, Label } from 'reactstrap';
 import ErrorHandler from '../Plants/ErrorHandler';
 import LoadingScreen from '../Plants/LoadingScreen';
 // TODO move to this folder
@@ -28,6 +28,7 @@ function Notifications({ action }: NotificationsProps) {
     const alertDispatch = useAlertDispatch()
     const [formErrors, setFormErrors] = useState<FormErrors>({});
     const [settings, setSettings] = useState<UserSettingsType>(defaultUserSettings);
+    const [isNotificationsEnabled, setIsNotificationsEnabled] = useState<Boolean>(false)
 
     const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
@@ -187,9 +188,15 @@ function Notifications({ action }: NotificationsProps) {
         </InputGroup>
       </FormGroup>
       <FormGroup>
-          <Button title="Resubscribe to notifications" onClick={handleRefreshNotificationSubscription}>
+          <Label for="notificationsEndTime">Notifications enabled</Label>
+          <ButtonGroup>
+            <Button color="primary" onClick={() => setIsNotificationsEnabled(false)} active={isNotificationsEnabled === true}>One</Button>
+            <Button color="primary" onClick={() => setIsNotificationsEnabled(true)} active={isNotificationsEnabled === false}>Two</Button>
+          </ButtonGroup>
+
+          <ButtonToggle title="Resubscribe to notifications" onClick={handleRefreshNotificationSubscription} >
             Resubscribe to notifications
-          </Button>
+          </ButtonToggle>
       </FormGroup>
       <section className={uiStyles.footer}>
         <Button color="success" title="Save!" type="submit">Save changes!</Button>
