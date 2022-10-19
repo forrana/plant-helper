@@ -56,32 +56,11 @@ class Query(graphene.ObjectType):
     all_filtered_plants = DjangoFilterConnectionField(PlantType)
 
     def resolve_plants(self, info, **kwargs):
-        try:
-            if not info.context.user.is_authenticated:
-                raise GraphQLError('Unauthorized')
-            else:
-                return Plant.objects \
-                    .filter(owner=info.context.user) \
-                    .annotate(when_to_water=ExpressionWrapper( \
-                        (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
-                    .order_by("when_to_water") \
-                    .select_related("room")
-        except Plant.DoesNotExist:
-            return None
+        return Plant.get_sorted_user_plants(user=info.context.user)
+
 
     def resolve_all_filtered_plants(self, info, **kwargs):
-        try:
-            if not info.context.user.is_authenticated:
-                raise GraphQLError('Unauthorized')
-            else:
-                return Plant.objects \
-                    .filter(owner=info.context.user) \
-                    .annotate(when_to_water=ExpressionWrapper( \
-                        (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
-                    .order_by("when_to_water") \
-                    .select_related("room")
-        except Plant.DoesNotExist:
-            return None
+        return Plant.get_sorted_user_plants(user=info.context.user)
 
     def resolve_rooms(self, info, **kwargs):
         try:
@@ -175,11 +154,7 @@ class WaterPlant(graphene.Mutation):
     @classmethod
     def mutate(root, id, info, plant_id):
         pk = from_global_id(plant_id)[1]
-        if not info.context.user.is_authenticated:
-            raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=pk, owner=info.context.user)
-        if not plant:
-            raise GraphQLError('Unauthorized')
+        plant = Plant.get_user_plant_by_id(pk, info.context.user)
         plant.watered = timezone.now()
         watered_at_entry = WateredAtEntry(plant=plant, watered_date=plant.watered)
         watered_at_entry.save()
@@ -198,11 +173,7 @@ class PostponeWatering(graphene.Mutation):
     @classmethod
     def mutate(root, id, info, plant_id, days):
         pk = from_global_id(plant_id)[1]
-        if not info.context.user.is_authenticated:
-            raise GraphQLError('Unauthorized')
-        plant = Plant.objects.get(pk=pk, owner=info.context.user)
-        if not plant:
-            raise GraphQLError('Unauthorized')
+        plant = Plant.get_user_plant_by_id(pk=pk, user=info.context.user)
         plant.postpone_days = (plant.postpone_days + datetime.timedelta(days=days))
         plant.save()
         ok = True
