@@ -31,7 +31,7 @@ async function askPermission(rejectAction: () => any, acceptAction: (subscriptin
     });
     if (permissionResult_1 !== 'granted') {
       rejectAction()
-      throw new Error('We weren\'t granted permission.');
+      console.error('We weren\'t granted permission.');
     }
     const subscriptin = await createNotificationSubscription(pushServerPublicKey)
     acceptAction(subscriptin)
