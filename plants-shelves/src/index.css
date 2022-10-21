@@ -121,7 +121,7 @@ i.icon {
   }
 
   html .card {
-    border: 1px solid gray;
+    border-color: gray;
   }
 
   html img{

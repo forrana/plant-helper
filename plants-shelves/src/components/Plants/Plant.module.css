@@ -5,6 +5,11 @@
   cursor: grab;
 }
 
+.borrowedPlant {
+  border-width: 4px;
+  border-style: dashed;
+}
+
 .draggedPlant {
   opacity: 0.4;
 }
