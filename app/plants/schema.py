@@ -1,6 +1,7 @@
 from .utils import get_time_between_watering_field_for_current_season
 from django.db.models.expressions import ExpressionWrapper, F
 from django.db.models.fields import DateTimeField
+from users.models import CustomUser
 from graphene_django import DjangoObjectType
 from graphene import relay, ObjectType
 from graphql_relay.node.node import from_global_id
@@ -41,6 +42,11 @@ class SymbolType(DjangoObjectType):
     class Meta:
         model = Symbol
         fields = ("id", "user_wide_id")
+
+class OwnerType(DjangoObjectType):
+    class Meta:
+        model = CustomUser
+        field = ("id", "name")
 
 class HouseType(DjangoObjectType):
     class Meta:
