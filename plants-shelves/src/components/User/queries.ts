@@ -140,6 +140,20 @@ const DELETE_SHARED_WITH = gql`
   }
 `;
 
+const SHARE_WITH_NEW_USER = gql`
+  mutation ShareWithNewUser($email: String!) {
+    shareWithNewUser(email: $email) {
+      ok,
+      sharedWith {
+        borrower {
+          id,
+          email
+        }
+      }
+    }
+  }
+`;
+
 export {
   CREATE_USER,
   LOG_IN,
@@ -149,6 +163,7 @@ export {
   GET_USER_DATA,
   GET_USERS_SHARING_WITH,
   DELETE_SHARED_WITH,
+  SHARE_WITH_NEW_USER,
   PASSWORD_RESET_EMAIL,
   PASSWORD_RESET,
   PASSWORD_CHANGE,
