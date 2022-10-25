@@ -113,7 +113,7 @@ function Plant({ plant, index, room }: PlantProps) {
     }
 
     const bgColor = getBackgroundColor(daysToWatering, daysBetweenWatering)
-
+/*
     const onDragStartEvent: React.DragEventHandler = (event) => {
       // @ts-ignore
       event.currentTarget.style.border = "1px dashed rgba(0,0,0,.125)";
@@ -126,6 +126,7 @@ function Plant({ plant, index, room }: PlantProps) {
       event.currentTarget.style.border = "1px solid rgba(0,0,0,.125)";
       event.currentTarget.classList.remove(styles.draggedPlant);
     }
+*/
 
     const isSomethingLoading = (actions: MutationResult<any>[]) =>
       actions.some(action => action.loading)

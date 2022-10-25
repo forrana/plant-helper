@@ -109,10 +109,33 @@ const GET_USER_SETTINGS = gql`
   }
 `;
 
+
+const GET_USERS_SHARING_WITH = gql`
+  query {
+    sharingWith {
+      borrower {
+        email
+      }
+    }
+  }
+`;
 const GET_USER_DATA = gql`
   query {
     me {
       email
+    }
+  }
+`;
+
+const DELETE_SHARED_WITH = gql`
+  mutation DeletSharedWith($email: String!) {
+    deleteSharedWith(email: $email) {
+      ok,
+      sharedWith {
+        borrower {
+          email
+        }
+      }
     }
   }
 `;
@@ -124,8 +147,10 @@ export {
   UPSERT_USER_SETTINGS,
   GET_USER_SETTINGS,
   GET_USER_DATA,
+  GET_USERS_SHARING_WITH,
+  DELETE_SHARED_WITH,
   PASSWORD_RESET_EMAIL,
   PASSWORD_RESET,
   PASSWORD_CHANGE,
-  REVOKE_TOKEN
+  REVOKE_TOKEN,
 }
