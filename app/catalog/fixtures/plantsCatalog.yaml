@@ -677,3 +677,31 @@
     plant_entry: 36
   model: catalog.nickname
   pk: 65
+- fields:
+    days_between_watering_dormant: 30 00:00:00
+    days_between_watering_growing: 14 00:00:00
+    nick_name: Mangave
+    nick_names:
+    - Mangave
+    scientific_name: Agave
+  model: catalog.plantentry
+  pk: 37
+- fields:
+    name: Mangave
+    plant_entry: 37
+  model: catalog.nickname
+  pk: 66
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 5 00:00:00
+    nick_name: Calathea
+    nick_names:
+    - Calathea
+    scientific_name: Calathea sanderiana
+  model: catalog.plantentry
+  pk: 38
+- fields:
+    name: Calathea
+    plant_entry: 38
+  model: catalog.nickname
+  pk: 67

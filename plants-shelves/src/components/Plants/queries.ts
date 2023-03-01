@@ -75,6 +75,9 @@ const ADD_PLANT = gql`
             roomName,
             colorBackground
           }
+          owner {
+            username
+          }
         }
       }
   }
