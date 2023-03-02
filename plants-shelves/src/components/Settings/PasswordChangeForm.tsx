@@ -31,7 +31,7 @@ function PasswordChangeForm({ action }: PasswordChangeFormProps) {
       setNewPassword2("");
       setOldPassword("");
   }
-
+  // @ts-ignore
   const [resetPassword, { client, loading, error }] = useMutation(PASSWORD_CHANGE, {
     onCompleted: (data: any) => {
       const errors: FormErrors = data?.passwordChange?.errors;

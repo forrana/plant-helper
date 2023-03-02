@@ -13,6 +13,11 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "username"   # e.g: "username", "email"
     EMAIL_FIELD = "email"         # e.g: "email", "primary_email"
 
+    @property
+    def borrowers(self):
+        return SharedWith.objects.filter(borrower=self).values_list('owner', flat=True)
+
+
 class UserSettings(models.Model):
     notifications_start_time = models.TimeField(auto_now=False, auto_now_add=False, default=datetime.time(8, 0))
     notifications_end_time   = models.TimeField(auto_now=False, auto_now_add=False, default=datetime.time(20, 0))
@@ -26,3 +31,7 @@ class PushSubscription(models.Model):
     auth   = models.CharField(max_length=200, blank=True)
     permission_given = models.BooleanField(blank=True)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=False)
+
+class SharedWith(models.Model):
+    owner = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=False, related_name='borrowed_to')
+    borrower = models.OneToOneField(CustomUser, on_delete=models.CASCADE, blank=False, related_name='borrowed_from')

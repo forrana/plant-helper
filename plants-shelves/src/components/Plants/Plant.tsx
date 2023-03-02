@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { MutationResult, useMutation } from '@apollo/client';
 import { PlantData, RoomType } from './models'
 import { Card, CardBody, CardTitle, CardSubtitle, Progress, Button, Badge, ButtonGroup,
@@ -13,6 +13,8 @@ import pot from './images/pot.png'
 import EditModal from './EditModal';
 import RoomBadge from './RoomBadge';
 import LoadingScreen from './LoadingScreen';
+import UserContext from '../User/UserContext'
+
 
 interface PlantProps extends PlantData { index: number, room?: RoomType }
 interface WhenToWaterProps { daysUntilNextWatering: number }
@@ -35,6 +37,8 @@ function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
 }
 
 function Plant({ plant, index, room }: PlantProps) {
+    const userContext = useContext(UserContext);
+
     const dispatch = usePlantsDispatch()
 
     const [isEditMode, setIsEditMode] = useState(false);
@@ -74,6 +78,10 @@ function Plant({ plant, index, room }: PlantProps) {
 
     const plantHealth = getPlantHealth(daysToWatering, daysBetweenWatering);
 
+    const isBorrowedPlant = (owner: string, currentUser: string) => owner !== currentUser
+
+    const borrowedStyle = isBorrowedPlant(plant.owner.username, userContext.username) ? styles.borrowedPlant : ""
+
     const getHealthColor = (daysToWatering: number, daysBetweenWatering: number) => {
       const plantHealth = getPlantHealth(daysToWatering, daysBetweenWatering)
       if( plantHealth >= 70) {
@@ -94,7 +102,7 @@ function Plant({ plant, index, room }: PlantProps) {
       if( plantHealth >= 70) {
           return "success"
         } else if ( plantHealth >= 50 ) {
-          return "info"
+        return "info"
         } else if ( plantHealth > 20 ) {
           return "warning"
         } else if ( daysToWatering > 0) {
@@ -105,7 +113,7 @@ function Plant({ plant, index, room }: PlantProps) {
     }
 
     const bgColor = getBackgroundColor(daysToWatering, daysBetweenWatering)
-
+/*
     const onDragStartEvent: React.DragEventHandler = (event) => {
       // @ts-ignore
       event.currentTarget.style.border = "1px dashed rgba(0,0,0,.125)";
@@ -118,6 +126,7 @@ function Plant({ plant, index, room }: PlantProps) {
       event.currentTarget.style.border = "1px solid rgba(0,0,0,.125)";
       event.currentTarget.classList.remove(styles.draggedPlant);
     }
+*/
 
     const isSomethingLoading = (actions: MutationResult<any>[]) =>
       actions.some(action => action.loading)
@@ -136,7 +145,7 @@ function Plant({ plant, index, room }: PlantProps) {
 
     return (
       <Card
-            className={`${styles.plant} ${styles[bgColor]}`} id={plant.id+""} data-testid={`plant-card-${index}`}
+            className={`${styles.plant} ${styles[bgColor]} ${borrowedStyle}`} id={plant.id+""} data-testid={`plant-card-${index}`}
             style={{borderColor: color}}
             >
         <Badge color="dark" className={styles.badge}>#{plant.symbol.userWideId}</Badge>

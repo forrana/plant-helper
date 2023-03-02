@@ -4,7 +4,12 @@ from datetime import timedelta
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-from users.models import CustomUser
+from users.models import CustomUser, SharedWith
+from .utils import get_time_between_watering_field_for_current_season
+from django.db.models.expressions import ExpressionWrapper, F
+from django.db.models.fields import DateTimeField
+from graphql import GraphQLError
+
 
 class House(models.Model):
     owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
@@ -73,6 +78,34 @@ class Plant(models.Model):
     @property
     def days_postpone(self):
         return self.postpone_days.days
+
+    @staticmethod
+    def get_sorted_user_plants(user):
+        if not user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        else:
+            try:
+                all_owners = list(user.borrowers) + [user.pk]
+                print(all_owners)
+                return Plant.objects \
+                            .filter(owner__pk__in=all_owners) \
+                            .annotate(when_to_water=ExpressionWrapper( \
+                                (F('watered') + F(get_time_between_watering_field_for_current_season(timezone.now())) + F('postpone_days')), output_field=DateTimeField())) \
+                            .order_by("when_to_water") \
+                            .select_related("room")
+            except Plant.DoesNotExist:
+                return None
+
+    @staticmethod
+    def get_user_plant_by_id(pk, user):
+        if not user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        try:
+            all_owners = list(user.borrowers) + [user.pk]
+            return Plant.objects.get(pk=pk, owner__pk__in=all_owners)
+        except Plant.DoesNotExist:
+            raise GraphQLError('Unauthorized')
+
 
     def save(self, *args, **kwargs):
         is_new = True if not self.pk else False

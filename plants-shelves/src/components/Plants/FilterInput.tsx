@@ -1,6 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Button, FormGroup, Input, Label } from "reactstrap";
+import { Button, Input } from "reactstrap";
 import { PlantsData, PlantType } from "./models";
 import { usePlantsDispatch } from "./PlantsDispatch";
 import { GET_FILTERED_PLANTS } from "./queries";

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import { PlantsList } from './PlantsList'
-import { GET_ALL_PLANTS, GET_ALL_ROOMS, GET_FILTERED_PLANTS } from './queries'
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { GET_ALL_PLANTS, GET_ALL_ROOMS } from './queries'
+import { useQuery } from '@apollo/client';
 import { usePlantsDispatch } from './PlantsDispatch'
 import { PlantsData, RoomsData } from './models'
 import { GlobalState } from './models'

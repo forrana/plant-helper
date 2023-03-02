@@ -1,7 +1,8 @@
 import datetime
+import re
 from django.db.models import fields
 from graphene.types import field
-from .models import PushSubscription, UserSettings
+from .models import CustomUser, PushSubscription, SharedWith, UserSettings
 from graphene_django import DjangoObjectType
 from graphql import GraphQLError
 import graphene
@@ -39,9 +40,15 @@ class UserSettingsType(DjangoObjectType):
         model = UserSettings
         fields = "__all__"
 
-
     def resolve_timezone(settings, info):
         return settings.timezone
+
+
+class SharedWithType(DjangoObjectType):
+    class Meta:
+        model = SharedWith
+        fields = "__all__"
+
 
 class UpsertUserSettings(graphene.Mutation):
     class Arguments:
@@ -128,6 +135,66 @@ class UserSettingQuery(graphene.ObjectType):
 
         return settings
 
+class SharingWithQuery(graphene.ObjectType):
+    sharing_with = graphene.List(lambda: SharedWithType)
+
+    def resolve_sharing_with(self, info):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+
+        shared_with = SharedWith.objects.filter(owner = user)
+        return shared_with
+
+
+class ShareWithNewUser(graphene.Mutation):
+    class Arguments:
+        email = graphene.String()
+
+    ok = graphene.Boolean()
+    shared_with = graphene.Field(SharedWithType)
+
+    @classmethod
+    def mutate(root, id, info, email):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+
+        try:
+            borrower = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            raise GraphQLError('Borrower with provided email doesn\'t exist')
+
+        shared_with_entry = SharedWith.objects.filter(owner=info.context.user, borrower=borrower)
+        if len(shared_with_entry) > 0:
+            raise GraphQLError('Already shared with the provided user')
+        new_shared_with = SharedWith.objects.create(owner=info.context.user, borrower=borrower)
+        ok = True
+        return ShareWithNewUser(shared_with=new_shared_with, ok=ok)
+
+class DeleteSharedWith(graphene.Mutation):
+    class Arguments:
+        email = graphene.String()
+    ok = graphene.Boolean()
+    shared_with = graphene.Field(SharedWithType)
+
+    @classmethod
+    def mutate(root, id, info, email):
+        if not info.context.user.is_authenticated:
+            raise GraphQLError('Unauthorized')
+        try:
+            borrower = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            raise GraphQLError('Borrower with provided email doesn\'t exist')
+
+        try:
+            shared_with_entry = SharedWith.objects.get(owner=info.context.user, borrower=borrower)
+        except SharedWith.DoesNotExist:
+            raise GraphQLError('There is no shared rights between provided 2 users')
+
+        shared_with_entry.delete()
+        ok = True
+        return DeleteSharedWith(shared_with=shared_with_entry, ok=ok)
+
 class SubscriptionQuery(graphene.ObjectType):
     subscription = graphene.Boolean()
 
@@ -145,11 +212,13 @@ class SubscriptionQuery(graphene.ObjectType):
         return False
 
 
-class Query(UserQuery, MeQuery, SubscriptionQuery, UserSettingQuery, graphene.ObjectType):
+class Query(UserQuery, MeQuery, SubscriptionQuery, UserSettingQuery, SharingWithQuery, graphene.ObjectType):
     pass
 
 class Mutation(AuthMutation, graphene.ObjectType):
     create_subscription = CreateSubscription.Field()
     upsert_user_settings = UpsertUserSettings.Field()
+    delete_shared_with = DeleteSharedWith.Field()
+    share_with_new_user = ShareWithNewUser.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

@@ -9,6 +9,11 @@ export interface PlantType {
   symbol: SymbolType;
   daysPostpone: number;
   room: RoomType;
+  owner: OwnerType;
+}
+
+export interface OwnerType {
+  username: string
 }
 
 export interface SymbolType {

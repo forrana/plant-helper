@@ -11,6 +11,9 @@ query {
       roomName,
       colorBackground
     }
+    owner {
+      username
+    }
   }
 }
 `;
@@ -29,6 +32,9 @@ const GET_FILTERED_PLANTS = gql`
             id,
             roomName,
             colorBackground
+          }
+          owner {
+            username
           }
         }
       }
@@ -69,6 +75,9 @@ const ADD_PLANT = gql`
             roomName,
             colorBackground
           }
+          owner {
+            username
+          }
         }
       }
   }
@@ -87,6 +96,9 @@ const WATER_PLANT = gql`
           roomName,
           colorBackground
         }
+        owner {
+          username
+        }
       }
     }
   }
@@ -104,6 +116,9 @@ const POSTPONE_WATERING = gql`
           id,
           roomName,
           colorBackground
+        }
+        owner {
+          username
         }
       }
     }
@@ -131,6 +146,9 @@ const UPDATE_PLANT = gql`
           id,
           roomName,
           colorBackground
+        }
+        owner {
+          username
         }
       }
     }
