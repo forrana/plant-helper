@@ -705,3 +705,23 @@
     plant_entry: 38
   model: catalog.nickname
   pk: 67
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 10 00:00:00
+    nick_name: White spruce, Dwarf spruce
+    nick_names:
+    - White Spruce
+    - Dwarf Spruce
+    scientific_name: Picea glauca
+  model: catalog.plantentry
+  pk: 39
+- fields:
+    name: White Spruce
+    plant_entry: 39
+  model: catalog.nickname
+  pk: 69
+- fields:
+    name: Dwarf Spruce
+    plant_entry: 39
+  model: catalog.nickname
+  pk: 70
