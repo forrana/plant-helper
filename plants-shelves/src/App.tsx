@@ -17,6 +17,8 @@ import Logout from './components/User/Logout';
 import Signup from './components/User/Signup';
 import { PrivateRoute, PublicRoute } from './components/Auth/AuthRoutes';
 
+import AppFooter from './components/Global/AppFooter';
+
 import {
   ApolloProvider,
   createHttpLink,
@@ -173,6 +175,7 @@ function App() {
                     <PlantsContainer state={state}/>
                   </PrivateRoute>
                 </Switch>
+                <AppFooter/>
               </AlertContext.Provider>
             </AlertDispatch.Provider>
           </PlantsDispatch.Provider>

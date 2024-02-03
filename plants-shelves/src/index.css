@@ -79,6 +79,10 @@ i.icon {
   content: "\25C0"
 }
 
+.icon-info:after {
+  content: "\2139"
+}
+
 .alert {
   position: fixed;
   top: 0;
