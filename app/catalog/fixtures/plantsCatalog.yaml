@@ -706,8 +706,8 @@
   model: catalog.nickname
   pk: 67
 - fields:
-    days_between_watering_dormant: 7 00:00:00
-    days_between_watering_growing: 10 00:00:00
+    days_between_watering_dormant: 10 00:00:00
+    days_between_watering_growing: 7 00:00:00
     nick_name: White spruce, Dwarf spruce
     nick_names:
     - White Spruce
@@ -725,3 +725,23 @@
     plant_entry: 39
   model: catalog.nickname
   pk: 70
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 5 00:00:00
+    nick_name: Calla, Happy Calla
+    nick_names:
+    - Calla
+    - Happy Calla
+    scientific_name: Calla palustris
+  model: catalog.plantentry
+  pk: 40
+- fields:
+    name: Calla
+    plant_entry: 40
+  model: catalog.nickname
+  pk: 71
+- fields:
+    name: Happy Calla
+    plant_entry: 40
+  model: catalog.nickname
+  pk: 72
