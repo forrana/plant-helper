@@ -745,3 +745,23 @@
     plant_entry: 40
   model: catalog.nickname
   pk: 72
+- fields:
+    days_between_watering_dormant: 7 00:00:00
+    days_between_watering_growing: 5 00:00:00
+    nick_name: Chinese hibiscus, China rose
+    nick_names:
+    - Chinese Hibiscus
+    - China Rose
+    scientific_name: Hibiscus rosa-sinensis
+  model: catalog.plantentry
+  pk: 41
+- fields:
+    name: Chinese Hibiscus
+    plant_entry: 41
+  model: catalog.nickname
+  pk: 73
+- fields:
+    name: China Rose
+    plant_entry: 41
+  model: catalog.nickname
+  pk: 74
