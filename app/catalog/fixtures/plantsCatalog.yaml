@@ -5,6 +5,7 @@
     nick_names:
     - Aloe
     scientific_name: Aloe Vera
+    image_name: aloe.jpeg
   model: catalog.plantentry
   pk: 1
 - fields:
@@ -22,6 +23,7 @@
     - European Ivy
     - Ivy
     scientific_name: Hedera helix
+    image_name: ivy.jpeg
   model: catalog.plantentry
   pk: 2
 - fields:
@@ -51,6 +53,7 @@
     nick_names:
     - Peace Lily
     scientific_name: Spathiphyllum
+    image_name: peace_lily.jpeg
   model: catalog.plantentry
   pk: 3
 - fields:
@@ -162,6 +165,7 @@
     - Laceleaf
     - Flamingo Flower
     scientific_name: Anthurium
+    image_name: flamingo_flower.jpeg
   model: catalog.plantentry
   pk: 10
 - fields:
@@ -182,6 +186,7 @@
     - African Violets
     - Violets
     scientific_name: Saintpaulia
+    image_name: violet.jpeg
   model: catalog.plantentry
   pk: 11
 - fields:
@@ -248,6 +253,7 @@
     - Citrus
     - Lemon
     scientific_name: Citrus
+    image_name: citrus.jpeg
   model: catalog.plantentry
   pk: 14
 - fields:
@@ -396,6 +402,7 @@
     - Dragon Fruit
     - White-Fleshed Pitahaya
     scientific_name: Selenicereus undatus
+    image_name: dragon_fruit.jpeg
   model: catalog.plantentry
   pk: 22
 - fields:

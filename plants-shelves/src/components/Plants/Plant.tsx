@@ -9,7 +9,18 @@ import PlantsEdit from './PlantsEdit'
 import styles from "./Plant.module.css"
 import uiStyles from "../UI/UIElements.module.css"
 import ErrorHandler from './ErrorHandler';
-import pot from './images/pot.png'
+import fallback from './images/fallback.jpg'
+import fallbackSad from './images/fallback_01.jpg'
+import aloe from './images/aloe.jpg'
+import aloeSad from './images/aloe_01.jpg'
+import citrus from './images/citrus.jpg'
+import citrusSad  from './images/citrus_01.jpg'
+import peacyLily from './images/peace_lily.jpg'
+import peacyLilySad from './images/peace_lily_01.jpg'
+import ivy from './images/ivy.jpg'
+import ivySad from './images/ivy_01.jpg'
+import flamingoFlower from './images/flamingo_flower.jpg'
+import flamingoFlowerSad from './images/flamingo_flower_01.jpg'
 import EditModal from './EditModal';
 import RoomBadge from './RoomBadge';
 import LoadingScreen from './LoadingScreen';
@@ -19,6 +30,47 @@ import UserContext from '../User/UserContext'
 interface PlantProps extends PlantData { index: number, room?: RoomType }
 interface WhenToWaterProps { daysUntilNextWatering: number }
 
+interface PlantImageProps {
+  scientificName: string;
+  className?: string;
+  needsWater?: boolean;
+}
+
+function PlantImage({ scientificName, needsWater = false }: PlantImageProps) {
+  const [imageError, setImageError] = useState(false);
+
+  const getPlantImage = (scientificName: string) => {
+    switch (scientificName.toLowerCase()) {
+      case 'aloe vera':
+        return needsWater ? aloeSad : aloe;
+      case 'citrus':
+        return needsWater ? citrusSad : citrus;
+      case 'spathiphyllum':
+        return needsWater ? peacyLilySad : peacyLily;
+      case 'hedera helix':
+        return needsWater ? ivySad : ivy;
+      case 'anthurium':
+        return needsWater ? flamingoFlowerSad : flamingoFlower;
+      default:
+        return needsWater ? fallbackSad : fallback;
+    }
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
+  const selectedImage = imageError ? fallback : getPlantImage(scientificName)
+
+  return (
+    <img 
+      src={selectedImage} 
+      alt="plant image" 
+      className={styles.image}
+      onError={handleImageError}
+    />
+  );
+}
 
 function WhenToWater({ daysUntilNextWatering }: WhenToWaterProps) {
   if(daysUntilNextWatering === 1)
@@ -159,7 +211,10 @@ function Plant({ plant, index, room }: PlantProps) {
           </section>
           <section className={styles.actions}>
             <Button size="sm" outline onClick={toWater} title="Water" data-testid="water-btn" className={uiStyles.roundButton}>&#128166;</Button>
-            <img src={pot} alt="plant pot" className={styles.image}/>
+            <PlantImage 
+              scientificName={plant.scientificName} 
+              needsWater={daysToWatering <= 0}
+            />
             <Button size="sm" outline onClick={toggleEditModal} title="Edit" data-testid="edit-btn" className={uiStyles.roundButton}>
               <i className="icon icon-settings" />
             </Button>

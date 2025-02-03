@@ -8,13 +8,15 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+COPY --chown=node:node package.json ./
+COPY --chown=node:node package-lock.json ./
 RUN npm install --silent
+RUN npm install typescript
 RUN npm install react-scripts -g --silent
 
 # add app
-COPY . ./
+COPY --chown=node:node . ./
+USER node
 
 # start app
 CMD ["npm", "start"]
