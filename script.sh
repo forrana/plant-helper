@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker-compose run app python manage.py "$@"
+docker-compose -f ./docker-compose.prod.yaml run app python manage.py "$@"
